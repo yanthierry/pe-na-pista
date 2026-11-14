@@ -2,7 +2,14 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Pé na Pista">
+<meta name="theme-color" content="#0d1440">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACBElEQVR42u3dMU4CQRSA4beGdqmkoTIewW47YwHhEN4EKziFFzFQUOotCBUFWKGlibRKCJoFlmX4vl4I45+3JDNhstfPu4BtriwB4kAciANxIA7EgTgQB+JAHCAOxIE4EAfiQByIA3EgDsQB4kAciANxUKXGad++e9M87AuOZqs6LGsan8vkQByIg3S+c/z01FmW+8PBuFXnJT7fz2VyIA7EgTgQB+JAHIgDcSAOxAHiQByIA3FwEtnxbk04+DlKotoTpiYH4kAciANxEBdz+vyl367mjd4Xi4T/Z4/PXyYHHiuIA3EgDsSBOEAciANxIA7EgTgQB+JAHIgDxIE4EAfiIBI+fd4bzq24yYE4EAe+cxzdavJtxffXfMhMDtzUxP4DeJqXeJ232w+TA48VxIE4EAfiQByIA3EgDhAH4uCfimle7NyUsfEWCWzZb1ypUZTahzM5iJpu2Vd2SgWTA3EgDlypEa7UCFdq4LGCOBAHiANxIA7EgTgQB+Ig7K1QF3/+toLJgTgQB+JAHIgDcSAOxAHiQByIA3EgDsSBOBAH4kAciAPEgTgQB+JAHIgDcSAOxIE4QByIA3EQafyyT284t+ImB+JAHIgDfsny63urgMmBOBAH4kAciANxIA7EgThAHIgDcSAOxIE4EAfiQByIA8SBOBAH4kAciANxIA7EwWVYA9dfNQauzi97AAAAAElFTkSuQmCC">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACBElEQVR42u3dMU4CQRSA4beGdqmkoTIewW47YwHhEN4EKziFFzFQUOotCBUFWKGlibRKCJoFlmX4vl4I45+3JDNhstfPu4BtriwB4kAciANxIA7EgTgQB+JAHCAOxIE4EAfiQByIA3EgDsQB4kAciANxUKXGad++e9M87AuOZqs6LGsan8vkQByIg3S+c/z01FmW+8PBuFXnJT7fz2VyIA7EgTgQB+JAHIgDcSAOxAHiQByIA3FwEtnxbk04+DlKotoTpiYH4kAciANxEBdz+vyl367mjd4Xi4T/Z4/PXyYHHiuIA3EgDsSBOEAciANxIA7EgTgQB+JAHIgDxIE4EAfiIBI+fd4bzq24yYE4EAe+cxzdavJtxffXfMhMDtzUxP4DeJqXeJ232w+TA48VxIE4EAfiQByIA3EgDhAH4uCfimle7NyUsfEWCWzZb1ypUZTahzM5iJpu2Vd2SgWTA3EgDlypEa7UCFdq4LGCOBAHiANxIA7EgTgQB+Ig7K1QF3/+toLJgTgQB+JAHIgDcSAOxAHiQByIA3EgDsSBOBAH4kAciAPEgTgQB+JAHIgDcSAOxIE4QByIA3EQafyyT284t+ImB+JAHIgDfsny63urgMmBOBAH4kAciANxIA7EgThAHIgDcSAOxIE4EAfiQByIA8SBOBAH4kAciANxIA7EwWVYA9dfNQauzi97AAAAAElFTkSuQmCC">
 <title>Pé na Pista</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Pixelify+Sans:wght@500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -14,9 +21,10 @@
   #c { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
   video { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
   .screen { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center;
-    justify-content: center; gap: 14px; padding: 24px; text-align: center;
+    justify-content: center; gap: 14px; text-align: center; box-sizing: border-box;
+    padding: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
     background: linear-gradient(rgba(13,20,64,.45), rgba(13,20,64,.85)); }
-  .hidden { display: none; }
+  .hidden { display: none !important; }
   .px { --bd: var(--lime); box-shadow: -4px 0 0 var(--bd), 4px 0 0 var(--bd), 0 -4px 0 var(--bd), 0 4px 0 var(--bd); margin: 4px; }
   h1 { margin: 6px 0 10px; font-family: "Bungee", "Pixelify Sans", sans-serif; font-weight: 400; line-height: .88;
     font-size: clamp(44px, 9vw, 96px); text-transform: uppercase; transform: rotate(-5deg) skewX(-10deg); letter-spacing: 1px;
@@ -49,7 +57,8 @@
     #menu .col { flex: 1; max-width: 430px; }
   }
   @media (orientation: landscape) and (max-height: 520px) {
-    .screen { padding: 8px 18px; gap: 6px; }
+    .screen { gap: 6px; padding: max(8px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left)); }
+    #cover { padding: 0; }
     .col { gap: 7px; }
     h1 { font-size: 54px; margin: 2px 0 6px; } h2 { font-size: 26px; } .big { font-size: 32px; }
     p, .moves { font-size: 14px; line-height: 1.25; } .tag { font-size: 13px; }
@@ -58,6 +67,18 @@
     button.alt { font-size: 13px; } .opt { font-size: 14px; padding: 4px 14px; }
     .stats { padding: 4px 18px; } .stats b { font-size: 22px; }
   }
+  button.sm { min-width: 0; font-size: 13px; padding: 7px 12px; background: var(--navy); color: #fff; --bd: var(--lime); box-shadow: -4px 0 0 var(--bd), 4px 0 0 var(--bd), 0 -4px 0 var(--bd), 0 4px 0 var(--bd); margin: 4px; }
+  /* ---------- escolha de avatar e skin ---------- */
+  #custom { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto 1fr auto; align-items: center; justify-items: center;
+    background: linear-gradient(90deg, rgba(13,20,64,.8), rgba(13,20,64,0) 36%, rgba(13,20,64,0) 64%, rgba(13,20,64,.8)); }
+  #custom h2 { grid-column: 1 / 4; }
+  .pick { background: var(--navy); padding: 10px 16px; display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 150px; }
+  .pick small { letter-spacing: 3px; color: #cfd8ff; font-size: 12px; } .pick b { font-size: 24px; color: var(--lime); }
+  .pick button { font-size: 20px; padding: 6px 18px; }
+  .pick.l { grid-column: 1; grid-row: 2; } .pick.r { grid-column: 3; grid-row: 2; }
+  #btnOk { grid-column: 3; grid-row: 3; min-width: 150px; }
+  #fsHelp { z-index: 6; background: rgba(7,10,42,.92); }
+  #fsHelp ol { text-align: left; margin: 0; padding-left: 22px; font-size: 16px; line-height: 1.5; color: #fff; max-width: 26em; }
   /* ---------- capa: fliperama com tela CRT ---------- */
   #cover { z-index: 5; padding: 0; gap: 0; justify-content: space-between; cursor: pointer;
     background: radial-gradient(ellipse at 50% 45%, #1a2278 0%, #0a0f38 55%, #04061c 100%); }
@@ -110,7 +131,8 @@
   <div class="col">
   <span class="tag"><i>✦</i> JOGUE COM O CORPO <i>✦</i></span>
   <h1><span>Pé na</span><b>Pista</b></h1>
-  <p>Apoie o celular deitado (na horizontal), com a tela virada para você, afaste-se uns 2 metros e use o corpo para jogar. Atravesse os 3 mundos em 60 segundos e vá o mais longe possível.</p>
+  <p>Apoie o celular deitado, afaste-se uns 2 metros e use o corpo para atravessar os 3 mundos em 60 segundos.</p>
+  <div class="row"><button class="sm" id="btnCustom">👕 Personagem</button><button class="sm" id="btnFs">⛶ Tela cheia</button></div>
   <label class="opt px"><input type="checkbox" id="optCue" checked> Mostrar ícones de comando</label>
   <p id="msg"></p>
   </div>
@@ -125,6 +147,25 @@
   <button id="btnCam">Jogar com a câmera</button>
   <button id="btnTouch" class="alt">Jogar com toque (deslizar e tocar)</button>
   </div>
+</div>
+
+<div id="custom" class="screen hidden">
+  <h2>Escolha seu corredor</h2>
+  <div class="pick l px"><small>AVATAR</small><b id="avName">Capi</b><div class="row"><button class="sm" id="avPrev" aria-label="Avatar anterior">◀</button><button class="sm" id="avNext" aria-label="Próximo avatar">▶</button></div></div>
+  <div class="pick r px"><small>SKIN</small><b id="skName">Clássico</b><div class="row"><button class="sm" id="skPrev" aria-label="Skin anterior">◀</button><button class="sm" id="skNext" aria-label="Próxima skin">▶</button></div></div>
+  <button id="btnOk">Pronto</button>
+</div>
+
+<div id="fsHelp" class="screen hidden">
+  <h2>Tela cheia no iPhone</h2>
+  <p>O Safari do iPhone não deixa um site entrar em tela cheia sozinho. Para o jogo ocupar a tela toda:</p>
+  <ol>
+    <li>Abra este endereço no <b>Safari</b>.</li>
+    <li>Toque em <b>Compartilhar</b> (o quadrado com a seta).</li>
+    <li>Toque em <b>Adicionar à Tela de Início</b>.</li>
+    <li>Abra o jogo pelo ícone novo e vire o celular.</li>
+  </ol>
+  <button id="btnFsOk">Entendi</button>
 </div>
 
 <div id="over" class="screen hidden">
@@ -148,11 +189,16 @@
 try { document.fonts.load('700 20px "Pixelify Sans"'); } catch (e) {}
 const $ = id => document.getElementById(id);
 const cv = $('c'), ctx = cv.getContext('2d'), video = $('v');
-let W = 0, H = 0, DPR = 1, VW = 0, VH = 0, OX = 0, OY = 0, portrait = false;
-function resize() {                       // palco fixo em 16:9, centralizado na tela
+let W = 0, H = 0, DPR = 1, VW = 0, VH = 0, OX = 0, OY = 0, portrait = false, SAFE = { t: 0, r: 0, b: 0, l: 0 };
+const probe = document.createElement('div');   // mede o recorte da tela (ilha dinâmica, barra de início)
+probe.style.cssText = 'position:fixed;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)';
+document.body.appendChild(probe);
+function resize() {                       // na horizontal o palco ocupa a tela inteira
   DPR = Math.min(window.devicePixelRatio || 1, 2);
   VW = window.innerWidth; VH = window.innerHeight; portrait = VH > VW;
-  if (VW / VH > 16 / 9) { H = VH; W = H * 16 / 9; } else { W = VW; H = W * 9 / 16; }
+  if (VW / VH > 16 / 9) { H = VH; W = VW; } else { W = VW; H = W * 9 / 16; }
+  const cs = getComputedStyle(probe);
+  SAFE = { t: parseFloat(cs.paddingTop) || 0, r: parseFloat(cs.paddingRight) || 0, b: parseFloat(cs.paddingBottom) || 0, l: parseFloat(cs.paddingLeft) || 0 };
   OX = (VW - W) / 2; OY = (VH - H) / 2;
   cv.width = Math.round(VW * DPR); cv.height = Math.round(VH * DPR);
 }
@@ -234,9 +280,51 @@ try { showCue = localStorage.getItem('pnp_cue') !== '0'; } catch (e) {}
 $('optCue').checked = showCue;
 $('optCue').onchange = e => { showCue = e.target.checked; try { localStorage.setItem('pnp_cue', showCue ? '1' : '0'); } catch (err) {} };
 
+/* ---------- avatares e skins ---------- */
+const AVATARS = [
+  { name: 'Capi', fur: '#b07a44', furLt: '#c4905a', furDk: '#8a5a2b', ear: 'square', inner: '#e9a98a' },
+  { name: 'Pintada', fur: '#f0a830', furLt: '#ffc24d', furDk: '#c97f14', ear: 'round', inner: '#ffe2b0', spots: true, tail: true },
+  { name: 'Zap', fur: '#9aa3c2', furLt: '#c9d0ea', furDk: '#5d668a', ear: 'none', antenna: true, robot: true }
+];
+const SKINS = [
+  { name: 'Clássico', shirt: '#18b3a3', band: '#ffd23f', glove: '#ff5d5d', stripe: '#ff5d5d', num: '#fff' },
+  { name: 'Neon', shirt: '#c6f432', band: '#ff4fd8', glove: '#4fd8ff', stripe: '#ff4fd8', num: '#0d1440' },
+  { name: 'Fogo', shirt: '#ff3b3b', band: '#ffd23f', glove: '#ff8a2a', stripe: '#ffd23f', num: '#ffd23f' },
+  { name: 'Galáxia', shirt: '#3a2a9a', band: '#4fd8ff', glove: '#f4f0ff', stripe: '#8b5cf6', num: '#4fd8ff', stars: true }
+];
+let avI = 0, skI = 0;
+try { avI = (+localStorage.getItem('pnp_av') || 0) % AVATARS.length; skI = (+localStorage.getItem('pnp_sk') || 0) % SKINS.length; } catch (e) {}
+let AV = AVATARS[avI], SK = SKINS[skI];
+function pickLook(da, ds) {
+  avI = (avI + da + AVATARS.length) % AVATARS.length; skI = (skI + ds + SKINS.length) % SKINS.length;
+  AV = AVATARS[avI]; SK = SKINS[skI];
+  $('avName').textContent = AV.name; $('skName').textContent = SK.name;
+  try { localStorage.setItem('pnp_av', avI); localStorage.setItem('pnp_sk', skI); } catch (e) {}
+  if (da || ds) beep(700, 0.07, 'square', 0.05);
+}
+pickLook(0, 0);
+$('avPrev').onclick = () => pickLook(-1, 0); $('avNext').onclick = () => pickLook(1, 0);
+$('skPrev').onclick = () => pickLook(0, -1); $('skNext').onclick = () => pickLook(0, 1);
+$('btnCustom').onclick = () => { initAudio(); G = newGame(); ctl.squat = false; ctl.lane = 0; setState('custom'); };
+$('btnOk').onclick = () => { ctl.squat = false; setState('menu'); };
+
+/* ---------- tela cheia ---------- */
+const fsRoot = document.documentElement, fsReq = fsRoot.requestFullscreen || fsRoot.webkitRequestFullscreen;
+const isApp = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches || matchMedia('(display-mode: fullscreen)').matches;
+if (isApp) $('btnFs').classList.add('hidden');        // aberto pelo ícone: já está em tela cheia
+$('btnFsOk').onclick = () => $('fsHelp').classList.add('hidden');
+$('btnFs').onclick = async () => {
+  if (!fsReq) { $('fsHelp').classList.remove('hidden'); return; }   // iPhone: explica o caminho pela Tela de Início
+  try {
+    if (document.fullscreenElement || document.webkitFullscreenElement) await (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    else { await fsReq.call(fsRoot); try { await screen.orientation.lock('landscape'); } catch (e) {} }
+  } catch (e) { $('fsHelp').classList.remove('hidden'); }
+};
+
 /* ---------- telas ---------- */
-function show(id) { for (const s of ['menu', 'over']) $(s).classList.toggle('hidden', s !== id); }
-function setState(s) { state = s; show(s === 'menu' || s === 'over' ? s : null); }
+const SCREENS = ['menu', 'over', 'custom'];
+function show(id) { for (const s of SCREENS) $(s).classList.toggle('hidden', s !== id); }
+function setState(s) { state = s; show(SCREENS.includes(s) ? s : null); }
 
 $('cover').onclick = () => { initAudio(); beep(660, 0.1, 'square', 0.06); setTimeout(() => beep(990, 0.18, 'square', 0.06), 100); $('cover').classList.add('hidden'); };
 $('btnCam').onclick = () => { initAudio(); goLandscape(); startCamera(); };
@@ -435,6 +523,19 @@ function update(dt, now) {
     const before = Math.ceil(countT); countT -= dt;
     if (Math.ceil(countT) !== before && countT > 0) beep(440, 0.12, 'triangle', 0.1);
     if (countT <= 0) { beep(880, 0.3, 'triangle', 0.12); setState('play'); }
+    return;
+  }
+  if (state === 'custom') {               // vitrine: corre, pula, agacha e soca para mostrar o visual
+    const cyc = Math.floor(clock / 1.5) % 4, cph = clock % 1.5;
+    G.dist += 6 * dt; G.speed = 8; G.runPhase += 8 * dt * 1.6; G.landT += dt;
+    ctl.squat = cyc === 2 && cph < 0.8;
+    if (cyc === 1 && cph < 0.1 && G.jumpT < 0) G.jumpT = 0;
+    if (cyc === 3 && cph < 0.1 && G.punchT < 0) G.punchT = 0;
+    const wasAir = G.jumpT >= 0;
+    if (G.jumpT >= 0) { G.jumpT += dt; if (G.jumpT > 0.7) G.jumpT = -1; }
+    if (wasAir && G.jumpT < 0) G.landT = 0;
+    if (G.punchT >= 0) { G.punchT += dt; if (G.punchT > 0.45) G.punchT = -1; }
+    G.sq += ((ctl.squat && G.jumpT < 0 ? 1 : 0) - G.sq) * Math.min(1, dt * 14);
     return;
   }
   if (state === 'over') {
@@ -793,7 +894,7 @@ function limb(x0, y0, mx, my, x1, y1, color, lw, ol) {
     ctx.strokeStyle = c; ctx.lineWidth = w; ctx.beginPath(); ctx.moveTo(x0, y0); ctx.quadraticCurveTo(mx, my, x1, y1); ctx.stroke();
   }
 }
-function drawPlayer() {                   // Capi, a capivara corredora (vista de costas)
+function drawPlayer() {                   // corredor em blocos, visto de costas (avatar AV + skin SK)
   const u = laneW, x = cx + G.x * laneW, jh = jumpHeight(), air = G.jumpT >= 0, sq = G.sq;
   const run = Math.min(1, G.speed / 4) * (air ? 0 : 1), ph = G.runPhase;
   const shd = 1 - jh * 0.45;
@@ -810,23 +911,30 @@ function drawPlayer() {                   // Capi, a capivara corredora (vista d
   for (const d of [-1, 1]) {              // pernas e tênis
     const lift = air ? 0.5 : Math.max(0, Math.sin(ph + (d > 0 ? 0 : Math.PI))) * run;
     const fx = d * u * (0.11 + 0.08 * sq + (air ? 0.03 : 0)), fy = -lift * legH * 0.85;
-    limb(d * u * 0.1, hipY, d * u * (0.16 + 0.12 * sq), (hipY + fy) / 2, fx, fy - u * 0.04, C.furDark, u * 0.115, ol);
+    limb(d * u * 0.1, hipY, d * u * (0.16 + 0.12 * sq), (hipY + fy) / 2, fx, fy - u * 0.04, AV.furDk, u * 0.115, ol);
     ctx.lineWidth = ol; ctx.strokeStyle = C.ink;
     if (lift > 0.3) {                     // sola aparecendo no chute para trás
       ctx.fillStyle = '#eef1f7'; rr(fx - u * 0.08, fy - u * 0.15, u * 0.16, u * 0.2, u * 0.03); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = C.red; for (let i = -1; i <= 1; i++) ctx.fillRect(fx - u * 0.05, fy - u * 0.055 + i * u * 0.04, u * 0.1, u * 0.014);
+      ctx.fillStyle = SK.stripe; for (let i = -1; i <= 1; i++) ctx.fillRect(fx - u * 0.05, fy - u * 0.055 + i * u * 0.04, u * 0.1, u * 0.014);
     } else {
       ctx.fillStyle = '#fff'; rr(fx - u * 0.09, fy - u * 0.09, u * 0.18, u * 0.1, u * 0.02); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = C.red; ctx.fillRect(fx - u * 0.085, fy - u * 0.045, u * 0.17, u * 0.022);
+      ctx.fillStyle = SK.stripe; ctx.fillRect(fx - u * 0.085, fy - u * 0.045, u * 0.17, u * 0.022);
     }
   }
-  const fg = ctx.createLinearGradient(-bw / 2, 0, bw / 2, 0); fg.addColorStop(0, '#c4905a'); fg.addColorStop(1, '#9c6a38');
+  const fg = ctx.createLinearGradient(-bw / 2, 0, bw / 2, 0); fg.addColorStop(0, AV.furLt); fg.addColorStop(1, AV.furDk);
   ctx.lineWidth = ol; ctx.strokeStyle = C.ink;
   ctx.fillStyle = fg; rr(-bw * 0.5, hipY - bodyH * 1.06, bw, bodyH * 1.14, u * 0.035); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = G.stun > 0 ? '#ff8a7a' : C.teal;                                  // camiseta
+  ctx.fillStyle = G.stun > 0 ? '#ff8a7a' : SK.shirt;                                  // camiseta
   rr(-bw * 0.5, hipY - bodyH * 0.97, bw, bodyH * 0.8, u * 0.03); ctx.fill(); ctx.stroke();
   ctx.fillStyle = 'rgba(255,255,255,.18)'; ctx.fillRect(-bw * 0.5 + ol, hipY - bodyH * 0.97 + ol, bw * 0.3, bodyH * 0.8 - 2 * ol);
-  ctx.fillStyle = '#fff'; ctx.font = `700 ${bodyH * 0.5}px ${FONT}`; ctx.textAlign = 'center'; ctx.fillText('1', 0, hipY - bodyH * 0.4);
+  ctx.fillStyle = SK.num; ctx.font = `700 ${bodyH * 0.5}px ${FONT}`; ctx.textAlign = 'center'; ctx.fillText('1', 0, hipY - bodyH * 0.4);
+  if (SK.stars) { ctx.fillStyle = '#fff'; for (const [dx, dy] of [[-0.36, 0.85], [0.3, 0.8], [-0.3, 0.35], [0.36, 0.45], [0.05, 0.9]]) ctx.fillRect(dx * bw, hipY - bodyH * dy, u * 0.022, u * 0.022); }
+  if (AV.tail) {                          // rabo comprido balançando
+    const tw = Math.sin(clock * 5) * u * 0.07;
+    limb(0, hipY - bodyH * 0.1, u * 0.2 + tw, hipY + u * 0.05, u * 0.3 + tw * 1.6, hipY - bodyH * 0.55, AV.fur, u * 0.05, ol);
+    ctx.fillStyle = '#5c3a10'; ctx.beginPath(); ctx.arc(u * 0.3 + tw * 1.6, hipY - bodyH * 0.55, u * 0.032, 0, 7); ctx.fill();
+  }
+  if (AV.robot) { ctx.fillStyle = AV.furDk; for (let i = 0; i < 3; i++) ctx.fillRect(-bw * 0.3, hipY - bodyH * 0.1 + i * u * 0.022, bw * 0.6, u * 0.01); }
   for (const d of [-1, 1]) {              // braços com luvas
     const ax = d * bw * 0.46, ay = hipY - bodyH * 0.82;
     let hx = d * (bw * 0.5 + u * 0.1), hy2 = hipY - bodyH * 0.32 - d * Math.sin(ph) * u * 0.16 * run, gr = u * 0.075;
@@ -836,26 +944,42 @@ function drawPlayer() {                   // Capi, a capivara corredora (vista d
       const k = Math.sin(Math.min(1, G.punchT / 0.14) * Math.PI / 2) * (G.punchT > 0.3 ? 1 - (G.punchT - 0.3) / 0.15 * 0.6 : 1);
       hx = bw * 0.5 - u * 0.12 * k + u * 0.1 * (1 - k); hy2 = ay - u * 0.5 * k + bodyH * 0.5 * (1 - k); gr = u * (0.075 + 0.09 * k);
     }
-    limb(ax, ay, ax + d * u * 0.14, (ay + hy2) / 2 + u * 0.03, hx, hy2, C.fur, u * 0.095, ol);
-    ctx.lineWidth = ol; ctx.strokeStyle = C.ink; ctx.fillStyle = C.red; rr(hx - gr, hy2 - gr, gr * 2, gr * 2, gr * 0.3); ctx.fill(); ctx.stroke();
+    limb(ax, ay, ax + d * u * 0.14, (ay + hy2) / 2 + u * 0.03, hx, hy2, AV.fur, u * 0.095, ol);
+    ctx.lineWidth = ol; ctx.strokeStyle = C.ink; ctx.fillStyle = SK.glove; rr(hx - gr, hy2 - gr, gr * 2, gr * 2, gr * 0.3); ctx.fill(); ctx.stroke();
     ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.fillRect(hx - gr * 0.65, hy2 - gr * 0.65, gr * 0.5, gr * 0.5);
   }
   const hx0 = G.tilt * u * 0.35, hy = hipY - bodyH - u * 0.1, hrx = u * 0.2, hry = u * 0.165;   // cabeça
   ctx.lineWidth = ol; ctx.strokeStyle = C.ink;
-  for (const d of [-1, 1]) {
-    const ew = Math.sin(clock * 9 + d) * run * 0.15;
-    ctx.fillStyle = C.furDark; rr(hx0 + d * hrx * 0.72 - u * 0.055, hy - hry * 1.28 - ew * u * 0.1, u * 0.11, u * 0.12, u * 0.015); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = '#e9a98a'; ctx.fillRect(hx0 + d * hrx * 0.72 - u * 0.025, hy - hry * 1.18 - ew * u * 0.1, u * 0.05, u * 0.05);
+  if (AV.ear !== 'none') for (const d of [-1, 1]) {
+    const ew = Math.sin(clock * 9 + d) * run * 0.15, ex = hx0 + d * hrx * 0.72, ey = hy - hry * 1.05 - ew * u * 0.1;
+    if (AV.ear === 'round') {
+      ctx.fillStyle = AV.furDk; ctx.beginPath(); ctx.arc(ex, ey, u * 0.075, 0, 7); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = AV.inner; ctx.beginPath(); ctx.arc(ex, ey, u * 0.035, 0, 7); ctx.fill();
+    } else {
+      ctx.fillStyle = AV.furDk; rr(ex - u * 0.055, ey - u * 0.04, u * 0.11, u * 0.12, u * 0.015); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = AV.inner; ctx.fillRect(ex - u * 0.025, ey - u * 0.02, u * 0.05, u * 0.05);
+    }
   }
-  const hg = ctx.createLinearGradient(hx0 - hrx, 0, hx0 + hrx, 0); hg.addColorStop(0, '#c4905a'); hg.addColorStop(1, '#a06e3c');
+  if (AV.antenna) {                       // antena com luz piscando
+    const sw2 = Math.sin(clock * 7) * u * 0.02 * (0.3 + run), tx = hx0 + sw2 * 2, ty = hy - hry - u * 0.2;
+    limb(hx0, hy - hry, hx0 + sw2, hy - hry - u * 0.1, tx, ty, AV.furDk, u * 0.03, ol * 0.7);
+    ctx.fillStyle = Math.floor(clock * 3) % 2 ? '#ff3b3b' : '#ffd23f'; ctx.strokeStyle = C.ink; ctx.lineWidth = ol;
+    ctx.beginPath(); ctx.arc(tx, ty, u * 0.04, 0, 7); ctx.fill(); ctx.stroke();
+  }
+  const hg = ctx.createLinearGradient(hx0 - hrx, 0, hx0 + hrx, 0); hg.addColorStop(0, AV.furLt); hg.addColorStop(1, AV.fur);
   ctx.fillStyle = hg; rr(hx0 - hrx, hy - hry, hrx * 2, hry * 2, u * 0.04); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = C.yellow; rr(hx0 - hrx * 0.99, hy - hry * 0.42, hrx * 1.98, hry * 0.38, hry * 0.15); ctx.fill(); ctx.stroke();   // faixa
+  if (AV.spots) { ctx.fillStyle = '#5c3a10'; const sp = u * 0.035; for (const [dx, dy] of [[-0.6, 0.45], [0.05, 0.6], [0.6, 0.3], [-0.25, -0.72], [0.4, -0.68], [-0.15, 0.2]]) ctx.fillRect(hx0 + dx * hrx - sp / 2, hy + dy * hry - sp / 2, sp, sp); }
+  if (AV.robot) {
+    ctx.fillStyle = AV.furDk; for (const d of [-1, 1]) for (const dy of [-0.75, 0.6]) ctx.fillRect(hx0 + d * hrx * 0.78 - u * 0.012, hy + dy * hry, u * 0.025, u * 0.025);
+    ctx.fillStyle = 'rgba(255,255,255,.4)'; ctx.fillRect(hx0 - hrx * 0.85, hy + hry * 0.2, hrx * 0.5, hry * 0.18);
+  }
+  ctx.fillStyle = SK.band; rr(hx0 - hrx * 0.99, hy - hry * 0.42, hrx * 1.98, hry * 0.38, hry * 0.15); ctx.fill(); ctx.stroke();   // faixa
   const flap = 0.3 + Math.min(1, G.speed / 8);
   for (const k of [0, 1]) {
     const fl = Math.sin(clock * 13 + k * 1.6) * u * 0.045 * flap;
-    limb(hx0 + hrx * 0.92, hy - hry * 0.22, hx0 + hrx * 1.3, hy - hry * 0.2 + fl, hx0 + hrx * (1.5 + 0.25 * flap), hy + k * u * 0.08 + fl * 1.6, C.yellow, u * 0.04, ol * 0.7);
+    limb(hx0 + hrx * 0.92, hy - hry * 0.22, hx0 + hrx * 1.3, hy - hry * 0.2 + fl, hx0 + hrx * (1.5 + 0.25 * flap), hy + k * u * 0.08 + fl * 1.6, SK.band, u * 0.04, ol * 0.7);
   }
-  ctx.fillStyle = C.yellow; ctx.strokeStyle = C.ink; ctx.lineWidth = ol; ctx.beginPath(); ctx.arc(hx0 + hrx * 0.95, hy - hry * 0.22, u * 0.035, 0, 7); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = SK.band; ctx.strokeStyle = C.ink; ctx.lineWidth = ol; ctx.beginPath(); ctx.arc(hx0 + hrx * 0.95, hy - hry * 0.22, u * 0.035, 0, 7); ctx.fill(); ctx.stroke();
   if (G.stun > 0) {
     ctx.fillStyle = C.yellow; ctx.font = `700 ${u * 0.17}px ${FONT}`; ctx.textAlign = 'center';
     for (let i = 0; i < 3; i++) { const a = clock * 6 + i * 2.1; ctx.fillText('★', hx0 + Math.cos(a) * hrx * 1.15, hy - hry * 1.25 + Math.sin(a) * u * 0.05); }
@@ -956,7 +1080,8 @@ function pill(x, y, w, h, text, bg = '#0d1440', fg = '#fff', bd = '#c6f432') {
   ctx.fillText(text, x + w / 2, y + h * 0.53); ctx.textBaseline = 'alphabetic';
 }
 function drawHUD() {
-  const m = H * 0.03, bh0 = H * 0.06, bx0 = m, bw0 = W - 2 * m, prog = 1 - G.t / GAME_TIME;
+  const si = OX ? 0 : Math.max(SAFE.l, SAFE.r), sb = OY ? 0 : SAFE.b;   // respeita o recorte da tela
+  const m = H * 0.03, bh0 = H * 0.06, bx0 = m + si, bw0 = W - 2 * m - 2 * si, prog = 1 - G.t / GAME_TIME;
   const b = pxPanel(bx0, m, bw0, bh0, '#0d1440', '#fff'), segs = 36, sgw = (bw0 - 2 * b) / segs;   // barra de progresso em blocos
   for (let i = 0; i < segs; i++) {
     const on = (i + 0.5) / segs <= prog;
@@ -965,18 +1090,18 @@ function drawHUD() {
   }
   ctx.font = `700 ${bh0 * 0.85}px ${FONT}`; ctx.textAlign = 'center'; ctx.fillStyle = '#fff'; ctx.fillText('🏁', bx0 + bw0 - bh0 * 0.8, m + bh0 * 0.8);
   const hs = bh0 * 1.5, hx = bx0 + b + (bw0 - 2 * b) * prog, hy = m + bh0 / 2;                    // Capi na barra
-  pxPanel(hx - hs / 2, hy - hs / 2, hs, hs, C.fur, '#fff');
-  ctx.fillStyle = C.yellow; ctx.fillRect(hx - hs / 2 + b, hy - hs * 0.22, hs - 2 * b, hs * 0.2);
+  pxPanel(hx - hs / 2, hy - hs / 2, hs, hs, AV.fur, '#fff');
+  ctx.fillStyle = SK.band; ctx.fillRect(hx - hs / 2 + b, hy - hs * 0.22, hs - 2 * b, hs * 0.2);
   const ph = Math.max(26, H * 0.085), py0 = m + bh0 + m * 1.4, low = G.t <= 10 && state === 'play';
-  pill(m, py0, ph * 4.6, ph, `⏱ ${Math.ceil(G.t)}s · ${Math.floor(G.dist)} m`, low && Math.floor(clock * 4) % 2 ? '#e2362f' : undefined);
-  ctx.save(); ctx.translate(W - m - ph * 1.8, py0 + ph / 2); ctx.scale(1 + 0.22 * G.coinPop, 1 + 0.22 * G.coinPop);
+  pill(m + si, py0, ph * 4.6, ph, `⏱ ${Math.ceil(G.t)}s · ${Math.floor(G.dist)} m`, low && Math.floor(clock * 4) % 2 ? '#e2362f' : undefined);
+  ctx.save(); ctx.translate(W - m - si - ph * 1.8, py0 + ph / 2); ctx.scale(1 + 0.22 * G.coinPop, 1 + 0.22 * G.coinPop);
   pill(-ph * 1.8, -ph / 2, ph * 3.6, ph, `🪙 ${G.coins}  👊 ${G.walls}`, '#c6f432', '#0d1440', '#0d1440'); ctx.restore();
-  const n = 14, bw = Math.min(W * 0.4, 400), bh = Math.max(12, H * 0.04), bx = (W - bw) / 2, by = H - bh - m, k = Math.min(1, G.speed / MAX_SPEED);
+  const n = 14, bw = Math.min(W * 0.4, 400), bh = Math.max(12, H * 0.04), bx = (W - bw) / 2, by = H - bh - m - sb, k = Math.min(1, G.speed / MAX_SPEED);
   const bb = pxPanel(bx, by, bw, bh, '#0d1440', '#fff'), cw = (bw - 2 * bb) / n;                  // velocidade em blocos
   for (let i = 0; i < n; i++) if ((i + 0.5) / n <= k) { ctx.fillStyle = i < n * 0.5 ? '#c6f432' : i < n * 0.8 ? C.yellow : '#ff3b3b'; ctx.fillRect(bx + bb + i * cw + 1, by + bb + 1, cw - 2, bh - 2 * bb - 2); }
   ctx.font = `700 ${bh * 1.3}px ${FONT}`; ctx.textAlign = 'right'; ctx.fillStyle = '#fff'; ctx.fillText('⚡', bx - 8, by + bh * 0.95);
   if (mode === 'camera') {
-    const pv = H * 0.3, pw = pv * 4 / 3, px = W - pw - m, py = H - pv - m;
+    const pv = H * 0.3, pw = pv * 4 / 3, px = W - pw - m - si, py = H - pv - m - sb;
     const act = G.stun > 0 ? ['#ff6b5e', 'OPS!'] : G.punchT >= 0 ? [C.yellow, 'SOCO'] : G.jumpT >= 0 ? ['#c6f432', 'PULO'] : ctl.squat ? ['#ff9be8', 'AGACHADO']
       : ctl.lane < 0 ? ['#4fd8ff', '◀ ESQUERDA'] : ctl.lane > 0 ? ['#4fd8ff', 'DIREITA ▶'] : ['#4fd8ff', G.speed > 1.2 ? 'CORRENDO' : 'PARADO'];
     pxPanel(px - 4, py - 4, pw + 8, pv + 8, '#0d1440', '#c6f432');
@@ -1040,7 +1165,7 @@ function draw() {
   const vg = ctx.createRadialGradient(W / 2, H * 0.55, H * 0.45, W / 2, H * 0.55, W * 0.62);
   vg.addColorStop(0, 'rgba(10,12,30,0)'); vg.addColorStop(1, 'rgba(10,12,30,.38)');
   ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
-  if (!inGame) return;
+  if (!inGame || state === 'custom') return;
   drawHUD();
   if (state === 'over') drawConfetti();
   if (G.flash > 0) { ctx.fillStyle = `rgba(255,60,40,${G.flash})`; ctx.fillRect(0, 0, W, H); }
@@ -1058,7 +1183,7 @@ function frame(now) {
   if (mode === 'camera' && state !== 'menu' && state !== 'loading') readPose(now);
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
-  const playing = state !== 'menu' && state !== 'over';
+  const playing = state !== 'menu' && state !== 'over' && state !== 'custom';
   if (portrait && playing) {              // pausa e pede para deitar o celular
     ctx.font = '800 22px system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = '#ffd23f';
     ctx.fillText('📱 Gire o celular', VW / 2, VH / 2 - 14);
