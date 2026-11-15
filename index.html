@@ -18,6 +18,7 @@
   :root { --navy: #0d1440; --blue: #2f6bff; --lime: #c6f432; --pink: #ff4fd8; --cyan: #4fd8ff; }
   html, body { margin: 0; height: 100%; background: #000; overflow: hidden; touch-action: none;
     font-family: "Press Start 2P", ui-monospace, monospace; color: #fff; -webkit-user-select: none; user-select: none; }
+  #app { position: fixed; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; } body.rot #app { transform-origin: 0 0; }   /* celular em pé: o jogo inteiro é girado e fica sempre na horizontal */
   #c { position: fixed; inset: 0; width: 100%; height: 100%; display: block; image-rendering: pixelated; }
   video { position: absolute; left: 0; top: 0; width: 2px; height: 2px; opacity: 0.01; pointer-events: none; }
   .screen { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center;
@@ -298,6 +299,7 @@
 </style>
 </head>
 <body>
+<div id="app">
 <canvas id="c"></canvas>
 <video id="v" playsinline muted autoplay></video>
 
@@ -476,9 +478,30 @@ document.body.appendChild(probe);
 const LO = document.createElement('canvas'), lctx = LO.getContext('2d');   // quadro do mundo (na placa de vídeo)   // quadro em baixa resolução
 const LO2 = document.createElement('canvas'), l2 = LO2.getContext('2d', { willReadFrequently: true });
 let PXS = 2, LW = 2, LH = 2, QL = 1080, qT = 0, qN = 0;   // QL: linhas do mundo; cai sozinho se o aparelho não aguentar
+const ROT = { on: false };                // celular na vertical: gira o jogo todo e ele já abre na horizontal
+const wantRot = () => innerHeight > innerWidth && matchMedia('(pointer: coarse)').matches;
+function swapCSS() {                       // troca vw<->vh e retrato<->paisagem no CSS (a tela "vira" de lado)
+  const sw = t => t.replace(/(\d)(vw|vh)\b/g, (m, d, u) => d + (u === 'vw' ? 'vh' : 'vw'));
+  const MQ = { portrait: 'landscape', landscape: 'portrait', 'max-height': 'max-width', 'max-width': 'max-height', 'min-height': 'min-width', 'min-width': 'min-height' };
+  const swm = t => t.replace(/portrait|landscape|max-height|max-width|min-height|min-width/g, w => MQ[w]);
+  const walk = rules => { for (const r of rules) {
+    if (r.media && r.cssRules) { try { r.media.mediaText = swm(r.media.mediaText); } catch (e) {} walk(r.cssRules); }
+    else if (r.style) for (let i = 0; i < r.style.length; i++) { const p = r.style[i], v = r.style.getPropertyValue(p); if (/\dv[wh]\b/.test(v)) r.style.setProperty(p, sw(v), r.style.getPropertyPriority(p)); }
+  } };
+  for (const ss of document.styleSheets) { try { walk(ss.cssRules); } catch (e) {} }
+  document.querySelectorAll('[style]').forEach(el => { const st = el.getAttribute('style'); if (/\dv[wh]\b/.test(st)) el.setAttribute('style', sw(st)); });
+}
+function applyRot() {
+  const on = wantRot(), a = $('app');
+  if (on !== ROT.on) { ROT.on = on; swapCSS(); document.body.classList.toggle('rot', on); }
+  if (on) { a.style.width = innerHeight + 'px'; a.style.height = innerWidth + 'px'; a.style.transform = `translateX(${innerWidth}px) rotate(90deg)`; }
+  else { a.style.width = a.style.height = a.style.transform = ''; }
+}
+const ptr = e => ROT.on ? { x: e.clientY, y: innerWidth - e.clientX } : { x: e.clientX, y: e.clientY };   // toque na tela -> ponto no jogo (girado ou não)
 function resize() {                       // na horizontal o palco ocupa a tela inteira
   DPR = Math.min(window.devicePixelRatio || 1, 3);
-  VW = window.innerWidth; VH = window.innerHeight; portrait = VH > VW;
+  applyRot();
+  VW = ROT.on ? innerHeight : innerWidth; VH = ROT.on ? innerWidth : innerHeight; portrait = VH > VW;
   if (VW / VH > 16 / 9) { H = VH; W = VW; } else { W = VW; H = W * 9 / 16; }
   PXS = Math.max(1, Math.round(H * DPR / QL)) / DPR; LW = Math.ceil(W / PXS); LH = Math.ceil(H / PXS); LO.width = LO2.width = LW; LO.height = LO2.height = LH;   // mundo em resolução cheia (até 1080 linhas): longe continua nítido
   const cs = getComputedStyle(probe);
@@ -596,7 +619,7 @@ const SFX = {
     }
   };
   const drawTitle = () => {               // uma linha na horizontal, duas na vertical
-    const wide = window.innerWidth > window.innerHeight, cols = wide ? 62 : 31, rows = wide ? 10 : 19;
+    const wide = ROT.on || window.innerWidth > window.innerHeight, cols = wide ? 62 : 31, rows = wide ? 10 : 19;
     c.width = cols * px; c.height = rows * px;
     for (const [dx, col] of [[4, 'rgba(255,59,59,.45)'], [-4, 'rgba(47,107,255,.45)'], [0, '#0d1440']]) {
       if (wide) line('PUNCH RUN', cols, 2, dx, col); else { line('PUNCH', cols, 2, dx, col); line('RUN', cols, 11, dx, col); }
@@ -1239,16 +1262,16 @@ function touchAct(a) {
 let ts = null;
 const inBtn = (b, qx, qy, p) => qx > b.x - p && qx < b.x + b.w + p && qy > b.y - p * 0.4 && qy < b.y + b.h + p * 0.4;
 cv.addEventListener('pointerdown', e => {
-  const qx = e.clientX - OX, qy = e.clientY - OY;
+  const P = ptr(e), qx = P.x - OX, qy = P.y - OY;
   const ab = state === 'play' && atkBtns.find(b => inBtn(b, qx, qy, b.w * 0.35));   // troca de arma na hora do toque, com área de toque maior
   if (ab) { setAtk(ab.a); ts = null; return; }
-  ts = { x: e.clientX, y: e.clientY };
+  ts = { x: P.x, y: P.y };
 });
 cv.addEventListener('pointerup', e => {
   if (!ts) return;
-  const dx = e.clientX - ts.x, dy = e.clientY - ts.y; ts = null;
+  const P = ptr(e), dx = P.x - ts.x, dy = P.y - ts.y; ts = null;
   if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) {
-    const qx = e.clientX - OX, qy = e.clientY - OY;
+    const qx = P.x - OX, qy = P.y - OY;
     const ab = state === 'play' && atkBtns.find(b => qx > b.x && qx < b.x + b.w && qy > b.y && qy < b.y + b.h);
     if (ab) { setAtk(ab.a); return; }
     if (powBtn && state === 'play' && qx > powBtn.x && qx < powBtn.x + powBtn.w && qy > powBtn.y && qy < powBtn.y + powBtn.h) doPower(); else touchAct('punch');
@@ -3995,5 +4018,6 @@ window.__game = { get state() { return state; }, get QL() { return [QL, LW, LH];
   fake() { mode = 'camera'; startCalib(); }, feed(lm, wl) { processPose(lm, wl, performance.now()); } };
 })();
 </script>
+</div>
 </body>
 </html>
