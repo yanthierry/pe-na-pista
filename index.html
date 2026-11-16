@@ -284,6 +284,21 @@
   #menu .mHero .who { min-width: 0; margin: 0; box-shadow: none; display: flex; align-items: center; gap: 10px; cursor: pointer; text-transform: uppercase; }
   .mHero .who svg { width: 18px; height: 18px; }
   #nameDlg, #resetDlg, #pickDlg, #duoDlg { z-index: 7; } #duoDlg { background: rgba(7,10,42,.8); }
+  #duoCfg { display: flex; flex-direction: column; gap: 12px; text-align: left; }
+  #duoCfg { width: 100%; align-self: stretch; box-sizing: border-box; min-width: 0; } #duoCfg * { box-sizing: border-box; } .dcModes > *, .dcMaps > * { min-width: 0; } .dcR img { flex: none; display: block; }
+  .dcModes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; } .dcMode { margin: 0 !important; padding: 12px 8px !important; border-radius: 16px !important; background: #16245e !important; border: 3px solid #2d3f8c !important; box-shadow: none !important; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #fff !important; transition: transform .12s; }
+  .dcMode img { width: 40px; height: 40px; image-rendering: pixelated; } .dcMode b { font: 400 15px Bungee, sans-serif; } .dcMode small { font: 700 11px Rubik, sans-serif; color: #8fa0e8; text-transform: none; letter-spacing: 0; }
+  .dcMode.on { border-color: #c6f432 !important; background: #1c2e78 !important; transform: scale(1.03); } .dcMode.on b { color: #c6f432; }
+  .dcMaps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; } .dcMap { margin: 0 !important; height: 58px; border-radius: 12px !important; border: 3px solid transparent !important; box-shadow: none !important; padding: 0 !important; display: flex; align-items: flex-end; justify-content: center; opacity: .6; }
+  .dcMap b { font: 900 11px Rubik, sans-serif; color: #fff; text-shadow: 0 1px 3px #000; margin-bottom: 4px; } .dcMap.on { border-color: #c6f432 !important; opacity: 1; }
+  .dcList { display: flex; flex-direction: column; background: #0c1640; border-radius: 16px; padding: 4px 12px; }
+  .dcR { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid #1c2a6a; } .dcR:last-child { border-bottom: 0; } .dcR img { width: 22px; height: 22px; image-rendering: pixelated; } .dcR span { flex: 1; color: #fff; font: 800 14px Rubik, sans-serif; }
+  .dcSeg { display: flex; background: #16245e; border-radius: 12px; padding: 3px; gap: 2px; } .dcSeg button { margin: 0 !important; min-width: 0; padding: 6px 10px !important; border-radius: 9px !important; background: transparent !important; box-shadow: none !important; color: #8fa0e8 !important; font: 900 12px Rubik, sans-serif !important; } .dcSeg button.on { background: #c6f432 !important; color: #0a1235 !important; }
+  .dcSw { margin: 0 !important; width: 46px; min-width: 0; height: 26px; padding: 0 !important; border-radius: 13px !important; background: #2d3f8c !important; box-shadow: none !important; position: relative; } .dcSw i { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #8fa0e8; transition: left .15s; } .dcSw.on { background: #c6f432 !important; } .dcSw.on i { left: 23px; background: #0a1235; }
+  #duoCfg { display: flex; flex-direction: column; gap: 12px; text-align: left; } .dcRow { display: flex; flex-direction: column; gap: 4px; } .dcRow small { color: #8fa0e8; font: 900 11px Rubik, sans-serif; letter-spacing: 1px; text-transform: uppercase; }
+  .dcOps { display: flex; gap: 6px; } .dcOps button { flex: 1; min-width: 0; padding: 8px 4px !important; font-size: 13px !important; margin: 0 !important; } .dcOps button.on { background: #c6f432 !important; color: #0a1235 !important; }
+  #duoDlg .pkBox { max-height: 92vh; overflow-y: auto; }
+  #duoModeRow button.on, #duoPkRow button.on { background: #c6f432 !important; color: #0a1235 !important; } #duoPkRow button, #duoModeRow button { flex: 1; }
   .duoTxt { margin: 0; font-size: 15px; line-height: 1.4; color: #cfd8ff; text-align: center; } .duoCol { display: flex; flex-direction: column; gap: 10px; } .duoCol.hidden { display: none; }
   .duoRow { display: grid; grid-template-columns: 1fr auto; gap: 8px; } #duoCode { font-family: Bungee, sans-serif; font-size: 22px; text-align: center; letter-spacing: 6px; padding: 10px; border-radius: 12px; border: 3px solid #2d3f8c; background: #16245e; color: #fff; text-transform: uppercase; min-width: 0; }
   .duoBig { font-family: Bungee, sans-serif; font-size: 48px; letter-spacing: 10px; color: var(--lime); text-align: center; }
@@ -469,10 +484,24 @@
   .embers.gold ~ .pic { background: radial-gradient(ellipse at 50% 55%, #b8860b 0%, #6b4a08 38%, #2a1a03 72%, #0a0600 100%) !important; filter: none !important; box-shadow: inset 0 0 0 2px #ffd23f88 !important; }
   .embers.gold i { background: #fff3a0; box-shadow: 0 0 8px #ffd23f; width: 4px; height: 4px; border-radius: 50%; animation: spark 2.4s ease-in infinite; }
   .it.lock .embers.gold ~ .pic { filter: grayscale(.4) brightness(.55) !important; }
+  #duoEmo { position: fixed; left: 18px; top: 146px; z-index: 40; display: flex; flex-direction: column; gap: 8px; }
+  #duoEmo button { width: 54px; height: 54px; min-width: 0; padding: 4px; margin: 0; border-radius: 16px; background: rgba(10,18,53,.62); border: 2px solid rgba(255,255,255,.25); box-shadow: none; transition: transform .12s; }
+  #duoEmo button:active { transform: scale(.85); } #duoEmo button img { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; }
+  #duoEmo button.pop { animation: emoPop .35s ease-out; } @keyframes emoPop { 0% { transform: scale(1); } 40% { transform: scale(1.3) rotate(-8deg); } 100% { transform: scale(1); } }
+  #skPrev { position: sticky; top: 0; z-index: 4; box-shadow: 0 8px 18px rgba(5,8,30,.6); grid-column: 1 / -1; display: flex; gap: 22px; align-items: center; padding: 16px 20px; background: radial-gradient(circle at 25% 50%, #2a3a9a, #0f1d4f 70%); border: 3px solid #c6f432; border-radius: 20px; }
+  #skPrev.leg { background: radial-gradient(circle at 25% 50%, #6b4a08, #1a1206 75%); border-color: #ffd23f; }
+  .spStage { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 190px; }
+  #spImg { height: 220px; image-rendering: pixelated; filter: drop-shadow(0 10px 0 rgba(0,0,0,.35)); } #spImg.spIn { animation: spIn .35s ease-out; } @keyframes spIn { 0% { transform: scale(.92); opacity: .4; } 100% { transform: scale(1); opacity: 1; } }
+  .spDots { display: flex; gap: 6px; } .spDots button { min-width: 0; padding: 4px 10px !important; font: 900 11px Rubik, sans-serif !important; border-radius: 10px; background: #16245e; color: #cfd8ff; box-shadow: none; margin: 0; }
+  .spInfo { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; text-align: left; color: #fff; font-family: Rubik, sans-serif; } .spInfo small { color: #cfd8ff; font-weight: 700; } .spInfo b { font: 400 30px Bungee, sans-serif; line-height: 1.05; }
+  .spAb { color: #c6f432; font-weight: 900; display: flex; align-items: center; gap: 6px; } .spAb.off { color: #8fa0e8; } .spAb img { width: 18px; height: 18px; }
+  .spBuy { margin: 4px 0 0 !important; padding: 12px 22px !important; font: 900 16px Rubik, sans-serif !important; display: flex; align-items: center; gap: 6px; } .spBuy.no { background: #1c2a6a !important; color: #8fa0e8 !important; box-shadow: none !important; } .spBuy .ic { width: 18px; height: 18px; }
+  .it.card.sel { border-color: #c6f432 !important; box-shadow: 0 0 0 3px #c6f43266, 0 6px 0 rgba(7,10,42,.55); }
+  @media (max-width: 700px), (max-height: 520px) { #skPrev { gap: 12px; padding: 10px; } #spImg { height: 150px; } .spStage { min-width: 120px; } .spInfo b { font-size: 20px; } }
 </style>
 </head>
 <body>
-<div id="verTag" style="position:fixed;left:8px;bottom:6px;font:11px monospace;color:rgba(255,255,255,.55);z-index:50;pointer-events:none">versão 16/11 01h35</div>
+<div id="verTag" style="position:fixed;left:8px;bottom:6px;font:11px monospace;color:rgba(255,255,255,.55);z-index:50;pointer-events:none">versão 16/11 02h35</div>
 <div id="app">
 <canvas id="c"></canvas>
 <video id="v" playsinline muted autoplay></video>
@@ -588,12 +617,13 @@
   <div id="t3Ed" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px 14px;width:min(92vw,720px);max-height:28vh;overflow:auto;color:#cfd8ff;font:700 12px Rubik,sans-serif"></div>
   <div style="display:flex;gap:8px"><button class="cfgBtn" id="t3Reset" style="width:auto;padding:8px 16px">Voltar ao padrão</button><button class="cfgBtn" id="t3Copy" style="width:auto;padding:8px 16px">Copiar medidas</button></div>
 </div>
+<div id="duoEmo" style="display:none"><button data-e="h" aria-label="Feliz"><img alt=""></button><button data-e="a" aria-label="Bravo"><img alt=""></button><button data-e="n" aria-label="Neutro"><img alt=""></button></div>
 <div id="pauseDlg" class="screen hidden"><div class="pkBox" style="width:min(420px,92vw);align-items:stretch;gap:12px"><h2>Pausado</h2><button id="pauseGo">Continuar</button><button id="pauseMenu" class="alt">Sair para o menu</button></div></div>
 <div id="ytBox"><div id="ytPl"></div></div>
 <div id="duoDlg" class="screen hidden">
   <div class="pkBox" style="width:min(480px,94vw);align-items:stretch">
     <h2>2 Jogadores</h2>
-    <p class="duoTxt">Corrida em dupla pela internet: os dois correm a <b>mesma pista</b> ao mesmo tempo e um vê o outro. Ganha quem for mais longe.</p>
+    <p class="duoTxt">Desafie um amigo na <b>mesma pista</b>. Vencer dá moedas e cristais.</p>
     <div id="duoHome" class="duoCol">
       <button id="duoHost">Criar sala</button>
       <div class="duoRow"><input id="duoCode" maxlength="4" placeholder="CÓDIGO" autocomplete="off"><button id="duoJoin" class="alt">Entrar</button></div>
@@ -601,6 +631,7 @@
     <div id="duoWait" class="duoCol hidden">
       <p class="duoTxt">Código da sala</p><div class="duoBig" id="duoShow">----</div>
       <p class="duoTxt" id="duoState">Esperando o outro jogador entrar…</p>
+      <div id="duoCfg" class="hidden"></div>
       <button id="duoGo" class="hidden">Começar corrida</button>
     </div>
     <p class="duoTxt" id="duoErr" style="color:#ff6b5e"></p>
@@ -881,6 +912,10 @@ function emoScale(e) { const t = clock - e.t0; if (t > 1.6) return 0; if (t < 0.
 function newGame() {
   if (!skinOk(skI)) { skI = (+localStorage.getItem('pnp_sk') || 0) % SKINS.length; if (!skinOk(skI)) skI = 1; SK = SKINS[skI]; $('skName').textContent = SK.name; }   // skin bloqueada: volta para a última liberada
   const ST = STAGES[stI];
+  if (DUO.on) { const c = DUO.cfg || {}, rc = c.mode === 'race', wd = c.map >= 0 ? c.map : Math.abs(DUO.seed || 0) % 3, lv = c.lives || 3, ds = c.dist || 1500;   // multiplayer: tudo vem da configuração da sala
+    return Object.assign(baseGame(), rc ? { race: true, t: Math.round(ds / 7.5), T: Math.round(ds / 7.5), goal: ds, diff: 2 } : { endless: true, t: 0, T: 0, goal: INF_SEG, diff: 0 },
+      { duo: true, pk: !!c.pk, lives: lv, world: wd, duoWorld: wd, noMob: !c.mobs, fbOn: !!c.fb, luckK: c.luck ?? 1, bots: [], place: 0, rOrd: null, emo: null }); }
+
   if (race) return Object.assign(baseGame(), { race: true, t: 200, T: 200, goal: 1500, diff: 2, lives: maxLives(), world: 1,
     bots: botSkins().map((sk, i) => ({ n: sk.name, o: sk.hero || (sk.name === 'Casual' ? 'c' : 'g'), d: 0, l: i ? 1 : -1, j: 0, k: i ? 0.97 : 1.0, lt: 2 + i })), place: 0, rOrd: null, emo: null });   // modo corrida: você e 2 bots
   if (inf) return Object.assign(baseGame(), { endless: true, lives: maxLives(), t: 0, T: 0, goal: INF_SEG, diff: 0 });   // modo infinito: sem tempo, 3 vidas
@@ -1458,6 +1493,20 @@ function drawPreview() {                    // vitrine: luva, espada e poder equ
   $('shopStat').innerHTML = `MÃOS <b>${bare() ? 'Nuas' : 'Boxe ' + GL.name}</b><br>MAGIA <b>${SHOP.magic.find(m => m.mg === mgType()).n}</b><br>ESPADA <b>${SW ? SW.n : '—'}</b><br>PODER <b>${PW ? PW.n : '—'}</b>`;
 }
 const TABICON = () => ({ magic: ITEM_SRC.mg_arc, sword: swordIcon(SHOP.sword[3]).toDataURL(), power: PICON.bolt.toDataURL(), skill: PICON.star.toDataURL(), tech: swordIcon(SHOP.sword[1]).toDataURL(), glove: ITEM_SRC.gl0, skin: HERO_SRC.w1[0] });
+let skinSel = null, skinFr = 0;
+const SK_AB = { dbl: 'Pulo duplo', high: 'Pulo alto', punch: 'Soco forte', magic: 'Poder de magia' };
+function skinPrevHTML() {   /* loja de skins: vitrine grande da skin selecionada */
+  const L = SHOP.skin; if (!skinSel || !L.find(q => q.id === skinSel)) { const f = $('shopList').querySelector('[data-id]'); skinSel = f ? f.dataset.id : L[0].id; }
+  const it = L.find(q => q.id === skinSel), sk = SKINS.find(k => k.hero === it.hero) || {}, ab = sk.ab || (/Ninja/.test(sk.name || '') ? 'dbl' : ''), own = !!S.own[it.id];
+  const lk = lvLocked(it), poor = !own && (S.w < it.p || (S.gem || 0) < (it.g || 0)), fr = HERO_SRC[it.hero] || [];
+  const act = own ? '✔ É SUA' : lk ? `${pxImg('lock')} Nível ${it.lv}` : `Comprar · <i class="ic" style="background-image:url(${coinURL()})"></i>${it.p}${it.g ? ` <i class="ic" style="background-image:url(${gemURL()})"></i>${it.g}` : ''}`;
+  const d = document.createElement('div'); d.id = 'skPrev'; d.className = 'card px ' + (it.hero === 'w1' || it.hero === 'w2' ? 'leg' : '');
+  d.innerHTML = `<div class="spStage"><img id="spImg" src="${fr[3] || fr[0] || ''}" alt=""><div class="spDots">${['Frente', 'Lado', 'Costas'].map((t, i) => `<button data-fr="${i}">${t}</button>`).join('')}</div></div>
+    <div class="spInfo"><small>${it.d}</small><b>${it.n}</b>${ab ? `<span class="spAb">${pxImg('star')} ${SK_AB[ab] || ab}</span>` : '<span class="spAb off">Sem habilidade especial</span>'}
+    <button class="spBuy ${own || lk || poor ? 'no' : ''}" data-id="${it.id}" data-buy="1" ${lk ? `data-lv="${it.lv}"` : ''}>${act}</button>${poor && !lk ? '<small style="color:#ff6b5e">Moedas ou cristais insuficientes</small>' : ''}</div>`;
+  $('shopList').prepend(d); $('shopList').querySelectorAll('.it.card[data-id]').forEach(c => c.classList.toggle('sel', c.dataset.id === skinSel));
+}
+setInterval(() => { const im = document.getElementById('spImg'); if (!im || skinFr < 0) return; const it = SHOP.skin.find(q => q.id === skinSel); if (!it) return; const fr = HERO_SRC[it.hero] || []; skinFr = (skinFr + 1) % 4; const src = [fr[3] || fr[0], fr[1], fr[2], fr[3] || fr[0]][skinFr]; if (src) { im.src = src; im.classList.remove('spIn'); void im.offsetWidth; im.classList.add('spIn'); } }, 1400);   /* vitrine gira a skin sozinha */
 function renderShop() {
   const ti = TABICON(), ic = u => `<i class="ic" style="background-image:url(${u})"></i>`;
   $('shopW').innerHTML = `${ic(coinURL())} ${S.w} &nbsp;${ic(gemURL())} <span style="color:#5ef0ff">${S.gem || 0}</span>`;
@@ -1475,12 +1524,15 @@ function renderShop() {
     return `<div class="it card px ${poor ? 'lock' : ''} ${eq ? 'eq' : ''}" data-id="${it.id}" style="--bd:${TIERC[idx % 4]}">${tab !== 'skill' && isNew(it) ? '<i class="newTag">NOVO</i>' : ''}${bnr(it)}<img class="pic" src="${picURL(it)}" alt="">` +
       `<b>${it.n}</b><span>${it.d}</span>${tab === 'power' ? `<div class="pq">Você tem: <b>x${(S.pq || {})[it.id] || 0}</b></div>` : ''}${tab === 'skill' ? `<div class="pips">${[...Array(it.max || 3).keys()].map(i => `<i class="${i < lv ? 'on' : ''}"></i>`).join('')}</div>` : ''}<div class="price ${poor ? 'no' : own || maxed ? 'ok' : ''}">${act}</div></div>`;
   }).join('');
+  if (tab === 'skin') skinPrevHTML();
   drawPreview();
 }
 function markSeen(t) { S.seenShop = S.seenShop || {}; if (!t || t === 'skill' || !SHOP[t]) return; let ch = false; for (const it of SHOP[t]) if (isNew(it)) { S.seenShop[it.id] = 1; ch = true; } if (ch) save(); }   /* sai da aba: novidades dela ficam vistas */
 $('shopTabs').onclick = e => { const b = e.target.closest('[data-t]'); if (b) { if (b.dataset.t !== tab) markSeen(tab); tab = b.dataset.t; SFX.tick(); renderShop(); } };
 $('shopList').onclick = e => {
+  const fb = e.target.closest('[data-fr]'); if (fb) { const it = SHOP.skin.find(q => q.id === skinSel), fr = HERO_SRC[it.hero] || []; skinFr = -1; $('spImg').src = [fr[3] || fr[0], fr[1], fr[2]][+fb.dataset.fr]; setTimeout(() => skinFr = 0, 4000); SFX.tick(); return; }
   const b = e.target.closest('[data-id]'); if (!b) return;
+  if (tab === 'skin' && !b.dataset.buy) { if (skinSel !== b.dataset.id) { skinSel = b.dataset.id; skinFr = 0; SFX.tick(); renderShop(); const p2 = $('skPrev'); if (p2) p2.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } return; }   /* skin: toque escolhe para ver grande; comprar é no botão da vitrine */
   if (b.dataset.lv) { SFX.no(); return; }   /* bloqueado por nível */
   const it = findItem(b.dataset.id);
   const equip = () => {
@@ -1565,22 +1617,58 @@ function duoErr(t) { $('duoErr').textContent = t; }
 function duoLeave() { try { DUO.conn && DUO.conn.close(); } catch (e) {} try { DUO.peer && DUO.peer.destroy(); } catch (e) {} Object.assign(DUO, { on: false, conn: null, peer: null, op: null }); }
 function duoWire(c) {
   DUO.conn = c;
-  c.on('open', () => { DUO.on = true; duoSend({ t: 'hi', n: S.name || 'Jogador' }); if (DUO.host) { duoMsg('Conectado! Pode começar.'); $('duoGo').classList.remove('hidden'); } else duoMsg('Conectado! Esperando o outro começar…'); SFX.ok(); });
+  c.on('open', () => { DUO.on = true; duoSend({ t: 'hi', n: S.name || 'Jogador', o: outfit() }); if (DUO.host) duoSend({ t: 'cfg', cfg: DUO.cfg }); if (DUO.host) { duoMsg('Conectado! Escolha e comece.'); $('duoGo').classList.remove('hidden'); duoModeUI(); } else duoMsg('Conectado! Esperando o outro começar…'); SFX.ok(); });
   c.on('data', m => {
     if (!m || typeof m !== 'object') return;
-    if (m.t === 'hi') { DUO.op = Object.assign(DUO.op || { d: 0 }, { n: m.n }); duoMsg((DUO.host ? 'Conectado com ' : 'Na sala de ') + m.n + (DUO.host ? '! Pode começar.' : '. Esperando começar…')); }
-    else if (m.t === 'go') { DUO.seed = m.seed; stI = m.stI; inf = !!m.inf; DUO.op = { d: 0, n: (DUO.op || {}).n }; try { stageUI(); } catch (e) {} $('duoDlg').classList.add('hidden'); initAudio(); mode = MOBILE ? 'touch' : 'keys'; goLandscape && MOBILE && goLandscape(); startCountdown(); }
+    if (m.t === 'hi') { DUO.op = Object.assign(DUO.op || { d: 0 }, { n: m.n, o: m.o }); duoMsg((DUO.host ? 'Conectado com ' : 'Na sala de ') + m.n + (DUO.host ? '! Pode começar.' : '. Esperando começar…')); }
+    else if (m.t === 'go') { DUO.seed = m.seed; DUO.cfg = Object.assign({}, DUO.cfg, m.cfg || {}); DUO.mode = DUO.cfg.mode; DUO.op = { d: 0, n: (DUO.op || {}).n, o: (DUO.op || {}).o }; try { stageUI(); } catch (e) {} $('duoDlg').classList.add('hidden'); initAudio(); mode = MOBILE ? 'touch' : 'keys'; goLandscape && MOBILE && goLandscape(); startCountdown(); }
+    else if (m.t === 'fb') { if (G && state === 'play') { G.fbIn = clock + 0.8; G.popups.push({ text: 'BOLA DE FOGO VINDO!', t: 0, color: '#ff6b3b', life: 0.9, size: 0.06 }); beep(300, 0.3, 'sawtooth', 0.05, -120); } }
+    else if (m.t === 'fbhit') { if (G && state === 'play') { G.popups.push({ text: m.blk ? 'ELE BLOQUEOU!' : 'ACERTOU!', t: 0, color: m.blk ? '#4fd8ff' : '#c6f432', life: 1, size: 0.08 }); if (!m.blk) emote(G, 'h'); } }
+    else if (m.t === 'emo') { if (G && G.opR) { G.opR.emoCd = 0; emote(G.opR, m.k); } }
+    else if (m.t === 'cfg') { DUO.cfg = Object.assign({}, DUO.cfg, m.cfg); duoMsg('Sala: ' + duoCfgTxt(DUO.cfg) + '. Esperando começar…'); }
     else if (m.t === 'st') { DUO.op = Object.assign(DUO.op || {}, m); if (m.over && state === 'over') duoResult(); }
   });
   c.on('close', () => { if (DUO.on) { DUO.on = false; try { G && G.popups.push({ text: 'O outro jogador saiu', t: 0, color: '#ff6b5e', life: 2 }); } catch (e) {} } });
   c.on('error', e => duoErr('Erro na conexão: ' + (e && e.type || e)));
 }
-function duoStart() { DUO.seed = (Math.random() * 1e9) | 0; duoSend({ t: 'go', seed: DUO.seed, stI, inf }); DUO.op = { d: 0, n: (DUO.op || {}).n }; $('duoDlg').classList.add('hidden'); initAudio(); mode = MOBILE ? 'touch' : 'keys'; startCountdown(); }
+function duoStart() { DUO.seed = (Math.random() * 1e9) | 0; if (DUO.pk === undefined) DUO.pk = true; DUO.mode = DUO.cfg.mode; duoSend({ t: 'go', seed: DUO.seed, cfg: DUO.cfg }); DUO.op = { d: 0, n: (DUO.op || {}).n, o: (DUO.op || {}).o }; $('duoDlg').classList.add('hidden'); initAudio(); mode = MOBILE ? 'touch' : 'keys'; startCountdown(); }
 function duoResult() {
-  if (!DUO.on || !DUO.op) return; const me = Math.floor(G.dist), od = Math.floor(DUO.op.d || 0);
+  if (!DUO.on || !DUO.op || (G && (G.race || G.duo))) return; const me = Math.floor(G.dist), od = Math.floor(DUO.op.d || 0);
   $('overT').textContent = !DUO.op.over ? 'Você caiu! Esperando o outro…' : me > od ? 'VOCÊ VENCEU!' : me < od ? (DUO.op.n || 'O outro') + ' venceu!' : 'Empate!';
 }
 $('btnDuo2').onclick = () => $('btnDuo').onclick();
+const DUO_OPT = [   /* configuração da sala: [chave, título, opções [valor, rótulo], só aparece se...] */
+  ['mode', 'Modo', [['surv', 'Sobrevivência'], ['race', 'Corrida']]],
+  ['dist', 'Distância', [[1000, '1.000 m'], [1500, '1.500 m'], [2500, '2.500 m']], c => c.mode === 'race'],
+  ['pk', 'Parkour', [[1, 'Com'], [0, 'Sem']], c => c.mode === 'race'],
+  ['map', 'Mapa', [[0, 'Céu Pixel'], [1, 'Cidade Neon'], [2, 'Vulcão'], [-1, 'Sorteio']]],
+  ['lives', 'Vidas', [[1, '1'], [3, '3'], [5, '5']]],
+  ['mobs', 'Mobs', [[1, 'Com'], [0, 'Sem']]],
+  ['fb', 'Bola de fogo', [[1, 'Ligada'], [0, 'Desligada']]],
+  ['luck', 'Luck blocks', [[1, 'Normal'], [2, 'Muitos'], [0, 'Sem']]]];
+DUO.cfg = Object.assign({ mode: 'surv', dist: 1500, pk: 1, map: -1, lives: 3, mobs: 1, fb: 1, luck: 1 }, (() => { try { return JSON.parse(localStorage.getItem('pnp_duocfg') || '{}'); } catch (e) { return {}; } })());
+const duoCfgTxt = c => [c.mode === 'race' ? `Corrida · ${(c.dist || 1500).toLocaleString('pt-BR')} m${c.pk ? ' · parkour' : ''}` : 'Sobrevivência', ['Céu Pixel', 'Cidade Neon', 'Vulcão'][c.map] || 'mapa sorteado', `${c.lives} vida${c.lives > 1 ? 's' : ''}`, c.mobs ? 'com mobs' : 'sem mobs', c.fb ? 'bola de fogo' : 'sem bola de fogo', ['sem luck blocks', '', 'muitos luck blocks'][c.luck]].filter(Boolean).join(' · ');
+function duoModeUI() {   /* tela de configuração da sala (só quem cria a sala mexe) */
+  const c = DUO.cfg, Q = qIcons(), U = x => x.toDataURL ? x.toDataURL() : x, HEART = mkIcon(['.##.##.', '#######', '#######', '.#####.', '..###..', '...#...'], { '#': '#ff4f6d' });
+  const seg = (k, ops) => `<div class="dcSeg">${ops.map(([v, l]) => `<button class="${c[k] === v ? 'on' : ''}" data-k="${k}" data-v="${v}">${l}</button>`).join('')}</div>`;
+  const sw = k => `<button class="dcSw ${c[k] ? 'on' : ''}" data-k="${k}" data-v="${c[k] ? 0 : 1}" aria-label="ligar/desligar"><i></i></button>`;
+  const row = (ic, t, ctl) => `<div class="dcR"><img src="${U(ic)}" alt=""><span>${t}</span>${ctl}</div>`;
+  const TH2 = [THEMES[0], THEMES[1], THEMES[2]], mapT = (v, n, th) => `<button class="dcMap ${c.map === v ? 'on' : ''}" data-k="map" data-v="${v}" style="background:${th ? `linear-gradient(${th.sky[0]},${th.sky[2]} 62%,${th.floor[0]} 62%)` : 'linear-gradient(135deg,#1f49d6,#5a2bb8,#ff7a2a)'}"><b>${n}</b></button>`;
+  $('duoCfg').innerHTML = `<div class="dcModes">
+      <button class="dcMode ${c.mode === 'surv' ? 'on' : ''}" data-k="mode" data-v="surv"><img src="${U(KILL_IC)}" alt=""><b>Sobrevivência</b><small>Quem durar mais ganha</small></button>
+      <button class="dcMode ${c.mode === 'race' ? 'on' : ''}" data-k="mode" data-v="race"><img src="${Q.run}" alt=""><b>Corrida</b><small>Quem chegar primeiro</small></button></div>
+    <div class="dcMaps">${mapT(0, 'Céu', TH2[0])}${mapT(1, 'Neon', TH2[1])}${mapT(2, 'Vulcão', TH2[2])}${mapT(-1, 'Sorteio')}</div>
+    <div class="dcList">
+      ${c.mode === 'race' ? row(PICON.clock, 'Distância', seg('dist', [[1000, '1 km'], [1500, '1,5 km'], [2500, '2,5 km']])) + row(Q.lava, 'Parkour', sw('pk')) : ''}
+      ${row(HEART, 'Vidas', seg('lives', [[1, '1'], [3, '3'], [5, '5']]))}
+      ${row(LUCKF(0), 'Luck blocks', seg('luck', [[0, 'Sem'], [1, 'Normal'], [2, 'Muitos']]))}
+      ${row(PICON.fire, 'Bola de fogo', sw('fb'))}
+      ${row(Q.skel, 'Mobs', sw('mobs'))}
+    </div>`;
+  $('duoCfg').classList.remove('hidden');
+}
+$('duoCfg').onclick = e => { const b = e.target.closest('[data-k]'); if (!b) return; const k = b.dataset.k, v = isNaN(+b.dataset.v) ? b.dataset.v : +b.dataset.v; DUO.cfg[k] = v; try { localStorage.setItem('pnp_duocfg', JSON.stringify(DUO.cfg)); } catch (e2) {} duoModeUI(); SFX.tick(); if (DUO.on) duoSend({ t: 'cfg', cfg: DUO.cfg }); };
+
 $('btnDuo').onclick = () => { if (typeof Peer === 'undefined') { duoErr('Sem internet para o modo 2 jogadores.'); } $('duoHome').classList.remove('hidden'); $('duoWait').classList.add('hidden'); $('duoGo').classList.add('hidden'); $('duoDlg').classList.remove('hidden'); SFX.tick(); };
 $('duoClose').onclick = () => { if (state === 'menu') duoLeave(); $('duoDlg').classList.add('hidden'); };
 $('duoHost').onclick = () => {
@@ -1631,11 +1719,12 @@ function drawBot(z, b) {                        // bot do modo corrida (de costa
   if (b.emo) { const sc = emoScale(b.emo), im2 = (skinEmo(b.o) || EMO)[b.emo.k]; if (sc > 0 && im2 && im2.width) { const eh = Math.max(26, p.u * 0.5) * sc, ew = eh * im2.width / im2.height; ctx.drawImage(im2, p.x - ew / 2, p.y - h - fs * 1.7 - eh, ew, eh); } else if (sc <= 0) b.emo = null; }   /* carinha em cima da cabeça */
 }
 function drawRival(z) {                         // o outro jogador visto de costas, na pista dele
-  const op = DUO.op, set = HERO.g; if (!set || !set[2] || !set[2].width) return;
+  const op = DUO.op, set = HERO[op.o] || HERO.g; if (!set || !set[2] || !set[2].width) return;
   const p = proj(op.l || 0, z, (op.j || 0) * 1.4), im = set[2], h = p.u * 1.25, w = im.width * h / im.height;
   ctx.globalAlpha = 0.9; ctx.imageSmoothingEnabled = false; ctx.drawImage(im, p.x - w / 2, p.y - h, w, h); ctx.globalAlpha = 1;
   const fs = Math.max(10, p.u * 0.13); ctx.font = `900 ${fs}px Rubik, ${FONT}`; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
   const t = op.n || 'Rival', tw = ctx.measureText(t).width + fs; ctx.fillStyle = 'rgba(10,18,53,.75)'; ctx.fillRect(p.x - tw / 2, p.y - h - fs * 1.5, tw, fs * 1.3); ctx.fillStyle = '#4fd8ff'; ctx.fillText(t, p.x, p.y - h - fs * 0.3);
+  const e = G && G.opR && G.opR.emo; if (e) { const sc = emoScale(e), im2 = (skinEmo(op.o) || EMO)[e.k]; if (sc > 0 && im2 && im2.width) { const eh = Math.max(26, p.u * 0.5) * sc, ew = eh * im2.width / im2.height; ctx.drawImage(im2, p.x - ew / 2, p.y - h - fs * 1.7 - eh, ew, eh); } else if (sc <= 0) G.opR.emo = null; }   /* carinha do rival */
 }
 $('btnReset').onclick = () => { $('resetDlg').classList.remove('hidden'); SFX.tick(); };   // resetar conta: sempre pede confirmação
 $('resetNo').onclick = () => $('resetDlg').classList.add('hidden');
@@ -1730,6 +1819,7 @@ const ACH_T = [   /* conquistas em níveis: bronze → prata → ouro → diaman
   { k: 'runs', n: 'Persistente', ic: 'run', g: [10, 50, 150, 400] }, { k: 'lava', n: 'Pé quente', ic: 'lava', g: [30, 150, 500, 1200] },
   { k: 'chest', n: 'Caçador de baús', ic: 'chest', g: [3, 15, 40, 100] }, { k: 'tree', n: 'Lenhador', ic: 'tree', g: [20, 80, 250, 600] }];
 for (const t of ACH_T) t.g.forEach((goal, i) => ACHS.push({ id: 't_' + t.k + i, n: `${pxImg(TIERS[i][0])} ${t.n} ${TIERS[i][1]}`, d: '', ic: t.ic, goal, prev: i ? 't_' + t.k + (i - 1) : null, p: () => S.mp[t.k] || 0, ok: () => (S.mp[t.k] || 0) >= goal, r: ACH_RW[i] }));
+ACHS.push({ id: 'aDuo', n: 'Rival de Respeito', d: '', ic: 'star', goal: 10, p: () => S.duoW || 0, ok: () => (S.duoW || 0) >= 10, r: { gem: 5 } });   /* 10 vitórias no multiplayer */
 ACHS.push({ id: 'aBow', n: 'Arqueiro', d: '', ic: 'skel', goal: 150, p: () => S.mp.skel || 0, ok: () => (S.mp.skel || 0) >= 150, r: { w: 100 }, bow: 1 });   /* conquista que dá o Arco e Flecha */
 for (const a of ACHS) if (a.r && a.r.gem && !a.goal) a.r.gem = Math.max(1, Math.ceil(a.r.gem / 3));   /* conquistas antigas: menos diamantes */
 /* ranking por liga (melhor distância no Infinito) */
@@ -1895,7 +1985,7 @@ function startCountdown() {
   setState('count');
 }
 function endGame() {
-  if (DUO.on) duoSend({ t: 'st', d: G.dist, l: G.lane, j: 0, over: 1, n: S.name || 'Jogador', sc: Math.floor(G.dist) });
+  if (DUO.on) duoSend({ t: 'st', d: G.dist, l: G.lane, j: 0, over: 1, fin: G.race && G.win && !G.rWin ? 1 : 0, n: S.name || 'Jogador', o: outfit(), sc: Math.floor(G.dist) });
   const score = Math.floor(G.dist) + G.coins * 10 + G.walls * 5 + G.bonus;
   let best = 0;
   try { best = +localStorage.getItem('pnp_best') || 0; } catch (e) {}
@@ -1909,7 +1999,7 @@ function endGame() {
   const gemsEarn = (G.gems || 0) + (G.win && !G.endless ? (stI >= STAGES.length - 1 ? 3 : 1) : 0); S.gem = (S.gem || 0) + gemsEarn;   // cristais: raros
   const earn = Math.floor(G.coins * (1 + 0.5 * (S.sk.coin || 0))) + (won ? 20 * (stI + 1) : 0) + (G.endless ? Math.floor(G.dist / 90) : 0);
   let newRec = false;
-  if (G.endless) { const d = Math.floor(G.dist); newRec = d > (S.inf || 0); if (newRec) S.inf = d; $('fBest').textContent = S.inf + ' m';
+  if (G.endless && !G.duo) { const d = Math.floor(G.dist); newRec = d > (S.inf || 0); if (newRec) S.inf = d; $('fBest').textContent = S.inf + ' m';
     S.infH = S.infH || []; const dt0 = new Date(), run = { d, k: (G.kSkel || 0) + (G.kSp || 0) + (G.kDr || 0), c: G.coins, t: dt0.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) + ' ' + dt0.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }), id: Date.now() };
     S.infH.push(run); S.infH.sort((a, b) => b.d - a.d); S.infH = S.infH.slice(0, 10); G.lastRun = run.id;   // histórico: 10 melhores corridas do Infinito
   }
@@ -1935,7 +2025,15 @@ function endGame() {
     c: ['#ffd23f', '#ff5d5d', '#18b3a3', '#8b5cf6', '#fff'][i % 5] }));
   if (G.race) { const P = [{ n: 'Você', d: rPlace ? -rPlace : G.dist }, ...G.bots.map(b => ({ n: b.n, d: b.fin ? 1e9 - b.d : b.d }))]; $('overHint').textContent = 'Corrida: ' + (rPlace ? 'você venceu · +40 moedas de prêmio. ' : (G.rWin ? G.rWin.n + ' cruzou primeiro. ' : 'você não chegou. ')) + $('overHint').textContent;
     $('overT').textContent = rPlace ? 'VOCÊ VENCEU!' : G.rWin ? G.rWin.n + ' venceu!' : 'Não terminou'; $('btnAgain').textContent = 'Correr de novo'; }
-  setState('over'); if (G.race) {} else if (DUO.on) { duoResult(); $('btnAgain').textContent = DUO.host ? 'Correr de novo' : 'Esperar revanche'; } else $('btnAgain').textContent = won && !last ? 'Próxima fase' : 'Jogar de novo';
+  if (G.duo) {   /* multiplayer: resultado e recompensas */
+    const W2 = G.race ? !!(G.win && !G.rWin) : !!G.duoWin, nm = (DUO.op && DUO.op.n) || 'O rival';
+    S.duoW = S.duoW || 0; S.duoSt = W2 ? (S.duoSt || 0) + 1 : 0; if (W2) S.duoW++;
+    const rc = W2 ? (G.race ? 60 : 50) : 15, rg = W2 ? 1 : 0, bon = W2 && S.duoSt % 3 === 0 ? 2 : 0; S.w += rc; S.gem = (S.gem || 0) + rg + bon; save();
+    $('overT').textContent = W2 ? 'VOCÊ VENCEU!' : nm + ' venceu!';
+    $('overHint').textContent = (G.race ? 'Corrida' : 'Sobrevivência') + ` · +${rc} moedas` + (rg ? ` · +${rg} cristal` : '') + (bon ? ` · SEQUÊNCIA DE ${S.duoSt}! +${bon} cristais` : W2 && S.duoSt > 1 ? ` · ${S.duoSt} vitórias seguidas` : '') + ` · ${S.duoW} vitórias no total`;
+    if (W2) { [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => beep(f, 0.16, 'triangle', 0.08), i * 110)); } else playSmp('over', 0.6);
+  }
+  setState('over'); if (G.duo && DUO.on) $('btnAgain').textContent = DUO.host ? 'Revanche' : 'Esperar revanche'; else if (G.race && DUO.on) $('btnAgain').textContent = DUO.host ? 'Revanche' : 'Esperar revanche'; else if (G.race) {} else if (DUO.on) { duoResult(); $('btnAgain').textContent = DUO.host ? 'Correr de novo' : 'Esperar revanche'; } else $('btnAgain').textContent = won && !last ? 'Próxima fase' : 'Jogar de novo';
 }
 
 /* ---------- câmera e detecção de pose ---------- */
@@ -2054,9 +2152,14 @@ function poseControls(now) {
 }
 
 /* ---------- controles por toque / teclado ---------- */
+function fireDuo() {   /* bola de fogo do multiplayer: sai voando pra frente e atinge o rival */
+  G.fbFx = clock; G.popups.push({ text: 'BOLA DE FOGO!', t: 0, color: '#ff8a2a', size: 0.08, life: 0.9 }); try { SFX.fire(); } catch (e) {} G.shake = Math.max(G.shake || 0, 0.15);
+  if (DUO.on) duoSend({ t: 'fb' });
+}
 function useLk() {   /* usa o poder guardado da caixa da sorte */
   if (!G || state !== 'play' || !G.lkPw) return false; const k = G.lkPw; G.lkPw = null;
-  if (k === 'boost') { G.rBoost = 3; G.wflash = Math.max(G.wflash || 0, 0.25); G.shake = Math.max(G.shake || 0, 0.2); G.popups.push({ text: 'TURBO!', t: 0, color: '#ffd23f', size: 0.08 }); noise(0.5, 400, 3000, 0.08, 1); }
+  if (k === 'fball') fireDuo();
+  else if (k === 'boost') { G.rBoost = 3; G.wflash = Math.max(G.wflash || 0, 0.25); G.shake = Math.max(G.shake || 0, 0.2); G.popups.push({ text: 'TURBO!', t: 0, color: '#ffd23f', size: 0.08 }); noise(0.5, 400, 3000, 0.08, 1); }
   else if (k === 'shield') { G.bShield = 8; playSmp('shield', 0.7); G.popups.push({ text: 'ESCUDO DE ENERGIA 8s', t: 0, color: '#4fd8ff' }); } else { G.bMag = 8; G.popups.push({ text: 'ÍMÃ 8s', t: 0, color: '#ff8a2a' }); }
   beep(520, 0.1, 'square', 0.08, 500); return true;
 }
@@ -2136,14 +2239,14 @@ window.addEventListener('keydown', e => {
 
 /* ---------- lógica ---------- */
 function spawn() { const R0 = Math.random, n0 = G.objs.length; if (G.rng) Math.random = G.rng; try { spawn0(); } finally { Math.random = R0; }
-  if (G.race || G.noMob) for (let i = G.objs.length - 1; i >= n0; i--) if (isMob(G.objs[i]) || G.objs[i].rider) G.objs.splice(i, 1);   /* modo corrida: só obstáculos, sem mobs */
+  if ((G.race && !G.duo) || G.noMob) for (let i = G.objs.length - 1; i >= n0; i--) if (isMob(G.objs[i]) || G.objs[i].rider) G.objs.splice(i, 1);   /* modo corrida: só obstáculos, sem mobs */
   for (let i = G.objs.length - 1; i >= n0; i--) { const o = G.objs[i]; if ((o.type === 'low' || o.type === 'high') && o.v && !o.lanes) G.objs.splice(i, 1, ...[-1, 0, 1].map(l => Object.assign({}, o, { lanes: [l] })));
     else if (o.type === 'block' && o.v && o.lanes && o.lanes.length > 1) G.objs.splice(i, 1, ...o.lanes.map(l => Object.assign({}, o, { lanes: [l] }))); }   // aranhas grandes em dupla também viram mobs separados   // trio vira 3 mobs separados (cada um leva o seu golpe)
 }   // 2 jogadores: mesma pista nos dois aparelhos
 function spawn0() {
   const prog = G.endless ? Math.min(1, G.dist / 3000) : Math.min(1, G.dist / G.goal), wz = G.nextSpawn, r = Math.random();
   const coinsLine = (lane, from, n) => { if (Math.random() < 0.62) return;   /* moedas bem escassas */ n = Math.max(1, Math.round(n * 0.5)); for (let i = 0; i < n; i++) G.objs.push({ type: 'coin', lane, wz: from + i * 2.2 }); };   /* moedas mais escassas */
-  if ((PARKOUR_ON || G.race) && G.dist > 150 && G.dist - (G.lastPk ?? -200) > (G.race ? 300 : 380) && Math.random() < (G.race ? 0.3 : 0.14)) {   /* parkour: caixas soltas no ar sobre a lava, pule de uma para outra */
+  if ((PARKOUR_ON || (G.race && G.pk !== false)) && G.dist > 150 && G.dist - (G.lastPk ?? -200) > (G.race ? 300 : 380) && Math.random() < (G.race ? 0.3 : 0.14)) {   /* parkour: caixas soltas no ar sobre a lava, pule de uma para outra */
     G.lastPk = G.dist; const s0 = wz, LAV = 27.6; let ln = Math.floor(Math.random() * 3) - 1;
     const TPS = Array.from({ length: 8 }, (_, i) => +(0.9 + i * 0.45).toFixed(2)), NS = TPS.length, PL = 15.5;   /* sempre subindo, degrau por degrau */   /* sobe bem mais alto; plataformas mais compridas */   /* parkour mais longo */   /* ~10 s de parkour: sobe, desce e troca de pista */
     for (let i = 0; i < NS; i++) { const tp = TPS[i], zb = s0 + 6 + i * PL;   /* plataformas coladas */   /* degraus colados: só um pulo curto */
@@ -2178,7 +2281,7 @@ function spawn0() {
     coinsLine([-1, 0, 1].filter(l => l !== lane)[Math.floor(Math.random() * 2)], wz - 2, 3);
   }
   else if (G.dist - (G.lastChest ?? -400) > 600 && Math.random() < 0.18) { G.lastChest = G.dist; G.objs.push({ type: 'chest', lane: Math.floor(Math.random() * 3) - 1, wz }); }   // baú de diamantes: raro (no máx. 1 a cada 600 m)
-  else if (G.dist - (G.lastLuck ?? -200) > (G.race ? 110 : 200) - 45 * (S.sk.lbox || 0) && Math.random() < (G.race ? 0.95 : 0.6) + 0.12 * (S.sk.lbox || 0)) { G.lastLuck = G.dist; G.objs.push({ type: 'luck', lane: Math.floor(Math.random() * 3) - 1, wz }); }   // caixa da sorte: rara (no máx. 1 a cada 200 m)
+  else if (G.luckK !== 0 && G.dist - (G.lastLuck ?? -200) > (G.luckK === 2 ? 70 : (G.race || G.duo) ? 110 : 200) - 45 * (S.sk.lbox || 0) && Math.random() < (G.race ? 0.95 : 0.6) + 0.12 * (S.sk.lbox || 0)) { G.lastLuck = G.dist; G.objs.push({ type: 'luck', lane: Math.floor(Math.random() * 3) - 1, wz }); }   // caixa da sorte: rara (no máx. 1 a cada 200 m)
   else { const ln = Math.floor(Math.random() * 3) - 1; coinsLine(ln, wz, 5); if (Math.random() < 0.03) G.objs.push({ type: 'prize', kind: 'gem', lane: ln, wz: wz + 12, t0: -9 }); }   // cristal raro no fim de algumas filas de moedas
   G.nextSpawn += Math.max(8, 19 - prog * 7 - G.diff * 1.7 + Math.random() * 4);   /* obstáculos mais juntos conforme sobe a dificuldade */
 }
@@ -2222,11 +2325,11 @@ const MC_ITEM = {
 };
 MC_ITEM.coins12 = MC_ITEM.coins;
 try { $('mGemI').src = MC_ITEM.gem.toDataURL(); $('mGemI').dataset.ok = 1; document.querySelectorAll('.coins:not(.gemP) i').forEach(el => el.style.backgroundImage = `url(${MC_ITEM.coin.toDataURL()})`); } catch (e) {}
-const PRIZE = { boost: ['bolt', '#ffd23f'], gem: ['star', '#5ef0ff'], coins: ['coin', '#ffd23f'], life: ['heart', '#ff4f6d'], shield: ['shield', '#4fd8ff'], magnet: ['magnet', '#ff8a2a'], ki: ['bolt', '#c6f432'], time: ['clock', '#c6f432'], coins12: ['coin', '#ffd23f'] };
+const PRIZE = { fball: ['bolt', '#ff6b3b'], boost: ['bolt', '#ffd23f'], gem: ['star', '#5ef0ff'], coins: ['coin', '#ffd23f'], life: ['heart', '#ff4f6d'], shield: ['shield', '#4fd8ff'], magnet: ['magnet', '#ff8a2a'], ki: ['bolt', '#c6f432'], time: ['clock', '#c6f432'], coins12: ['coin', '#ffd23f'] };
 function openLuck(o) {                       // caixa da sorte: quebra e joga o prêmio para a frente, na mesma pista, para você pegar
   const r = Math.random(); let kind;
   if (r < 0.02) kind = 'gem'; else if (r < 0.35) kind = 'coins'; else if (r < 0.5) kind = G.lives < maxLives() ? 'life' : 'coins'; else if (r < 0.65) kind = 'shield'; else if (r < 0.8) kind = 'magnet'; else if (r < 0.86) kind = 'ki'; else if (r < 0.94) kind = 'pwr'; else kind = G.endless ? 'coins12' : 'time';   /* pwr: +1 poder guardado */
-  if (G.race && Math.random() < 0.45) kind = 'boost';   /* corrida: turbo é o prêmio mais comum */
+  if ((G.race || G.duo) && Math.random() < 0.45) kind = G.duo && G.fbOn && Math.random() < 0.45 ? 'fball' : 'boost';   /* corrida/multiplayer: turbo; no multiplayer também a bola de fogo */   /* corrida: turbo é o prêmio mais comum */
   G.objs.push({ type: 'prize', kind, lane: o.lane, wz: G.dist + 4.5, t0: clock });
   SFX.tick();
   const p = proj(o.lane, Math.max(0.4, o.wz - G.dist), 0.45), u = p.u;   // a caixa estoura em pedacinhos dourados (estilo bloco quebrando no Minecraft)
@@ -2254,8 +2357,9 @@ function givePrize(kind) {                   // pegou o prêmio: aplica
   else if (kind === 'coins') { G.coins += 8; txt = '+8 MOEDAS'; }
   else if (kind === 'coins12') { G.coins += 12; txt = '+12 MOEDAS'; }
   else if (kind === 'life') { G.lives = Math.min(maxLives(), G.lives + 1); txt = '+1 VIDA'; }
+  else if (kind === 'fball' && G.lkPw) { fireDuo(); txt = 'BOLA DE FOGO!'; }
   else if (kind === 'boost' && G.lkPw) { G.rBoost = 3; txt = 'TURBO!'; }
-  else if ((kind === 'shield' || kind === 'magnet' || kind === 'boost') && !G.lkPw) { G.lkPw = kind; txt = (kind === 'shield' ? 'ESCUDO' : kind === 'boost' ? 'TURBO' : 'ÍMÃ') + ' · TOQUE PARA USAR'; }   /* fica guardado no canto */
+  else if ((kind === 'shield' || kind === 'magnet' || kind === 'boost' || kind === 'fball') && !G.lkPw) { G.lkPw = kind; txt = (kind === 'shield' ? 'ESCUDO' : kind === 'boost' ? 'TURBO' : kind === 'fball' ? 'BOLA DE FOGO' : 'ÍMÃ') + ' · TOQUE PARA USAR'; }   /* fica guardado no canto */
   else if (kind === 'shield') { G.bShield = 8; txt = 'ESCUDO DE ENERGIA 8s'; beep(440, 0.3, 'sine', 0.07, 440); noise(0.4, 300, 1200, 0.06, 0.8); }
   else if (kind === 'magnet') { G.bMag = 8; txt = 'ÍMÃ 8s'; }
   else if (kind === 'ki') { G.ki = 1; txt = 'MAGIA CHEIA'; }
@@ -2455,7 +2559,7 @@ function update(dt, now) {
   G.lost = mode === 'camera' && (!pose || now - pose.t > 700);
   if (G.lost) return;                      // pausa até a pessoa voltar para a câmera
   if (G.lives <= 0 && G.race) {   // modo corrida: não perde, renasce onde parou (vidas cheias, para um instante)
-    G.lives = maxLives(); G.stun = Math.max(G.stun, 1.0); G.speed = 0; G.pushV = 0; G.flash = 0.6; G.wflash = Math.max(G.wflash || 0, 0.3);
+    G.lives = G.duo ? ((DUO.cfg || {}).lives || 3) : maxLives(); G.stun = Math.max(G.stun, 1.0); G.speed = 0; G.pushV = 0; G.flash = 0.6; G.wflash = Math.max(G.wflash || 0, 0.3);
     G.objs = G.objs.filter(o => o.type === 'pk' || o.type === 'pklava' || o.type === 'coin' || o.wz - G.dist > 6 || o.wz - G.dist < -3);   /* limpa o que estava em cima de você */
     G.popups.push({ text: 'RENASCEU!', t: 0, color: '#4fd8ff', life: 1.3, size: 0.08 }); beep(523, 0.1, 'triangle', 0.07); setTimeout(() => beep(784, 0.16, 'triangle', 0.07), 90); }
   if (G.lives <= 0) { endGame(); return; }   // sem vidas: fim da corrida
@@ -2467,7 +2571,7 @@ function update(dt, now) {
     if (!G.boss && !G.race && G.dist >= G.goal) { if (stI === STAGES.length - 1) startBoss(); else { G.win = true; endGame(); return; } }   // chefão só na fase 5
     if (G.t <= 0) { G.t = 0; endGame(); return; }
   }
-  const wd = G.endless ? Math.floor(G.dist / INF_SEG) % 3 : STAGE_MAP[stI];   // só o Infinito troca de mapa
+  const wd = G.duoWorld !== undefined ? G.duoWorld : G.endless ? Math.floor(G.dist / INF_SEG) % 3 : STAGE_MAP[stI];   // só o Infinito troca de mapa
   if (wd !== G.world) {
     G.world = wd; G.wflash = 0.5;
     G.popups.push({ text: `Mundo ${wd + 1}: ${THEMES[wd].name}`, t: 0, color: '#fff', life: 2, size: 0.085 });
@@ -2506,9 +2610,15 @@ function update(dt, now) {
     botAI(b, dt);
     if (b.d >= G.goal && !b.fin && !G.rWin) { b.fin = 1; G.rWin = b; }   /* um bot cruzou primeiro: ele vence, os outros perdem */
   }
+  if (G.duo && !G.vs) { G.vs = 1; G.popups.push({ text: 'VS ' + ((DUO.op && DUO.op.n) || 'RIVAL').toUpperCase(), t: 0, color: '#ff4fd8', life: 1.8, size: 0.1 }); G.popups.push({ text: G.race ? 'CORRIDA · 1.500 M' : 'SOBREVIVÊNCIA', t: 0, color: '#fff', life: 1.8, size: 0.05 }); }   /* abertura da partida */
+  if (G.fbIn && clock >= G.fbIn) { G.fbIn = 0;   /* bola de fogo do rival chegou */
+    if (G.bShield > 0 || (PW && PW.shield && G.pAct > 0)) { G.popups.push({ text: 'BLOQUEOU!', t: 0, color: '#4fd8ff', size: 0.08 }); duoSend({ t: 'fbhit', blk: 1 }); emote(G, 'h'); }
+    else { lavaBurn(); G.wflash = Math.max(G.wflash || 0, 0.3); G.shake = Math.max(G.shake || 0, 0.35); if (G.race) { G.pushV = 18; G.stun = Math.max(G.stun, 0.9); } else hit(); G.popups.push({ text: 'ATINGIDO!', t: 0, color: '#ff4f4f', size: 0.09 }); duoSend({ t: 'fbhit' }); emote(G, 'a'); } }
+  if (G.duo && !G.race && DUO.op && DUO.op.over && state === 'play' && G.lives > 0) { G.duoWin = 1; emote(G, 'h'); endGame(); return; }   /* sobrevivência: o rival caiu, você venceu */
   if (G.race && G.rWin && state === 'play') { emote(G.rWin, 'h'); emote(G, 'a'); endGame(); return; }
-  if (G.race && G.dist > 25) {                   // mudou a ordem: quem subiu fica feliz, quem caiu fica bravo
-    const all = [G, ...G.bots], ord = all.slice().sort((a, c) => (c === G ? c.dist : c.d) - (a === G ? a.dist : a.d));
+  if ((G.race || G.duo) && G.dist > 25) {                   // mudou a ordem: quem subiu fica feliz, quem caiu fica bravo
+    if (G.duo && DUO.op) { G.opR = G.opR || {}; G.opR.n = DUO.op.n || 'Rival'; G.opR.d = DUO.op.d || 0; G.opR.o = DUO.op.o; if (G.race && DUO.op.fin && !G.rWin && !G.win) G.rWin = G.opR; }   /* rival da internet entra na disputa */
+    const all = [G, ...G.bots, ...(G.opR ? [G.opR] : [])], ord = all.slice().sort((a, c) => (c === G ? c.dist : c.d) - (a === G ? a.dist : a.d));
     if (G.rOrd) all.forEach(r => { const a0 = G.rOrd.indexOf(r), a1 = ord.indexOf(r); if (a1 < a0) { emote(r, 'h'); if (a1 === 0 && r === G) G.popups.push({ text: '1º LUGAR!', t: 0, color: '#c6f432', life: 1.2, size: 0.08 }); } else if (a1 > a0) emote(r, 'a'); });
     G.rOrd = ord;
   }
@@ -2531,7 +2641,7 @@ function update(dt, now) {
   if (G.bowCd > 0) G.bowCd = Math.max(0, G.bowCd - dt);
   if (G.fireT > 0) G.fireT -= dt; if (G.sinkT > 0) G.sinkT -= dt;
   if (G.pushV > 0) { G.dist = Math.max(0, G.dist - G.pushV * dt); G.pushV = Math.max(0, G.pushV - 24 * dt); G.speed = 0; }
-  if (DUO.on && state === 'play' && (DUO.sendT -= dt) <= 0) { DUO.sendT = 0.1; duoSend({ t: 'st', d: G.dist, l: G.x, j: jumpHeight(), n: S.name || 'Jogador' }); }   // manda posição 10x por segundo
+  if (DUO.on && state === 'play' && (DUO.sendT -= dt) <= 0) { DUO.sendT = 0.1; duoSend({ t: 'st', d: G.dist, l: G.x, j: jumpHeight(), n: S.name || 'Jogador', o: outfit() }); }   // manda posição 10x por segundo
   const atk = S.atk;
   if (atk === 'sword' && swd().bow && G.punchT >= 0.12 && !G.arFired) {   // arco: solta uma flecha na sua pista
     G.arFired = true; G.bowCd = G.bowMax = swd().id === 'bow2' ? 0.6 : 0.85; G.shots.push({ wz: G.dist + 0.7, lane: G.lane, t: 0, k: 'arrow', ice: swd().id === 'bow2' });   // recarga do arco noise(0.08, 1800, 4000, 0.06, 1); beep(520, 0.08, 'triangle', 0.05, 260);
@@ -5228,14 +5338,14 @@ function hudPill(x, y, h, items, bg, fg, bd, right) {   // painel com ícones em
   ctx.textBaseline = 'alphabetic'; return w;
 }
 function drawHUD() {
-  if (G && G.race && G.emo) { const sc = emoScale(G.emo), im2 = (skinEmo(outfit()) || EMO)[G.emo.k]; if (sc > 0 && im2 && im2.width) { const eh = H * 0.14 * sc, ew = eh * im2.width / im2.height; ctx.drawImage(im2, W / 2 - ew / 2, H * 0.1, ew, eh); } else if (sc <= 0) G.emo = null; }   // sua carinha: micro interação
-  if (G && G.race && G.bots) {               // placar da corrida: posições
-    const h = Math.max(24, H * 0.05), R2 = [{ n: (S.name || 'Você').slice(0, 10), d: G.dist, me: 1 }, ...G.bots.map(b => ({ n: b.n, d: b.d }))].sort((a, c) => c.d - a.d);
+  if (G && (G.race || G.duo) && G.emo) { const sc = emoScale(G.emo), im2 = (skinEmo(outfit()) || EMO)[G.emo.k]; if (sc > 0 && im2 && im2.width) { const eh = H * 0.14 * sc, ew = eh * im2.width / im2.height; ctx.drawImage(im2, W / 2 - ew / 2, H * 0.1, ew, eh); } else if (sc <= 0) G.emo = null; }   // sua carinha: micro interação
+  if (G && (G.race || G.duo) && G.bots) {               // placar da corrida: posições
+    const h = Math.max(24, H * 0.05), R2 = [{ n: (S.name || 'Você').slice(0, 10), d: G.dist, me: 1 }, ...G.bots.map(b => ({ n: b.n, d: b.d })), ...(G.opR ? [{ n: G.opR.n.slice(0, 10), d: G.opR.d }] : [])].sort((a, c) => c.d - a.d);
     ctx.save(); ctx.font = `900 ${Math.round(h * 0.42)}px Rubik, ${FONT}`; ctx.textBaseline = 'middle'; const x = W - Math.max(12, W * 0.015), y = H * 0.14, w = h * 6.2;
     ctx.fillStyle = 'rgba(10,18,53,.7)'; ctx.beginPath(); ctx.roundRect(x - w, y, w, h * (R2.length * 0.75 + 0.4), h * 0.3); ctx.fill();
     R2.forEach((r, i) => { ctx.textAlign = 'left'; ctx.fillStyle = r.me ? '#c6f432' : '#fff'; ctx.fillText(`${i + 1}º ${r.n}`, x - w + h * 0.35, y + h * (0.55 + i * 0.75)); ctx.textAlign = 'right'; ctx.fillText(Math.floor(Math.min(r.d, G.goal)) + 'm', x - h * 0.35, y + h * (0.55 + i * 0.75)); });
     ctx.restore(); }
-  if (DUO.on && G) { const op = DUO.op, h = Math.max(26, H * 0.06), me = Math.floor(G.dist), od = op ? Math.floor(op.d) : 0, lead = me >= od;   // placar da dupla
+  if (DUO.on && G && !G.race) { const op = DUO.op, h = Math.max(26, H * 0.06), me = Math.floor(G.dist), od = op ? Math.floor(op.d) : 0, lead = me >= od;   // placar da dupla
     ctx.save(); ctx.font = `900 ${Math.round(h * 0.42)}px Rubik, ${FONT}`; ctx.textBaseline = 'middle'; const t1 = `${(S.name || 'Você').slice(0, 10)} ${me}m`, t2 = op ? `${(op.n || 'Rival').slice(0, 10)} ${od}m${op.over ? ' ✖' : ''}` : 'conectando…';
     const w = Math.max(ctx.measureText(t1).width, ctx.measureText(t2).width) + h * 0.8, x = Math.max(12, W * 0.015), y = H * 0.12;
     ctx.fillStyle = 'rgba(10,18,53,.7)'; ctx.beginPath(); ctx.roundRect(x, y, w, h * 1.7, h * 0.3); ctx.fill();
@@ -5271,7 +5381,7 @@ function drawHUD() {
   if (lkUp) {                                                     // poder da caixa da sorte: canto inferior esquerdo
     const pb = pbS, bx2 = m + si, by2 = H - pb - m - sb, b2 = pxPanel(bx2, by2, pb, pb, '#0d1440', '#ffd23f');
     ctx.fillStyle = '#ffd23f'; ctx.fillRect(bx2 + b2, by2 + b2, pb - 2 * b2, pb - 2 * b2);
-    spr(PICON[G.lkPw === 'boost' ? 'thunder' : G.lkPw], bx2 + pb * 0.24, by2 + pb * 0.12, pb * 0.52, pb * 0.52);
+    spr(PICON[G.lkPw === 'boost' ? 'thunder' : G.lkPw === 'fball' ? 'fire' : G.lkPw], bx2 + pb * 0.24, by2 + pb * 0.12, pb * 0.52, pb * 0.52);
     ctx.font = pf(pb * 0.17); ctx.textAlign = 'center'; ctx.fillStyle = '#0d1440'; ctx.fillText(mode === 'keys' ? 'TECLA C' : 'TOQUE', bx2 + pb / 2, by2 + pb * 0.86);
     lkBtn = { x: bx2, y: by2, w: pb, h: pb };
   }
@@ -5331,9 +5441,12 @@ function drawHUD() {
     lines.forEach((t, i) => { ctx.fillStyle = '#0d1440'; ctx.fillText(t, lx + 2, ly0 + i * fs * 2.1 + 2); ctx.fillStyle = '#fff'; ctx.fillText(t, lx, ly0 + i * fs * 2.1); });
     ctx.globalAlpha = 1;
   }
+  if (G.fbFx) { const k = (clock - G.fbFx) / 0.55; if (k > 1) G.fbFx = 0; else kiOrb(W / 2 + Math.sin(k * 9) * W * 0.02, H * (0.95 - 0.47 * k), H * 0.13 * (1 - k * 0.75), 1, GFIRE_P); }   /* sua bola de fogo indo */
+  if (G.fbIn) { const k = 1 - Math.max(0, G.fbIn - clock) / 0.8; ctx.fillStyle = `rgba(255,60,20,${0.08 + 0.12 * Math.abs(Math.sin(clock * 14))})`; ctx.fillRect(0, 0, W, H); kiOrb(W / 2, H * (1.15 - 0.25 * k), H * (0.06 + 0.12 * k), 1, GFIRE_P); }   /* vindo atrás de você */
+  let stk = 0;   /* avisos ao mesmo tempo ficam empilhados (um embaixo do outro), não um em cima do outro */
   for (const p of G.popups) {
-    const life = p.life || 0.8, sc = 1 + 0.5 * Math.max(0, 1 - p.t / 0.15);
-    ctx.globalAlpha = Math.max(0, Math.min(1, (life - p.t) / 0.3)); centerText(p.text, H * 0.6 - Math.min(p.t, 0.8) * H * 0.1, H * (p.size || 0.1) * sc, p.color); ctx.globalAlpha = 1;
+    const life = p.life || 0.8, sc = 1 + 0.5 * Math.max(0, 1 - p.t / 0.15); if (p.t >= life) continue;
+    ctx.globalAlpha = Math.max(0, Math.min(1, (life - p.t) / 0.3)); centerText(p.text, H * 0.6 - Math.min(p.t, 0.8) * H * 0.1 + stk, H * (p.size || 0.1) * sc, p.color); ctx.globalAlpha = 1; stk += H * (p.size || 0.1) * 1.15;
   }
   if (G.wflash > 0) { ctx.fillStyle = `rgba(255,255,255,${G.wflash * 1.6})`; ctx.fillRect(0, 0, W, H); }
 }
@@ -5373,7 +5486,7 @@ function draw() {
   const list = [];
   addScenery(scroll, list);
   if (inGame && G && G.race) for (const b of G.bots) { const z = b.d - G.dist; if (z > 4 && z < FAR) list.push({ z, f: zz => drawBot(zz, b) }); }   /* bot colado na câmera não aparece gigante */
-  if (inGame && DUO.on && DUO.op) { const z = DUO.op.d - G.dist; if (z > 0.8 && z < FAR) list.push({ z, f: zz => drawRival(zz) }); }   // o outro jogador correndo na pista
+  if (inGame && DUO.on && DUO.op) { const z = DUO.op.d - G.dist; if (z > 4 && z < FAR) list.push({ z, f: zz => drawRival(zz) }); }   // o outro jogador correndo na pista
   if (inGame) for (const o of G.objs) { const z = o.wz - G.dist; if (z < FAR && z > -F * 0.9 - objLen(o)) list.push({ z, f: zz => { drawObj(o, zz); if (o.burn > 0) drawBurn(o, zz); } }); }   // obstáculos passam pela câmera (pelos lados, por baixo ou por cima) em vez de sumir
   if (inGame && G.boss && !G.boss.gone) list.push({ z: G.boss.pz, f: zz => drawBoss(zz) });
   if (inGame && G.projs) for (const pr of G.projs) list.push({ z: pr.pz, f: zz => drawProj(pr, zz) });
@@ -5486,7 +5599,12 @@ requestAnimationFrame(frame);
   const up = () => { drag = null; cv.style.cursor = 'grab'; }; cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
   cv.addEventListener('wheel', e => { e.preventDefault(); zoom = Math.max(0.5, Math.min(2.5, zoom * (e.deltaY > 0 ? 0.9 : 1.1))); }, { passive: false });
 })();
-window.__game = { get state() { return state; }, get QL() { return [QL, LW, LH]; }, get G() { return G; }, get clock() { return clock; }, get EYE() { return EYE; }, get cam() { return [F, H, hor, yP, W]; }, skinEmo, HERO, ctl,
+/* ---------- carinhas no multiplayer: toque para mandar ---------- */
+function duoEmo(k) { if (!G || !G.duo || state !== 'play') return; G.emoCd = 0; emote(G, k); duoSend({ t: 'emo', k }); const b = document.querySelector(`#duoEmo [data-e="${k}"]`); if (b) { b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); } }
+$('duoEmo').addEventListener('pointerdown', e => { const b = e.target.closest('[data-e]'); if (!b) return; e.preventDefault(); e.stopPropagation(); duoEmo(b.dataset.e); });
+window.addEventListener('keydown', e => { if (G && G.duo && ['7', '8', '9'].includes(e.key)) duoEmo({ 7: 'h', 8: 'a', 9: 'n' }[e.key]); });
+setInterval(() => { const on = !!(G && G.duo && state === 'play'), el = $('duoEmo'); if ((el.style.display !== 'none') !== on) { el.style.display = on ? 'flex' : 'none'; if (on) { const E = skinEmo(outfit()) || EMO; el.querySelectorAll('[data-e]').forEach(b => { const im = E[b.dataset.e]; if (im) b.querySelector('img').src = im.toDataURL ? im.toDataURL() : im.src; }); } } }, 250);
+window.__game = { get state() { return state; }, get QL() { return [QL, LW, LH]; }, get G() { return G; }, get clock() { return clock; }, get EYE() { return EYE; }, DUO, duoModeUI, startCountdown, get cam() { return [F, H, hor, yP, W]; }, skinEmo, HERO, ctl,
   fake() { mode = 'camera'; startCalib(); }, feed(lm, wl) { processPose(lm, wl, performance.now()); } };
 })();
 </script>
