@@ -651,7 +651,7 @@
 <body>
 <div id="splash"><div class="spLogo"></div><div class="spBar"><i></i></div></div>
 <script>(function(){var t0=Date.now();document.addEventListener('DOMContentLoaded',function(){var l=document.querySelector('.logo');var b=document.querySelector('#splash .spLogo');if(l&&b)b.appendChild(l.cloneNode(true));});window.addEventListener('load',function(){setTimeout(function(){var s=document.getElementById('splash');if(!s)return;s.classList.add('out');setTimeout(function(){s.remove()},400);},Math.max(250,1200-(Date.now()-t0)));});})();</script>
-<div id="verTag" style="position:fixed;left:8px;bottom:6px;font:11px monospace;color:rgba(255,255,255,.55);z-index:50;pointer-events:none">versão 17/11 14h05</div>
+<div id="verTag" style="position:fixed;left:8px;bottom:6px;font:11px monospace;color:rgba(255,255,255,.55);z-index:50;pointer-events:none">versão 17/11 14h15</div>
 <div id="app">
 <canvas id="c"></canvas>
 <video id="v" playsinline muted autoplay></video>
@@ -2169,7 +2169,9 @@ $('resetYes').onclick = () => { try { ['pnp_save', 'pnp_sk', 'pnp_av2'].forEach(
 $('btnHelp').onclick = () => $('help').classList.remove('hidden');
 /* ---------- progressão: nível, XP, atributos, recompensas e missões ---------- */
 S.xp = S.xp || 0; S.ap = S.ap || 0; S.at = Object.assign({ str: 0, nrg: 0, luck: 0, def: 0 }, S.at || {}); S.mp = Object.assign({ walls: 0, items: 0, craft: 0, boss: 0, skel: 0, spider: 0, drone: 0, mobs: 0, tree: 0, lava: 0, dist: 0, chest: 0, coins: 0, runs: 0 }, S.mp || {}); S.mq = S.mq || {};
-function xpNeed(L) { return Math.round(100 + 60 * L + 14 * L * L); }   /* cada nível pede bem mais XP que o anterior (cresce rápido) */
+function xpNeedOld(L) { return Math.round(100 + 60 * L + 14 * L * L); }
+function xpNeed(L) { return Math.round(180 + 110 * L + 24 * L * L); }   /* mais XP por nível: subir demora mais */
+try { if (S.lvMax === undefined) { let L = 1, x = S.xp || 0; while (x >= xpNeedOld(L)) { x -= xpNeedOld(L); L++; } S.lvMax = L; } } catch (e) {}   /* nível que já recebeu recompensa (não paga de novo) */   /* cada nível pede bem mais XP que o anterior (cresce rápido) */
 const LV_TITLE = L => L < 5 ? 'Novato' : L < 10 ? 'Corredor' : L < 20 ? 'Lutador' : L < 30 ? 'Veterano' : L < 50 ? 'Campeão' : 'Lenda';                                  // XP para passar do nível L para o L+1
 function lvInfo() { let L = 1, x = S.xp; while (x >= xpNeed(L)) { x -= xpNeed(L); L++; } return { L, x, need: xpNeed(L) }; }
 const ATTRS = [
@@ -2223,7 +2225,7 @@ function allMissions() { if (!S.mt) { S.mt = {}; for (const id in LEG_MQ) if (S.
 const rwText = r => [r.w ? r.w + ' moedas' : '', r.gem ? r.gem + ' diamante' + (r.gem > 1 ? 's' : '') : '', r.xp ? r.xp + ' XP' : '', r.skin && SKINS[r.skin] ? 'skin ' + SKINS[r.skin].name : '', r.it ? (findItem(r.it) || {}).n : '', r.bag ? Object.keys(r.bag).map(k => r.bag[k] + ' ' + ((typeof BAG !== 'undefined' && BAG[k]) ? BAG[k].n : k)).join(' + ') : '', r.un || '', r.ap ? r.ap + ' ponto' + (r.ap > 1 ? 's' : '') + ' de atributo' : ''].filter(Boolean).join(' + ');
 function addXp(n) {                                                 // devolve os níveis ganhos (com as recompensas já entregues)
   const L0 = lvInfo().L; S.xp += n; const L1 = lvInfo().L, ups = [];
-  for (let L = L0 + 1; L <= L1; L++) { if (L >= ATK_LV.sword && !S.own.sw1) { S.own.sw1 = 1; S.sw = 'sw1'; UNLK_Q.push('sw1'); }   /* nível 3: ganha a Espada de Treino */
+  for (let L = Math.max(L0, S.lvMax || 1) + 1; L <= L1; L++) { S.lvMax = L; if (L >= ATK_LV.sword && !S.own.sw1) { S.own.sw1 = 1; S.sw = 'sw1'; UNLK_Q.push('sw1'); }   /* nível 3: ganha a Espada de Treino */
     const r = LV_RW(L); S.ap = (S.ap || 0) + r.ap; if (r.it && r.it !== 'sw1') { if (!S.own[r.it]) { S.own[r.it] = 1; UNLK_Q.push(r.it); } else { const it = findItem(r.it); S.w += Math.round(((it && it.p) || 100) / 2); } } S.w += r.w; S.gem = (S.gem || 0) + r.gem; ups.push(L); }
   return ups;
 }
@@ -2585,7 +2587,7 @@ function endGame() {
   try { const L = G.loot || {}, ks = Object.keys(L).filter(k => BAG[k] && L[k] > 0); $('lootBox').innerHTML = ks.length ? `<small>ITENS QUE VOCÊ PEGOU</small><div class="lbRow">${ks.map(k => `<span class="lbIt"><img src="${BAG[k].ic.toDataURL()}" alt=""><b>+${L[k]}</b><em>${BAG[k].n}</em></span>`).join('')}</div>${(() => { const nw = learnRecipes(); return nw.length ? `<div class="lbNew">RECEITA NOVA: ${nw.map(rcName).join(', ')} · veja em Criar</div>` : ''; })()}` : ''; $('lootBox').style.display = ks.length ? '' : 'none'; } catch (e) {}   /* fim da partida: mostra os itens pegos */
   G.lootTxt = Object.keys(G.loot || {}).length ? ' · Bolsa: ' + Object.keys(G.loot).map(k => '+' + G.loot[k] + ' ' + BAG[k].n).join(', ') : '';
   S.mp.skel += G.kSkel || 0; if (atkOpen('ki')) S.mp.mage = (S.mp.mage || 0) + (G.kMage || 0);   /* magos só contam depois de liberar a magia */ S.mp.spider += G.kSp || 0; S.mp.drone += G.kDr || 0; S.mp.dist += Math.floor(G.dist); S.mp.chest += G.nChest || 0; S.mp.tree += G.kTree || 0; S.mp.lava += G.nLava || 0; S.mp.mobs += (G.kSkel || 0) + (G.kSp || 0) + (G.kDr || 0); S.mp.sw9 = (S.mp.sw9 || 0) + (G.kSw9 || 0); S.mp.walls = (S.mp.walls || 0) + (G.kWall || 0); S.mp.items = (S.mp.items || 0) + Object.values(G.loot || {}).reduce((a, b) => a + b, 0); S.mp.boss = (S.mp.boss || 0) + (G.kBoss || 0); S.mp.coins += G.coins; S.mp.runs++;
-  const xpGain = Math.floor(G.dist / 8) + 5 * ((G.kSkel || 0) + (G.kSp || 0) + (G.kDr || 0)) + G.coins + (won ? 60 : 0), xpG2 = Math.floor(xpGain * (1 + 0.15 * (S.sk.wise || 0)) * (G.potXp ? 1.5 : 1)), ups = addXp(xpG2);
+  const xpGain = Math.floor(G.dist / 18) + 2 * ((G.kSkel || 0) + (G.kSp || 0) + (G.kDr || 0)) + Math.floor(G.coins / 3) + (won ? 25 : 0)   /* XP mais lento: subir de nível leva mais partidas */, xpG2 = Math.floor(xpGain * (1 + 0.15 * (S.sk.wise || 0)) * (G.potXp ? 1.5 : 1)), ups = addXp(xpG2);
   const qReady = MQ().filter(m => S.mp[m.k] >= m.goal).length;
   if (ups.length) setTimeout(() => lvUpPop(ups), 1100);   /* pop-up de nível novo */
   G.progTxt = ` · +${xpG2} XP` + (ups.length ? ` · SUBIU PARA O NÍVEL ${ups[ups.length - 1]}! (${ups.map(L => rwText(LV_RW(L))).join(', ')})` : '') + (qReady ? ` · ${qReady} missão pronta no pergaminho` : '');
@@ -3370,7 +3372,8 @@ function update(dt, now) {
   if (G.pAct > 0 && PW && PW.dash) { target = MAX_SPEED * 3.4; snap = true; }   // dash: arrancada curta e muito rápida
   if (G.stun > 0) { G.stun -= dt; target = 0; }
   G.speed += (target - G.speed) * Math.min(1, dt * (snap ? 14 : 4));
-  G.boost = 1 + Math.min(0.9, G.dist / 900);   /* acelera mais cedo */   // quanto mais avança, mais rápido fica (até +90%)
+  if (G.bCap === undefined) { const D = G.goal || 1100, tOld = x0 => { let t = 0; for (let x = 0; x < D; x += 5) t += 5 / (1 + Math.min(0.9, x / 900)); return t; }, T = tOld(), tN = c => { let t = 0; for (let x = 0; x < D; x += 5) t += 5 / (1 + Math.min(c, x / 300)); return t; }; let lo = 0.2, hi = 2; for (let i = 0; i < 22; i++) { const md = (lo + hi) / 2; if (tN(md) > T) lo = md; else hi = md; } G.bCap = (lo + hi) / 2; }   /* mesma duração da partida */
+  G.boost = 1 + Math.min(G.bCap, G.dist / 300);   /* acelera bem mais cedo (topo em ~300 m) e mantém o tempo total igual */   /* acelera mais cedo */   // quanto mais avança, mais rápido fica (até +90%)
   if (G.rBoost > 0) { G.rBoost -= dt; if (Math.random() < dt * 6) G.wflash = Math.max(G.wflash || 0, 0.08); }
   fairyStep(dt);   /* mascote ataca sozinha */
   if (G.slowT > 0) G.slowT -= dt;
