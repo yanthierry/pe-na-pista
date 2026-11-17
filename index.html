@@ -661,12 +661,15 @@
   }
   #menu .logo { transform: none !important; }   /* logo igual à da tela de carregamento (reta) */
   .stReq { display: none !important; }   /* sem a linha de muro/força no card da fase */
+  #over.duoOv #finalScore, #over.duoOv .stats, #over.duoOv #lootBox, #over.duoOv #recBox { display: none !important; }   /* multiplayer: só vencedor, placar e botões */
+  #duoBoard .dbOne { justify-content: center; border: 0; margin-top: 6px; } #duoBoard .dbOne b { font-size: 22px; }
+  #pauseDlg button#pauseGo.dlX { position: absolute !important; top: 10px !important; right: 10px !important; left: auto !important; width: 34px !important; min-width: 0 !important; height: 34px !important; min-height: 0 !important; font-size: 15px !important; box-shadow: 0 3px 0 #060a24 !important; align-self: auto !important; border-radius: 50% !important; padding: 0 !important; margin: 0 !important; z-index: 2; }
 </style>
 </head>
 <body>
 <div id="splash"><div class="spLogo"></div><div class="spBar"><i></i></div></div>
 <script>(function(){var t0=Date.now();document.addEventListener('DOMContentLoaded',function(){var l=document.querySelector('.logo');var b=document.querySelector('#splash .spLogo');if(l&&b)b.appendChild(l.cloneNode(true));});window.addEventListener('load',function(){setTimeout(function(){var s=document.getElementById('splash');if(!s)return;s.classList.add('out');setTimeout(function(){s.remove()},400);},Math.max(250,1200-(Date.now()-t0)));});})();</script>
-<div id="verTag" style="position:fixed;left:8px;bottom:6px;font:11px monospace;color:rgba(255,255,255,.55);z-index:50;pointer-events:none">versão 17/11 22h45</div>
+<div id="verTag" style="position:fixed;left:8px;bottom:6px;font:11px monospace;color:rgba(255,255,255,.55);z-index:50;pointer-events:none">versão 17/11 23h15</div>
 <div id="app">
 <canvas id="c"></canvas>
 <video id="v" playsinline muted autoplay></video>
@@ -775,13 +778,13 @@
 
 <button id="btnPause" aria-label="Pausar" style="display:none"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1" fill="#fff"/><rect x="14" y="5" width="4" height="14" rx="1" fill="#fff"/></svg></button>
 <div id="duoEmo" style="display:none"><div class="deOps"><button data-e="h" aria-label="Feliz"><img alt=""></button><button data-e="a" aria-label="Bravo"><img alt=""></button><button data-e="n" aria-label="Neutro"><img alt=""></button></div><button id="deMain" aria-label="Carinhas"><img alt=""></button></div>
-<div id="pauseDlg" class="screen hidden"><div class="pkBox" style="width:min(420px,92vw);align-items:stretch;gap:12px"><h2 id="pzT">Pausado</h2><small id="pzNote" class="pzNote"></small>
+<div id="pauseDlg" class="screen hidden"><div class="pkBox" style="width:min(420px,92vw);align-items:stretch;gap:12px;position:relative"><button class="dlX" id="pauseGo" aria-label="Fechar">✕</button><h2 id="pzT">Pausado</h2><small id="pzNote" class="pzNote"></small>
   <div class="pzSet"><div class="dcR"><span>Ícones de comando</span><button class="dcSw" id="pzCue" aria-label="Ícones de comando"><i></i></button></div>
     <div class="dcR"><span>Avisos na tela</span><button class="dcSw" id="pzPop" aria-label="Avisos na tela"><i></i></button></div>
     <div class="dcR"><span>Música</span><button class="dcSw" id="pzMus" aria-label="Música"><i></i></button></div>
     <div class="dcR"><span>Gráfico</span><div class="dcSeg" id="pzQ"><button data-q="540">Baixo</button><button data-q="720">Médio</button><button data-q="1080">Alto</button></div></div>
     <div class="dcR"><span>Quadros por segundo</span><div class="dcSeg" id="pzFps"><button data-fps="auto">Auto</button><button data-fps="30">30</button><button data-fps="60">60</button></div></div></div>
-  <button id="pauseMenu" class="alt">Sair para o menu</button><button id="pauseGo">Continuar</button></div></div>
+  <button id="pauseMenu" class="alt">Sair para o menu</button></div></div>
 <div id="ytBox"><div id="ytPl"></div></div>
 <div id="duoDlg" class="screen hidden">
   <div class="pkBox" style="width:min(480px,94vw);align-items:stretch">
@@ -850,7 +853,7 @@
     <h2>Subiu de nível!</h2>
     <div class="lvNum" id="lvUpN">NÍVEL 2</div>
     <p class="dlSub" id="lvUpR"></p>
-    <button class="dlGo" id="lvUpOk">Show!</button>
+    <button class="dlGo" id="lvUpOk" style="display:none">Show!</button>
   </div>
 </div>
 <div id="daily" class="screen hidden">
@@ -1464,7 +1467,7 @@ const SHOP = {
   power: [
     { id: 'pw1', n: 'Escudo', p: 70, d: 'Imune por 5s', dur: 5, cd: 18, ic: 'shield', shield: 1 },
     { id: 'pw2', n: 'Ímã', p: 90, d: 'Pega moedas de todas as pistas por 7s', dur: 7, cd: 16, ic: 'magnet', mag: 1 },
-    { id: 'pw3', n: 'Turbo', p: 150, d: 'Velocidade máxima e imune por 4s', dur: 4, cd: 22, ic: 'bolt', turbo: 1 },
+    { id: 'pw3', n: 'Turbo', p: 150, d: 'Mais velocidade e imune por 3s', dur: 3, cd: 30, ic: 'bolt', turbo: 1 },
     { id: 'pw4', n: 'Relógio', p: 180, d: '+8 segundos no tempo', dur: 0.5, cd: 25, ic: 'clock', time: 1 },
     { id: 'pw6', n: 'Congelar Tempo', p: 200, d: 'Para o tempo, os monstros e os tiros por 5s', dur: 5, cd: 24, ic: 'clock', freeze: 1 },
     { id: 'pw5', n: 'Dash', p: 220, d: 'Arrancada: dispara pra frente atravessando tudo', dur: 0.5, cd: 9, ic: 'dash', dash: 1 }],
@@ -1536,7 +1539,7 @@ function mobInit(o) { if (o.hpI) return o.hp; o.hpI = 1; const T = o.tier ?? tie
 function mobHit(o, dm, pts, label, klabel, col) { mobInit(o); if (o.hp > dm) { o.hp -= dm; knock(o, o.wz - G.dist, klabel || label, col || '#dae4e6', true); G.popups.push({ text: '-' + dm + ' · vida ' + o.hp, t: 0, color: '#ffb4a8' }); return false; } o.hp = 0; o._ok = 1; smash(o, pts, label); return true; }
 const wallTier = (t = tierNow()) => (!(inf || race || (G && (G.endless || G.race))) && stI < SEASON_N) ? 1 : t === 0 ? 1 : t;   /* temporada 1: só madeira · tijolo a partir da fase 2.1 */
 const wallSeason = () => (inf || race || (G && (G.endless || G.race))) ? 0 : Math.floor(stI / SEASON_N);
-const wallHp = m => Math.round(WALLM[m].hp * (1 + 0.5 * wallSeason()));   /* da 2ª temporada em diante o muro pede mais força (+50% por temporada) */
+const wallHp = m => (G && G.duo) ? 1 : Math.round(WALLM[m].hp * (1 + 0.5 * wallSeason()));   /* multiplayer: muro cai com 1 soco */   /* da 2ª temporada em diante o muro pede mais força (+50% por temporada) */
 function wallInit(o) { if (o.m === undefined) o.m = wallTier(); if (o.m === 0) o.m = 1; if (o.hp === undefined) o.hp = o.hpMax = wallHp(o.m); }
 function wallHit(o, dm, pts, label) { wallInit(o); if (o.hp > dm) { o.hp -= dm; o.crk = clock; const M2 = WALLM[o.m]; G.shake = Math.max(G.shake || 0, 0.12); G.hitAt = clock; SFX.punch(); const p = proj(G.lane, Math.max(o.wz - G.dist, 0.6), 1); for (let i = 0; i < 10; i++) G.parts.push({ x: p.x, y: p.y, vx: (Math.random() - 0.5) * W * 0.4, vy: -Math.random() * H * 0.4, s: p.u * 0.07, t: 0, life: 0.5, c: M2.pc[i % 3] }); return false; } o._ok = 1; if (DUO.on) duoSend({ t: 'brk', c: (WALLM[o.m] || WALLM[1]).pc }); smash(o, pts + o.m * 3, label); return true; }
 try { for (const it of SHOP.sword) if (SW_POW[it.id]) it.d += ' · força ' + SW_POW[it.id] + (it.hammer ? ' (x2 no muro)' : it.axe && !it.storm ? ' (x2 na madeira)' : ''); for (const it of SHOP.magic) if (MG_POW[it.mg]) it.d += ' · força ' + MG_POW[it.mg]; for (const it of SHOP.glove) it.d += ' · +1 de força no soco'; } catch (e) {}   /* loja mostra a força de cada arma */
@@ -1678,7 +1681,7 @@ let potBtn = null;
 let atkBtns = [];
 let SW = null, PW = null, GL = GLOVES[0], powBtn = null, lkBtn = null, fdBtn = null, thBtn = null, stI = Math.min(S.st, STAGES.length - 1), tab = 'sword', inf = false, race = false;
 function refreshGear() {
-  SW = S.sw ? findItem(S.sw) : null; PW = S.pw && S.own[S.pw] ? findItem(S.pw) : null;   /* poder só aparece na partida se você equipou */ GL = GLOVES[S.gl] || GLOVES[0];
+  SW = S.sw ? findItem(S.sw) : null; PW = S.pw && S.own[S.pw] && !(G && G.noPw) ? findItem(S.pw) : null;   /* poder só aparece na partida se você equipou */ GL = GLOVES[S.gl] || GLOVES[0];
   $('glName').textContent = bare() ? 'Mãos nuas' : 'Boxe ' + GL.name;
   if (!ATKS.includes(S.atk) || !S.eq[S.atk] || !atkOpen(S.atk)) S.atk = eqList()[0];
   document.querySelectorAll('[data-eq]').forEach(b => { b.classList.toggle('on', !!S.eq[b.dataset.eq] && atkOpen(b.dataset.eq)); b.style.opacity = atkOpen(b.dataset.eq) ? '' : 0.45; });
@@ -2098,9 +2101,8 @@ function duoWire(c) {
 function duoStart() { DUO.nx = 0; DUO.seed = (Math.random() * 1e9) | 0; if (DUO.pk === undefined) DUO.pk = true; DUO.mode = DUO.cfg.mode; duoSend({ t: 'go', seed: DUO.seed, cfg: DUO.cfg }); DUO.op = { d: 0, n: (DUO.op || {}).n, o: (DUO.op || {}).o }; DUO.lsD = undefined; $('duoDlg').classList.add('hidden'); initAudio(); mode = MOBILE ? 'touch' : 'keys'; try { if (MOBILE && goLandscape) goLandscape(); } catch (e) {} startCountdown(); }   /* quem cria a sala também vira a tela (antes ficava preto com 'Gire o celular') */
 function duoBoard() {   /* placar final do multiplayer: você x rival */
   const el = $('duoBoard'); if (!G || !G.duo) { el.classList.add('hidden'); return; } const op = DUO.op || {}, me = G.duoW2, E1 = emoSet(outfit()) || EMO, E2 = emoSet(op.o) || EMO, U = x => x && (x.toDataURL ? x.toDataURL() : x.src);
-  const col = (who, nm, em, w, d, c, k, h, s2, fin) => `<div class="dbP ${w ? 'win' : ''}">${w ? `<i class="dbCrown">${pxImg('crown')}</i>` : ''}<img src="${U(em[w ? 'h' : 'a'])}" alt=""><b>${nm}</b><small>${who}</small>
-    <div class="dbS"><span>Distância</span><b>${Math.floor(d || 0)} m</b></div><div class="dbS"><span>Moedas</span><b>${fin ? c ?? 0 : '…'}</b></div><div class="dbS"><span>Quebrados</span><b>${fin ? k ?? 0 : '…'}</b></div><div class="dbS"><span>Ataques certos</span><b>${fin ? `${h ?? 0}/${s2 ?? 0}` : '…'}</b></div></div>`;
-  el.innerHTML = `<div class="dbHead">${G.race ? 'CORRIDA' : 'SOBREVIVÊNCIA'} · PLACAR</div><div class="dbGrid">${col('Você', (S.name || 'Você').slice(0, 12), E1, me, G.dist, G.coins, G.walls, G.atkHit, G.atkSent, 1)}<div class="dbVs">VS</div>${col('Rival', (op.n || 'Rival').slice(0, 12), E2, !me, op.d, op.fc, op.fw, op.fh, op.fs, op.over)}</div>`;
+  const col = (who, nm, em, w, d, c, k, h, s2, fin) => `<div class="dbP ${w ? 'win' : ''}">${w ? `<i class="dbCrown">${pxImg('crown')}</i>` : ''}<img src="${U(em[w ? 'h' : 'a'])}" alt=""><b>${nm}</b><div class="dbS dbOne"><b>${Math.floor(d || 0)} m</b></div></div>`;   /* placar limpo: só nome e distância */
+  el.innerHTML = `<div class="dbGrid">${col('Você', (S.name || 'Você').slice(0, 12), E1, me, G.dist, G.coins, G.walls, G.atkHit, G.atkSent, 1)}<div class="dbVs">VS</div>${col('Rival', (op.n || 'Rival').slice(0, 12), E2, !me, op.d, op.fc, op.fw, op.fh, op.fs, op.over)}</div>`;
   el.classList.remove('hidden'); el.classList.remove('dbIn'); void el.offsetWidth; el.classList.add('dbIn');
 }
 function duoResult() {
@@ -2594,7 +2596,7 @@ $('btnMenu').onclick = () => { stopCamera(); duoLeave(); setState('menu'); };
 
 function startCalib() { calibT = 0; base = null; setState('calib'); }
 function startCountdown() {
-  G = newGame(); countT = 3.2;
+  G = newGame(); countT = 3.2; G.noPw = !!(G.duo || G.race); try { refreshGear(); } catch (e) {}   /* multiplayer e corrida: sem poder da loja, só luck block */
   if (S.eq && S.eq.fist) { S.atk = 'fist'; try { refreshGear(); } catch (e) {} }   /* toda partida começa só com a mão */
   S.pots = S.pots || {}; G.potI = 0;   /* poções: bebe na partida pelo botão (tecla P) */
   S.inv = S.inv || {}; if (S.inv.arm > 0) { S.inv.arm--; G.armor++; G.popups.push({ text: 'Armadura extra!', t: 0, color: '#4fd8ff', life: 1.6 }); save(); }   /* item de 1 partida */ if (DUO.on) { G.rng = mulberry(DUO.seed); G.lives = maxLives(); }
@@ -2603,6 +2605,14 @@ function startCountdown() {
 }
 function endGame() {
   if (DUO.on) duoSend({ t: 'st', d: G.dist, l: G.lane, j: 0, over: 1, fc: G.coins, fw: G.walls, fh: G.atkHit || 0, fs: G.atkSent || 0, fin: G.race && G.win && !G.rWin ? 1 : 0, n: S.name || 'Jogador', o: outfit(), sc: Math.floor(G.dist) });
+  $('over').classList.toggle('duoOv', !!G.duo);
+  if (G.duo) {   /* multiplayer: sem recompensa (XP, moedas, itens) e tela limpa */
+    const W2 = G.race ? !!(G.win && !G.rWin) : !!G.duoWin, nm = (DUO.op && DUO.op.n) || 'O rival'; G.duoW2 = W2;
+    S.duoW = S.duoW || 0; S.duoSt = W2 ? (S.duoSt || 0) + 1 : 0; if (W2) S.duoW++; save();
+    $('overT').textContent = W2 ? 'VOCÊ VENCEU!' : nm + ' venceu!'; $('overHint').textContent = ''; $('lootBox').innerHTML = ''; $('recBox').style.display = 'none';
+    if (W2) { [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => beep(f, 0.16, 'triangle', 0.08), i * 110)); } else playSmp('over', 0.6);
+    handsT = 0; CONF = W2 ? Array.from({ length: 70 }, (_, i) => ({ x: Math.random() * W, y: -Math.random() * H, vx: (Math.random() - 0.5) * H * 0.15, vy: H * (0.25 + Math.random() * 0.35), rot: Math.random() * 6, vr: (Math.random() - 0.5) * 8, s: H * (0.02 + Math.random() * 0.02), c: ['#ffd23f', '#ff5d5d', '#18b3a3', '#8b5cf6', '#fff'][i % 5] })) : [];
+    setTimeout(duoBoard, 50); setState('over'); $('btnAgain').textContent = 'Próxima'; setTimeout(() => { rmUI(); duoTryNext(); }, 0); return; }
   const score = Math.floor(G.dist) + G.coins * 10 + G.walls * 5 + G.bonus;
   let best = 0;
   try { best = +localStorage.getItem('pnp_best') || 0; } catch (e) {}
@@ -2796,15 +2806,16 @@ function fireDuo(k = 'fball') {   /* ataque de 1 uso: no multiplayer atinge o ri
   if (G.race && !G.duo && G.bots) {   /* corrida contra bots: o ataque vai no bot mais perto à sua frente (ou no líder) */
     const tg = atkTarget(), hitOk = Math.random() < ATK_HIT;
     G.fbFx = clock; G.fbK = k; G.popups.push({ text: ATK[k].n + '!', t: 0, color: ATK[k].c, size: 0.08, life: 0.9 }); try { k === 'ice' ? noise(0.4, 4000, 1500, 0.08, 1, 'highpass') : k === 'poison' ? beep(180, 0.3, 'sawtooth', 0.05, 80) : SFX.fire(); } catch (e) {}
+    if (!tg) setTimeout(() => { if (G) G.popups.push({ text: 'NINGUÉM À FRENTE', t: 0, color: '#ffd23f', life: 1, size: 0.06 }); }, 600);
     if (tg && !hitOk) setTimeout(() => { if (G) G.popups.push({ text: 'ERROU!', t: 0, color: '#ff6b5e', life: 1, size: 0.07 }); }, 600);
     if (tg && hitOk) setTimeout(() => { if (!G || !G.bots) return; if (k === 'ice') tg.iceT = 2.2; else if (k === 'poison') tg.poisT = 2.4; else { tg.pv = 18; tg.st = 0.9; } emote(tg, 'a'); emote(G, 'h'); G.popups.push({ text: 'ACERTOU ' + tg.n.toUpperCase() + '!', t: 0, color: '#c6f432', life: 1, size: 0.06 }); }, 600);
     return; }
   if (!G.duo) { G.shots.push({ wz: G.dist + 1.5, lane: G.lane, t: 0, k: 'fire' }); G.shake = Math.max(G.shake || 0, 0.15); SFX.fire(); G.popups.push({ text: 'MAGIA DE FOGO!', t: 0, color: '#ff8a2a', size: 0.07, life: 0.8 }); return; }
   G.fbFx = clock; G.fbK = k; G.popups.push({ text: ATK[k].n + '!', t: 0, color: ATK[k].c, size: 0.08, life: 0.9 }); try { k === 'ice' ? noise(0.4, 4000, 1500, 0.08, 1, 'highpass') : k === 'poison' ? beep(180, 0.3, 'sawtooth', 0.05, 80) : SFX.fire(); } catch (e) {} G.shake = Math.max(G.shake || 0, 0.15);
-  G.atkSent = (G.atkSent || 0) + 1; if (Math.random() >= ATK_HIT) { setTimeout(() => { if (G) G.popups.push({ text: 'ERROU!', t: 0, color: '#ff6b5e', life: 1, size: 0.07 }); }, 600); return; } if (DUO.on) duoSend({ t: 'atk', k });
+  G.atkSent = (G.atkSent || 0) + 1; if (!atkTarget()) { setTimeout(() => { if (G) G.popups.push({ text: 'NINGUÉM À FRENTE', t: 0, color: '#ffd23f', life: 1, size: 0.06 }); }, 600); return; }   /* usou sem ninguém perto à frente: o poder vai, mas não pega ninguém */ if (Math.random() >= ATK_HIT) { setTimeout(() => { if (G) G.popups.push({ text: 'ERROU!', t: 0, color: '#ff6b5e', life: 1, size: 0.07 }); }, 600); return; } if (DUO.on) duoSend({ t: 'atk', k });
 }
 function useLk() {   /* usa o poder guardado da caixa da sorte */
-  if (!G || state !== 'play' || !G.lkPw) return false; const k = G.lkPw; if (ATK[k] && (G.duo || G.race) && !atkTarget()) { if (clock - (G.noTgT || -9) > 0.8) { G.noTgT = clock; G.popups.push({ text: 'NINGUÉM PERTO À SUA FRENTE', t: 0, color: '#ffd23f', size: 0.055, life: 1 }); } return false; } G.lkPw = null;
+  if (!G || state !== 'play' || !G.lkPw) return false; const k = G.lkPw; G.lkPw = null;
   if (ATK[k]) fireDuo(k);
   else if (k === 'boost') { G.rBoost = 3; G.wflash = Math.max(G.wflash || 0, 0.25); G.shake = Math.max(G.shake || 0, 0.2); G.popups.push({ text: 'TURBO!', t: 0, color: '#ffd23f', size: 0.08 }); noise(0.5, 400, 3000, 0.08, 1); }
   else if (k === 'shield') { G.bShield = 8; playSmp('shield', 0.7); G.popups.push({ text: 'ESCUDO DE ENERGIA 8s', t: 0, color: '#4fd8ff' }); } else { G.bMag = 8; G.popups.push({ text: 'ÍMÃ 8s', t: 0, color: '#ff8a2a' }); }
@@ -3012,6 +3023,7 @@ function openLuck(o) {                       // caixa da sorte: quebra e joga o 
   const r = Math.random(); let kind;
   if (r < 0.02) kind = 'gem'; else if (r < 0.07) kind = 'item'; else if (r < 0.35) kind = 'coins'; else if (r < 0.5) kind = G.lives < maxLives() ? 'life' : 'coins'; else if (r < 0.65) kind = 'shield'; else if (r < 0.8) kind = 'magnet'; else if (r < 0.86) kind = 'ki'; else if (r < 0.94) kind = 'pwr'; else kind = G.endless ? 'coins12' : 'time';   /* pwr: +1 poder guardado */
   if (kind === 'magnet' && (G.duo || G.race)) kind = 'boost';   /* ímã só no jogo normal */
+  if (kind === 'shield' && G.duo) kind = 'boost';   /* multiplayer: sem escudo */
   if ((G.race || G.duo) && Math.random() < 0.45) kind = (G.duo ? G.fbOn : true) && Math.random() < 0.6 ? ['fball', 'ice', 'poison'][Math.floor(Math.random() * 3)] : 'boost';   /* corrida e multiplayer: mesmos poderes */
    /* corrida/multiplayer: turbo; no multiplayer também a bola de fogo */   /* corrida: turbo é o prêmio mais comum */
   G.objs.push({ type: 'prize', kind, lane: o.lane, wz: G.dist + 4.5, t0: clock });
@@ -3044,9 +3056,7 @@ function givePrize(kind) {                   // pegou o prêmio: aplica
   else if (kind === 'coins') { G.coins += 8; txt = '+8 MOEDAS'; }
   else if (kind === 'coins12') { G.coins += 12; txt = '+12 MOEDAS'; }
   else if (kind === 'life') { G.lives = Math.min(maxLives(), G.lives + 1); txt = '+1 VIDA'; }
-  else if (ATK[kind] && G.lkPw) { if ((G.duo || G.race) && !atkTarget()) txt = 'NINGUÉM À FRENTE'; else { fireDuo(kind); txt = ATK[kind].n + '!'; } }
-  else if (kind === 'boost' && G.lkPw) { G.rBoost = 3; txt = 'TURBO!'; }
-  else if ((kind === 'shield' || kind === 'magnet' || kind === 'boost' || ATK[kind]) && !G.lkPw) { G.lkPw = kind; txt = (kind === 'shield' ? 'ESCUDO' : kind === 'boost' ? 'TURBO' : ATK[kind] ? ATK[kind].n : 'ÍMÃ') + ' · TOQUE PARA USAR'; }   /* fica guardado no canto */
+  else if ((kind === 'shield' || kind === 'magnet' || kind === 'boost' || ATK[kind])) { G.lkPw = kind; txt = (kind === 'shield' ? 'ESCUDO' : kind === 'boost' ? 'TURBO' : ATK[kind] ? ATK[kind].n : 'ÍMÃ') + ' · TOQUE PARA USAR'; }   /* fica guardado no canto · se já tinha um, troca pelo novo */
   else if (kind === 'shield') { G.bShield = 8; txt = 'ESCUDO DE ENERGIA 8s'; beep(440, 0.3, 'sine', 0.07, 440); noise(0.4, 300, 1200, 0.06, 0.8); }
   else if (kind === 'magnet') { G.bMag = 8; txt = 'ÍMÃ 8s'; }
   else if (kind === 'ki') { G.ki = 1; txt = 'MAGIA CHEIA'; }
@@ -3411,7 +3421,7 @@ function update(dt, now) {
   } else { target = TOUCH_SPEED; ctl.squat = now < ctl.squatUntil || !!ctl.shiftSq; }
   let snap = false;
   target *= 1.6 + (G.diff || 0) * 0.07 + tierNow() * 0.09;   /* fases mais difíceis: mais velocidade */   /* partidas mais rápidas (+18%) */   /* partida mais rápida */   /* corre mais rápido a cada nível de dificuldade */
-  if (G.pAct > 0 && PW && PW.turbo) { const t0 = G.pDur - G.pAct; target = MAX_SPEED * (t0 < 0.4 ? 2.6 : 1.7); snap = t0 < 0.4; }   // turbo: começa com um dash e segue bem rápido
+  if (G.pAct > 0 && PW && PW.turbo) { const t0 = G.pDur - G.pAct; target = MAX_SPEED * (t0 < 0.3 ? 1.8 : 1.3); snap = t0 < 0.3;   /* turbo mais fraco (nerf) */ }   // turbo: começa com um dash e segue bem rápido
   if (G.pAct > 0 && PW && PW.dash) { target = MAX_SPEED * 3.4; snap = true; }   // dash: arrancada curta e muito rápida
   if (G.stun > 0) { G.stun -= dt; target = 0; }
   G.speed += (target - G.speed) * Math.min(1, dt * (snap ? 14 : 4));
@@ -3559,9 +3569,10 @@ function update(dt, now) {
     if (o.type === 'high' && !o.v && !o.lanes) {   /* ponte: enquanto estiver embaixo dela, precisa ficar agachado */
       const zb = o.wz - G.dist;
       if (zb <= 0.3 && zb > -1.1 - 3.4 && ctl.squat) ctl.squatUntil = Math.max(ctl.squatUntil || 0, performance.now() + 250);   /* agachou na ponte: fica agachado até passar (não bate a cabeça) */
-      if (!o.thru && zb <= -1.8 && zb > -2.6 && !ctl.squat) {   /* em pé: a ponte é uma barreira, não dá pra atravessar sem agachar */
-        o.thru = true; ctl.squatUntil = Math.max(ctl.squatUntil || 0, performance.now() + 900);   /* bateu a cabeça uma vez: perde vida e passa agachado (não fica preso) */
-        if (!o.hd && G.stun <= 0) { o.hd = true; const sp = G.speed; if (hit()) { G.speed = Math.max(sp, 4); G.stun = 0; } G.shake = Math.max(G.shake || 0, 0.25); } continue; }
+      if (!o.thru && zb <= -1.8 && !ctl.squat) {   /* em pé: a ponte trava você como a caixa dupla; só passa agachando */
+        G.dist = Math.min(G.dist, o.wz + 1.8);
+        if (G.stun <= 0 && clock - (o.bumpT ?? -9) > 0.6) { o.bumpT = clock; if (hit()) G.pushV = 9; else G.pushV = 6; G.shake = Math.max(G.shake || 0, 0.25); noise(0.1, 300, 120, 0.12, 1, 'lowpass'); }
+        continue; }
       if (zb <= -1.8 && ctl.squat && !o.thru) { o.thru = true; if (!o.hd) G.popups.push({ text: 'Boa!', t: 0, color: '#7dffb0' }); }
       if (zb <= -1.1 - 3.2) o.done = true; continue;
     }
@@ -6562,7 +6573,7 @@ function drawHUD() {
     const pb = pbS, bx2 = m + si, by2 = H - pb - m - sb, b2 = pxPanel(bx2, by2, pb, pb, '#0d1440', '#ffd23f');
     ctx.fillStyle = '#ffd23f'; ctx.fillRect(bx2 + b2, by2 + b2, pb - 2 * b2, pb - 2 * b2);
     spr(ATK[G.lkPw] ? ATK[G.lkPw].ic() : G.lkPw === 'boost' ? TURBO_IC : PICON[G.lkPw], bx2 + pb * 0.24, by2 + pb * 0.12, pb * 0.52, pb * 0.52);
-    const noTg = ATK[G.lkPw] && (G.duo || G.race) && !atkTarget(); if (noTg) { ctx.fillStyle = 'rgba(13,20,64,.62)'; ctx.fillRect(bx2 + b2, by2 + b2, pb - 2 * b2, pb - 2 * b2); }   /* ninguém perto à frente: botão apagado */
+    const noTg = false; if (noTg) { ctx.fillStyle = 'rgba(13,20,64,.62)'; ctx.fillRect(bx2 + b2, by2 + b2, pb - 2 * b2, pb - 2 * b2); }   /* ninguém perto à frente: botão apagado */
     ctx.font = pf(pb * 0.17); ctx.textAlign = 'center'; ctx.fillStyle = noTg ? '#ffd23f' : '#0d1440'; ctx.fillText(noTg ? 'SEM ALVO' : mode === 'keys' ? 'TECLA C' : 'TOQUE', bx2 + pb / 2, by2 + pb * 0.86);
     lkBtn = { x: bx2, y: by2, w: pb, h: pb };
   }
