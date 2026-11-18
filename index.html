@@ -664,12 +664,23 @@
   #over.duoOv #finalScore, #over.duoOv .stats, #over.duoOv #lootBox, #over.duoOv #recBox { display: none !important; }   /* multiplayer: só vencedor, placar e botões */
   #duoBoard .dbOne { justify-content: center; border: 0; margin-top: 6px; } #duoBoard .dbOne b { font-size: 22px; }
   #pauseDlg button#pauseGo.dlX { position: absolute !important; top: 10px !important; right: 10px !important; left: auto !important; width: 34px !important; min-width: 0 !important; height: 34px !important; min-height: 0 !important; font-size: 15px !important; box-shadow: 0 3px 0 #060a24 !important; align-self: auto !important; border-radius: 50% !important; padding: 0 !important; margin: 0 !important; z-index: 2; }
+  /* celular deitado: respeita a câmera/ilha do iPhone nas laterais e centraliza a loja */
+  @media (orientation: landscape) and (max-height: 600px) {
+    #custom { padding-left: max(16px, calc(env(safe-area-inset-left) / .8 + 6px)) !important; padding-right: max(16px, calc(env(safe-area-inset-right) / .8 + 6px)) !important; }
+    #custom .backArrow { left: max(16px, calc(env(safe-area-inset-left) / .8 + 6px)) !important; }
+    #shop { padding-left: max(16px, calc(env(safe-area-inset-left) / .8)) !important; padding-right: max(16px, calc(env(safe-area-inset-right) / .8)) !important; }
+    #eqBottom { left: auto !important; right: max(16px, calc(env(safe-area-inset-right) / .8 + 6px)) !important; transform: none !important; bottom: 14px !important; }
+    #eqBottom .pick.r, #eqBottom .fdSide .eqCard { height: 92px !important; } #eqBottom .pick.r { width: 230px !important; } #eqBottom .fdSide { width: 190px !important; }
+    #eqBottom .pick.r img { max-height: 76px; }
+  }
+  #eqBottom .fdSide .eqCard em { display: block !important; font-size: 13px !important; }   /* mascote: mostra o nome / cadeado */
+  #shopBody { width: min(100%, 940px) !important; margin: 0 auto; } #shopRow { justify-content: center !important; } #shopRow #shopList { max-width: 640px; }   /* loja centralizada, não espalhada na tela toda */
 </style>
 </head>
 <body>
 <div id="splash"><div class="spLogo"></div><div class="spBar"><i></i></div></div>
 <script>(function(){var t0=Date.now();document.addEventListener('DOMContentLoaded',function(){var l=document.querySelector('.logo');var b=document.querySelector('#splash .spLogo');if(l&&b)b.appendChild(l.cloneNode(true));});window.addEventListener('load',function(){setTimeout(function(){var s=document.getElementById('splash');if(!s)return;s.classList.add('out');setTimeout(function(){s.remove()},400);},Math.max(250,1200-(Date.now()-t0)));});})();</script>
-<div id="verTag" style="position:fixed;left:8px;bottom:6px;font:11px monospace;color:rgba(255,255,255,.55);z-index:50;pointer-events:none">versão 17/11 23h15</div>
+<div id="verTag" style="position:fixed;left:8px;bottom:6px;font:11px monospace;color:rgba(255,255,255,.55);z-index:50;pointer-events:none">versão 17/11 0h45</div>
 <div id="app">
 <canvas id="c"></canvas>
 <video id="v" playsinline muted autoplay></video>
@@ -1171,6 +1182,24 @@ const SONGS = {   /* uma música por mapa */
   rock: { bpm: 172, lead: 'square', cut: 3400, len: 1.4, bassStep: 1, kick: [0, 3, 6, 8, 11, 14], arp: null, bass: [40, 40, 43, 38],
     mel: [[76,76,0,79,0,76,0,74, 76,0,0,71,0,74,0,76], [79,79,0,81,0,79,0,76, 74,0,0,76,0,71,0,0], [76,76,0,79,0,83,0,81, 79,0,0,76,0,79,0,81], [83,0,81,0,79,0,76,0, 74,0,71,0,74,0,76,0],
           [88,0,86,88,0,83,0,0, 86,0,84,86,0,81,0,0], [84,0,83,84,0,79,0,0, 83,0,81,83,0,76,0,0], [88,0,86,0,84,0,83,0, 81,0,79,0,81,0,83,0], [84,83,81,79,76,74,71,0, 76,0,0,0,79,0,0,0]] } };
+SONGS.boss = { bpm: 184, lead: 'sawtooth', cut: 2600, len: 1.1, bassStep: 1, kick: [0, 2, 4, 6, 8, 10, 12, 14], arp: [3, 3, 5, 3], bass: [33, 33, 36, 31],   /* chefão: rápida e pesada, em tom menor */
+  mel: [[69,0,72,0,76,0,72,0, 69,0,72,0,77,0,76,0], [69,0,72,0,76,0,79,0, 77,0,76,0,72,0,71,0], [72,0,76,0,79,0,76,0, 72,0,76,0,81,0,79,0], [77,0,76,0,74,0,72,0, 71,0,72,0,74,0,0,0],
+        [81,0,81,0,84,0,81,0, 79,0,77,0,76,0,0,0], [77,0,77,0,81,0,77,0, 76,0,74,0,72,0,0,0], [76,0,79,0,84,0,83,0, 81,0,79,0,77,0,76,0], [81,80,81,0,76,0,72,0, 69,0,0,0,68,0,0,0]] };
+SONGS.ice = { bpm: 100, lead: 'triangle', cut: 4000, len: 2.5, bassStep: 4, kick: [0, 8], arp: [4, 3, 4, 3], bass: [48, 45, 41, 43],   /* gelo: sininhos calmos */
+  mel: [[84,0,0,0,79,0,0,0,76,0,79,0,84,0,0,0],[86,0,0,0,84,0,0,0,81,0,0,0,79,0,0,0],[81,0,0,0,77,0,0,0,76,0,77,0,81,0,0,0],[79,0,0,0,74,0,0,0,76,0,0,0,79,0,0,0],
+        [88,0,86,0,84,0,0,0,79,0,81,0,84,0,0,0],[86,0,84,0,81,0,0,0,76,0,79,0,81,0,0,0],[84,0,81,0,77,0,0,0,76,0,74,0,72,0,0,0],[74,0,76,0,79,0,0,0,72,0,0,0,0,0,0,0]] };
+SONGS.desert = { bpm: 118, lead: 'sawtooth', cut: 1800, len: 1.2, bassStep: 2, kick: [0, 6, 10], arp: null, bass: [40, 40, 41, 40],   /* deserto: escala árabe */
+  mel: [[76,0,77,0,80,0,77,0,76,0,0,0,74,0,72,0],[71,0,72,0,74,0,72,0,71,0,0,0,0,0,0,0],[76,0,77,0,80,0,81,0,83,0,81,0,80,0,77,0],[76,0,0,0,0,0,77,76,74,0,72,0,71,0,0,0],
+        [83,0,84,0,83,0,81,0,80,0,81,0,80,0,77,0],[76,0,77,0,76,0,74,0,72,0,74,0,72,0,71,0],[69,0,71,0,72,0,74,0,76,0,77,0,80,0,81,0],[80,0,77,0,76,0,0,0,76,0,0,0,0,0,0,0]] };
+SONGS.forest = { bpm: 84, piano: 1, ch: [[45, 57, 60, 64], [41, 53, 57, 60], [43, 55, 59, 62], [40, 52, 56, 59]],   /* floresta à noite: piano misterioso */
+  mel: [[76,0,0,0,0,0,72,0,0,0,74,0,0,0,0,0],[72,0,0,0,0,0,69,0,0,0,71,0,72,0,0,0],[74,0,0,0,0,0,71,0,0,0,67,0,0,0,0,0],[68,0,0,0,71,0,0,0,76,0,0,0,0,0,0,0]] };
+SONGS.beach = { bpm: 128, lead: 'square', cut: 2600, len: 1.0, bassStep: 2, kick: [0, 4, 8, 12], arp: null, bass: [43, 48, 50, 43],   /* praia: alegre e saltitante */
+  mel: [[79,0,83,0,86,0,83,0,79,0,0,81,0,79,0,0],[84,0,83,0,81,0,79,0,76,0,0,79,0,0,0,0],[86,0,0,83,0,86,0,88,0,86,0,83,0,81,0,0],[79,0,81,0,83,0,0,0,79,0,0,0,0,0,0,0],
+        [83,0,86,0,91,0,88,0,86,0,0,83,0,86,0,0],[84,0,88,0,91,0,88,0,84,0,0,81,0,0,0,0],[86,0,83,0,79,0,81,0,83,0,86,0,83,0,81,0],[79,0,0,0,74,0,76,0,79,0,0,0,0,0,0,0]] };
+SONGS.sea = { bpm: 80, lead: 'sine', cut: 1400, len: 4, bassStep: 4, kick: [0], arp: [3, 4, 3, 4], bass: [38, 34, 36, 33],   /* fundo do mar: sonhadora */
+  mel: [[74,0,0,0,0,0,77,0,0,0,76,0,0,0,0,0],[72,0,0,0,0,0,69,0,0,0,0,0,0,0,0,0],[74,0,0,0,0,0,79,0,0,0,77,0,0,0,0,0],[76,0,0,0,72,0,0,0,69,0,0,0,0,0,0,0],
+        [81,0,0,0,0,0,79,0,0,0,77,0,0,0,0,0],[76,0,0,0,0,0,74,0,0,0,72,0,0,0,0,0],[74,0,0,0,77,0,0,0,81,0,0,0,79,0,0,0],[77,0,0,0,76,0,0,0,74,0,0,0,0,0,0,0]] };
+const SONG_MAP = { 'Tundra Gelada': 'ice', 'Deserto Pixel': 'desert', 'Floresta da Lua': 'forest', 'Praia Tropical': 'beach', 'Fundo do Mar': 'sea' };   /* cada mapa com a sua música */
 SONGS.funk = { bpm: 130, funk: 1, lead: 'square', cut: 2200, len: 1.2, bassStep: 99, kick: [0, 3, 6, 10, 12], arp: null, bass: [38, 38, 41, 36],   /* batidão (original): tamborzão + 808 */
   mel: [[74,0,0,74,0,0,77,0, 0,0,76,0,74,0,0,0], [72,0,0,72,0,0,74,0, 0,0,0,0,0,0,0,0], [74,0,0,74,0,0,77,0, 0,0,79,0,77,0,76,0], [74,0,0,0,72,0,0,0, 69,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0], [86,0,0,86,0,0,84,0, 0,0,81,0,0,0,0,0], [0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0], [86,0,84,0,81,0,79,0, 77,0,76,0,74,0,0,0]] };
@@ -1249,7 +1278,7 @@ function musTick() {
     if (musMode === 'yt' && YT.pl && YT.ok && YT.pl.getPlayerState && YT.pl.getPlayerState() === 1) return;   /* YouTube tocando: sem música do mapa */
   } catch (e) {}
   if (!ac || !MUS || !musicOn || document.hidden || musMode === 'def' || (musMode === 'mine' && MYDB.list.length) || (musMode === 'yt' && !YT.fail)) return;
-  const kind = musMode === 'funk' ? 'funk' : SONGS[TH.kind] ? TH.kind : 'vox', SG = SONGS[kind], STP = 60 / (SG.bpm * 0.88) / 4;   /* um pouco mais lenta e tranquila */
+  const kind = (typeof G !== 'undefined' && G && G.boss && !G.boss.gone && state === 'play') ? 'boss' : musMode === 'funk' ? 'funk' : SONG_MAP[TH.name] || (SONGS[TH.kind] ? TH.kind : 'vox'), SG = SONGS[kind], STP = 60 / (SG.bpm * 0.88) / 4;   /* um pouco mais lenta e tranquila */
   if (kind !== musKind) { musKind = kind; musStep = 0; musT = 0; }   // trocou de mapa: começa a música dele
   if (musT < ac.currentTime) musT = ac.currentTime + 0.05;
   while (musT < ac.currentTime + 0.15) {
@@ -1506,7 +1535,7 @@ for (const k of SKINS) { if (k.p) k.p = Math.round(k.p * 2.5 / 10) * 10; if (k.g
 const STAGES = [
   { name: 'Primeiros Passos', goal: 1100, time: 170, d: 0, noMob: 1 },   /* fase nova (a 1ª): só obstáculos, sem mobs */
   { name: 'Aquecimento', goal: 1100, time: 170 }, { name: 'Corrida de Rua', goal: 1300, time: 180 }, { name: 'Maratona Neon', goal: 1400, time: 185 },   /* primeiras fases mais longas */
-  { name: 'Desafio do Vulcão', goal: 1200, time: 175 }, { name: 'Lenda Pixel', goal: 1400, time: 185, boss: 1, mobs: 0.6 },   /* fases mais longas */
+  { name: 'Desafio do Vulcão', goal: 1200, time: 175 }, { name: 'Esqueleto Gigante', goal: 1400, time: 185, boss: 1, mobs: 0.6 },   /* fases mais longas */
   /* temporada 2: mapas novos (gelo, deserto e floresta à noite) */
   { name: 'Trilha Gelada', goal: 1300, time: 180, d: 3 }, { name: 'Pico Nevado', goal: 1400, time: 185, d: 4 },
   { name: 'Dunas Douradas', goal: 1400, time: 185, d: 4 }, { name: 'Tempestade de Areia', goal: 1500, time: 190, d: 5 },
@@ -1930,7 +1959,7 @@ const itSel = {};   /* item selecionado em cada aba da loja (vitrine) */
 function itemPrevHTML() {   /* vitrine grande do item selecionado com explicação ao lado */
   const L = SHOP[tab]; if (!L || !L.length) return;
   if (!itSel[tab] || !L.find(q => q.id === itSel[tab])) { const f = $('shopList').querySelector('[data-id]'); itSel[tab] = f ? f.dataset.id : L[0].id; }
-  const it = L.find(q => q.id === itSel[tab]), own = tab !== 'power' && (!!S.own[it.id] || it.p === 0), lk = lvLocked(it), poor = !own && (S.w < it.p || (S.gem || 0) < (it.g || 0));
+  const it = L.find(q => q.id === itSel[tab]), own = tab !== 'power' && (!!S.own[it.id] || (it.p === 0 && !it.quest && !it.craft)), lk = lvLocked(it), poor = !own && (S.w < it.p || (S.gem || 0) < (it.g || 0));
   const lockTx = it.id === 'bow1' && !own ? `Conquista · mate 150 esqueletos (${Math.min(150, S.mp.skel || 0)}/150)` : it.quest && !own && it.id === 'tc_vtx' ? (S.own.sw9 ? `Missão · derrote 40 mobs com a Lâmina Sombria (${Math.min(40, S.mp.sw9 || 0)}/40)` : 'Derrote o chefão para ganhar a Lâmina Sombria e começar a missão') : it.quest && !own ? (atkOpen('ki') ? `Missão · derrote 30 magos esqueleto (${Math.min(30, S.mp.mage || 0)}/30)` : 'Libere a magia (nível 6) para começar a missão') : it.boss && !own ? 'Derrote o chefão para liberar' : lk ? 'Nível ' + it.lv : '';
   const act = own ? '✔ É SEU' : lockTx ? `${pxImg('lock')} ${lockTx}` : `Comprar · <i class="ic" style="background-image:url(${coinURL()})"></i>${it.p}${it.g ? ` <i class="ic" style="background-image:url(${gemURL()})"></i>${it.g}` : ''}`;
   const cat = '';
@@ -2610,7 +2639,7 @@ function endGame() {
     const W2 = G.race ? !!(G.win && !G.rWin) : !!G.duoWin, nm = (DUO.op && DUO.op.n) || 'O rival'; G.duoW2 = W2;
     S.duoW = S.duoW || 0; S.duoSt = W2 ? (S.duoSt || 0) + 1 : 0; if (W2) S.duoW++; save();
     $('overT').textContent = W2 ? 'VOCÊ VENCEU!' : nm + ' venceu!'; $('overHint').textContent = ''; $('lootBox').innerHTML = ''; $('recBox').style.display = 'none';
-    if (W2) { [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => beep(f, 0.16, 'triangle', 0.08), i * 110)); } else playSmp('over', 0.6);
+    if (W2) { [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => beep(f, 0.16, 'triangle', 0.08), i * 110)); } else playSmp('over', 0.35);
     handsT = 0; CONF = W2 ? Array.from({ length: 70 }, (_, i) => ({ x: Math.random() * W, y: -Math.random() * H, vx: (Math.random() - 0.5) * H * 0.15, vy: H * (0.25 + Math.random() * 0.35), rot: Math.random() * 6, vr: (Math.random() - 0.5) * 8, s: H * (0.02 + Math.random() * 0.02), c: ['#ffd23f', '#ff5d5d', '#18b3a3', '#8b5cf6', '#fff'][i % 5] })) : [];
     setTimeout(duoBoard, 50); setState('over'); $('btnAgain').textContent = 'Próxima'; setTimeout(() => { rmUI(); duoTryNext(); }, 0); return; }
   const score = Math.floor(G.dist) + G.coins * 10 + G.walls * 5 + G.bonus;
@@ -2644,7 +2673,7 @@ function endGame() {
   if (won && stI >= STAGES.length - 1) { if (!S.champ) G.progTxt += ' · SKIN ANDARILHO SÁBIO LIBERADA!'; S.champ = 1; }
   if (won) { if (stI === S.st && S.st < STAGES.length - 1) S.st++; if (stI < STAGES.length - 1) stI++; }
   save();
-  if (!won && !(G.endless && newRec)) playSmp('over', 0.7);   /* som de perdeu */
+  if (!won && !(G.endless && newRec)) playSmp('over', 0.4);   /* som de perdeu */
   $('overT').textContent = G.endless ? (newRec ? 'Novo recorde!' : 'Fim do Infinito!') : won ? (last ? 'Campeão!' : 'Fase concluída!') : G.lives <= 0 ? 'Sem vidas!' : 'Fim da corrida!';
   $('btnAgain').textContent = won && !last ? 'Próxima fase' : 'Jogar de novo';
   $('overHint').textContent = `+${earnL} moedas (${S.w})` + (gemsEarn ? ` · +${gemsEarn} cristal${gemsEarn > 1 ? 'is' : ''} (${S.gem})` : '') + (G.progTxt || '') + '. ' + (mode === 'camera' ? 'Levante as duas mãos acima da cabeça para jogar de novo.' : '');
@@ -2662,7 +2691,7 @@ function endGame() {
     const rc = W2 ? (G.race ? 60 : 50) : 15, rg = 0, bon = W2 && S.duoSt % 3 === 0 ? 1 : 0;   /* diamante raro: só a cada 3 vitórias seguidas */ S.w += rc; S.gem = (S.gem || 0) + rg + bon; save();
     $('overT').textContent = W2 ? 'VOCÊ VENCEU!' : nm + ' venceu!';
     $('overHint').textContent = (G.race ? 'Corrida' : 'Sobrevivência') + ` · +${rc} moedas` + (rg ? ` · +${rg} cristal` : '') + (bon ? ` · SEQUÊNCIA DE ${S.duoSt}! +${bon} cristal` : W2 && S.duoSt > 1 ? ` · ${S.duoSt} vitórias seguidas` : '') + ` · ${S.duoW} vitórias no total`;
-    if (W2) { [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => beep(f, 0.16, 'triangle', 0.08), i * 110)); } else playSmp('over', 0.6);
+    if (W2) { [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => beep(f, 0.16, 'triangle', 0.08), i * 110)); } else playSmp('over', 0.35);
   }
   setState('over'); if (G.duo && DUO.on) { $('btnAgain').textContent = 'Próxima'; setTimeout(() => { rmUI(); duoTryNext(); }, 0); } else if (G.race && DUO.on) { $('btnAgain').textContent = 'Próxima'; setTimeout(() => { rmUI(); duoTryNext(); }, 0); } else if (G.race) {} else if (DUO.on) { duoResult(); $('btnAgain').textContent = 'Próxima'; setTimeout(() => { rmUI(); duoTryNext(); }, 0); } else $('btnAgain').textContent = won && !last ? 'Próxima fase' : 'Jogar de novo';
 }
@@ -2959,10 +2988,11 @@ function spawn0() {
   else if (r < 0.69 && wz - (G.lastBr ?? -999) > 40) { const v = TH.kind === 'neon' && Math.random() < 0.12; if (!v) G.lastBr = wz; G.objs.push({ type: 'high', wz, v }); } else if (r < 0.69) G.objs.push({ type: 'wall', wz, m: wallTier() });   // drones só no mapa da cidade
   else if (r < 0.735) G.objs.push({ type: 'wall', wz, m: wallTier() });
   else if (r < 0.79) G.objs.push({ type: 'hurdle', wz });   /* barreira listrada baixa: pule */
+  else if (r < 0.9 && Math.random() < 0.4) { G.objs.push({ type: 'tree', lane: -1, wz }, { type: 'tree', lane: 1, wz }); coinsLine(0, wz - 2, 3); }   /* árvores nas duas pontas: passe pelo meio */
   else if (r < 0.9) { const lane = Math.floor(Math.random() * 3) - 1; G.objs.push({ type: 'tree', lane, wz }); coinsLine([-1, 0, 1].filter(l => l !== lane)[Math.floor(Math.random() * 2)], wz - 2, 3); }   // árvore numa pista: desvie ou corte com o machado
-  else if (r < 0.94 && TH.kind === 'vox' && Math.random() < 0.25) {   /* planta carnívora (só no Céu Pixel): 1 ou 2 vasos, sempre sobra uma pista livre */
+  else if (r < 0.94 && (TH.kind === 'vox' || TH.snow) && Math.random() < (TH.snow ? 0.35 : 0.25)) {   /* planta carnívora (só no Céu Pixel): 1 ou 2 vasos, sempre sobra uma pista livre */
     const ls = [-1, 0, 1].sort(() => Math.random() - 0.5), n = Math.random() < 0.4 ? 2 : 1;
-    for (let i = 0; i < n; i++) G.objs.push({ type: 'plant', lane: ls[i], wz: wz + i * 0.6 });
+    for (let i = 0; i < n; i++) G.objs.push({ type: 'plant', lane: ls[i], wz: wz + i * 0.6, ice: !!TH.snow });   /* mapa de gelo: planta de gelo que cospe gelo */
     coinsLine(ls[2], wz - 2, 3);
   }
   else if (r < 0.94) {                       // monstros: esqueleto com espada ou esqueleto mago numa pista
@@ -3260,9 +3290,9 @@ function burstAt(p, n, cols, big) {
 }
 function startBoss() {
   const hp = 20 + 4 * stI;
-  G.boss = { s: 0, hp, max: hp, x: 0, tx: 0, pz: FAR - 4, e: 1.05, t: 0, thr: 1.6, wind: 0, hurt: 0, lastHit: false, dieT: 0, moveT: 2.5, n: 0, kind: 'rock', gone: false };
+  G.boss = { s: 0, hp, max: hp, x: 0, tx: 0, pz: FAR - 4, e: 1.05, t: 0, thr: 1.6, wind: 0, hurt: 0, lastHit: false, dieT: 0, moveT: 2.5, n: 0, kind: 'rock', gone: false, sk: stI < SEASON_N && !G.endless && !G.race };
   G.projs = []; G.t += 45; G.flash = 0.3; G.shake = 0.5;
-  G.popups.push({ text: 'CHEFÃO!', t: 0, color: '#ff4f6d', life: 2.4, size: 0.12 });
+  G.popups.push({ text: G.boss.sk ? 'ESQUELETO GIGANTE!' : 'CHEFÃO!', t: 0, color: '#ff4f6d', life: 2.4, size: G.boss.sk ? 0.09 : 0.12 });
   beep(110, 0.5, 'sawtooth', 0.12, -40); setTimeout(() => beep(82, 0.6, 'sawtooth', 0.12, -30), 220);
 }
 function hurtBoss(d, label) {
@@ -3275,14 +3305,15 @@ function hurtBoss(d, label) {
     b.s = 2; b.dieT = 0; G.projs = []; G.shake = 0.8;
     G.popups.push({ text: 'CHEFÃO DERROTADO!', t: 0, color: '#c6f432', life: 2.4, size: 0.085 });
     addLoot('crystal', 1, proj(b.x, b.pz, b.e), true); G.kBoss = (G.kBoss || 0) + 1;   /* chefão: 100% solta 1 Cristal Vórtice (fora do limite) */
-    if (!S.own.sw9) { S.own.sw9 = 1; save(); setTimeout(() => unlockPop('sw9'), 1400); }
+    if (b.sk) { addLoot('bone', 5, proj(b.x, b.pz, b.e), true); G.coins += 60; G.popups.push({ text: '+60 MOEDAS · +5 OSSO', t: 0, color: '#ffd23f', life: 2, size: 0.06 }); }   /* esqueleto gigante (temporada 1): cristal, ossos e moedas */
+    else if (!S.own.sw9) { S.own.sw9 = 1; save(); setTimeout(() => unlockPop('sw9'), 1400); }   /* chefão da temporada 2+: Lâmina Sombria */
     if (STAGES[stI] && STAGES[stI].name === 'Rei dos Mares' && !S.own.trid) { S.own.trid = 1; save(); setTimeout(() => unlockPop('trid'), 2200); }   /* Rei dos Mares: Tridente */
-    if (!S.own.mg_arc) { S.own.mg_arc = 1; save(); setTimeout(() => unlockPop('mg_arc'), 3200); }   /* magia mais forte: só do chefão */   /* chefão derrotado: Lâmina Sombria surge */   /* espada do chefão liberada */
+    if (!b.sk && !S.own.mg_arc) { S.own.mg_arc = 1; save(); setTimeout(() => unlockPop('mg_arc'), 3200); }   /* magia mais forte: só do chefão */   /* chefão derrotado: Lâmina Sombria surge */   /* espada do chefão liberada */
     beep(200, 0.6, 'sawtooth', 0.12, -150);
   }
 }
 function throwAtPlayer() {
-  const b = G.boss, one = (lane, kind) => G.projs.push({ kind, lane, x0: b.x, e0: b.e - 0.15, e1: kind === 'rock' ? 0.14 : 0.62, pz: b.pz, pz0: b.pz, t: 0, T: 1.7 });
+  const b = G.boss, one = (lane, kind) => G.projs.push({ kind, bone: !!b.sk, lane, x0: b.x, e0: b.e - 0.15, e1: kind === 'rock' ? 0.14 : 0.62, pz: b.pz, pz0: b.pz, t: 0, T: 1.7 });
   const kind = b.kind, lanes = [-1, 0, 1]; b.kind = Math.random() < 0.5 ? 'rock' : 'bomb';
   const l1 = Math.random() < 0.65 ? G.lane : lanes[Math.floor(Math.random() * 3)];
   one(l1, kind);
@@ -3299,12 +3330,21 @@ function bossUpdate(dt) {
     b.pz += (BOSS_HOVER - b.pz) * Math.min(1, dt * 1.4);
     if (b.pz < BOSS_HOVER + 1) { b.s = 1; b.thr = 1.4; }
   } else if (b.s === 1) {
+    b.e = (b.sk ? 0.25 : 1.05) + 0.07 * Math.sin(b.t * 3);
+    if (b.bite !== undefined) {   /* MORDIDÃO do esqueleto: avança na sua pista com a boca escancarada e fecha de uma vez */
+      b.bite += dt; const k = b.bite; b.wind = 0;
+      b.x += (b.btx - b.x) * Math.min(1, dt * 6); b.pz += ((k < 0.6 ? 2.6 : BOSS_HOVER) - b.pz) * Math.min(1, dt * (k < 0.6 ? 6 : 2));
+      b.jaw = k < 0.5 ? k / 0.5 : k < 0.62 ? 1 - (k - 0.5) / 0.12 : 0;
+      if (!b.bit && k >= 0.6) { b.bit = 1; G.shake = Math.max(G.shake || 0, 0.45); noise(0.18, 220, 90, 0.16, 1, 'lowpass'); beep(90, 0.2, 'square', 0.1, -40);
+        if (Math.abs(G.lane - b.x) < 0.6 && G.stun <= 0 && !(G.bShield > 0) && !(PW && PW.shield && G.pAct > 0)) { if (hit()) G.pushV = 18; G.popups.push({ text: 'MORDIDÃO!', t: 0, color: '#ff4f6d', size: 0.09 }); } else G.popups.push({ text: 'Escapou!', t: 0, color: '#7dffb0' }); }
+      if (k > 1.6) { b.bite = undefined; b.bit = 0; b.jaw = 0; b.thr = 1.6; }
+    } else {
     b.moveT -= dt; if (b.moveT <= 0) { b.moveT = 2.2 + Math.random() * 1.6; b.tx = [-1, 0, 1][Math.floor(Math.random() * 3)]; }
     b.x += (b.tx - b.x) * Math.min(1, dt * 2.2);
     b.pz += (BOSS_HOVER + 2.5 * Math.sin(b.t * 1.25) - b.pz) * Math.min(1, dt * 3);   // vai e vem: 5m a 11m
-    b.e = 1.05 + 0.07 * Math.sin(b.t * 3);
     b.thr -= dt; b.wind = b.thr < 0.6 ? 1 - Math.max(0, b.thr) / 0.6 : 0;
-    if (b.thr <= 0) { throwAtPlayer(); b.thr = 2.4 - 1.0 * (1 - b.hp / b.max); b.wind = 0; }
+    if (b.thr <= 0) { if (b.sk && (b.bn = (b.bn || 0) + 1) % 3 === 0) { b.bite = 0; b.btx = G.lane; G.popups.push({ text: 'CUIDADO: MORDIDÃO!', t: 0, color: '#ffd23f', size: 0.06, life: 0.9 }); } else throwAtPlayer(); b.thr = 2.4 - 1.0 * (1 - b.hp / b.max); b.wind = 0; }
+    }
     // golpes do jogador no chefão
     if (G.punchT < 0) b.lastHit = false;
     if (G.punchT >= 0 && S.atk !== 'ki') {
@@ -3456,6 +3496,10 @@ function update(dt, now) {
       else { lavaBurn(); if (G.race) { G.pushV = 18; G.stun = Math.max(G.stun, 0.9); } else hit(); G.popups.push({ text: 'ATINGIDO!', t: 0, color: '#ff4f4f', size: 0.09 }); }
       G.atkTaken = (G.atkTaken || 0) + 1; duoSend({ t: 'fbhit', k }); emote(G, 'a'); } }
   if (G.iceT > 0) G.iceT -= dt; if (G.poisHit > 0) G.poisHit -= dt;
+  G.iceB = G.iceB || [];   /* planta de gelo: cospe bolas de gelo na sua pista; acertou, congela um pouco */
+  for (const o of G.objs) if (o.type === 'plant' && o.ice && !o.done && !o.dieT) { const zz = o.wz - G.dist; if (zz > 6 && zz < 32 && clock > (o.shT ?? 0)) { o.shT = clock + 2.4 + Math.random() * 0.8; G.iceB.push({ lane: o.lane, wz: o.wz - 0.4, t: 0 }); noise(0.15, 3000, 1500, 0.04, 1, 'highpass'); } }
+  for (const q of G.iceB) { q.wz -= 20 * dt; q.t += dt; const zq = q.wz - G.dist; if (!q.dead && zq < 0.4 && zq > -1.2 && q.lane === G.lane && G.stun <= 0 && !(G.bShield > 0) && !(PW && PW.shield && G.pAct > 0)) { q.dead = true; hit(); G.iceT = Math.max(G.iceT || 0, 1.3); G.popups.push({ text: 'CONGELADO!', t: 0, color: '#7fdcff', size: 0.08 }); noise(0.4, 5000, 2000, 0.07, 1, 'highpass'); } if (zq < -2) q.dead = true; }
+  G.iceB = G.iceB.filter(q => !q.dead);
   if (G.poisT > 0) { G.poisT -= dt; G.poisTick -= dt; if (G.poisTick <= 0) { G.poisTick = 0.6; G.poisHit = 0.18; G.shake = Math.max(G.shake || 0, 0.12); beep(160, 0.08, 'square', 0.05, -60); } }   /* cada tique do veneno: tranco e trava */
   if (G.duo && !G.race && DUO.op && DUO.op.over && state === 'play' && G.lives > 0) { G.duoWin = 1; emote(G, 'h'); endGame(); return; }   /* sobrevivência: o rival caiu, você venceu */
   if (G.race && G.rWin && state === 'play') { emote(G.rWin, 'h'); emote(G, 'a'); endGame(); return; }
@@ -4472,10 +4516,10 @@ function drawBoss(z) {                       // chefão: capuz vermelho em pixel
   const g = proj(b.x, z, 0), p = proj(b.x, z, b.e + Math.sin(clock * 3) * 0.04), u = p.u * 0.85;
   const dying = b.s === 2, hurt = b.hurt > 0 && Math.floor(clock * 30) % 2 === 0, t = clock, w = b.wind;
   ctx.fillStyle = 'rgba(13,20,64,.28)'; ctx.beginPath(); ctx.ellipse(g.x, g.y, u * 0.5, u * 0.08, 0, 0, 7); ctx.fill();
-  { const blink = Math.floor(t * 0.9) % 5 === 0 && (t % 1.1) < 0.12, key = w > 0.3 || t - (b.swT ?? -9) < 0.4 ? 'bossR' : (b.hurt > 0 || blink) ? 'bossN' : 'bossW';   /* chefão em 3D de blocos */
-    const ps0 = u * 1.55 / BOSS_W, a = Math.round(-((p.x - W / 2) / W) * 9) / 10, hh = 33 * ps0 * 76 / 70, sw0 = (b.w0 || 0) > 0.3 && w <= 0.05; if (sw0) b.swT = t; b.w0 = w;   /* soltou o poder: a foice faz o golpe */
+  { const blink = Math.floor(t * 0.9) % 5 === 0 && (t % 1.1) < 0.12, key = (b.sk ? 'bossS' : 'boss') + (w > 0.3 || t - (b.swT ?? -9) < 0.4 ? 'R' : (b.hurt > 0 || blink) ? 'N' : 'W');   /* temporada 1: esqueleto gigante */   /* chefão em 3D de blocos */
+    const ps0 = u * 1.55 / BOSS_W, a = Math.round(-((p.x - W / 2) / W) * 9) / 10, hh = 33 * ps0 * 76 / 70 * (b.sk ? 1.4 : 1),   /* esqueleto gigante: 40% maior */ sw0 = (b.w0 || 0) > 0.3 && w <= 0.05; if (sw0) { b.swT = t; if (b.sk) G.shake = Math.max(G.shake || 0, 0.35); } b.w0 = w;   /* esqueleto: bate o ossão e treme a tela */   /* soltou o poder: a foice faz o golpe */
     const sk = t - (b.swT ?? -9) < 0.4 ? 0.9 * (1 - (t - b.swT) / 0.4) : -0.7 * w, rq = Math.round(sk * 10) / 10, lf = Math.round(Math.abs(Math.sin(t * 2.2)) * 3) / 2;
-    const pose = { key: 'f' + rq + 'l' + lf, lift: lf, armR: { ax: 'z', px: 14, py: 50, pz: 0, r: rq } };
+    const jw = Math.round((b.jaw || 0) * 5) / 5, bk = b.bite !== undefined ? Math.round(Math.min(1, (b.jaw || 0) * 1.4 + (b.bite > 0.5 && b.bite < 0.9 ? 1 : 0)) * 5) / 5 : 0, pose = b.sk ? (bk > 0 ? { key: 'sb' + jw + 'b' + bk, lift: 0, legL: { py: 38, pz: 22, r: jw * 0.75 }, legR: { py: 81, pz: 16, r: -bk * 0.3 }, armL: { py: 81, pz: 16, r: -bk * 0.3 }, armR: { ax: 'x', py: 81, pz: 16, r: -bk * 0.3 } } : { key: 's2' + rq + 'l' + lf + 'j' + jw, lift: lf, legL: { py: 38, pz: 22, r: jw * 0.75 }, armR: { ax: 'x', px: 27, py: 45, pz: 16, r: -rq * 1.2 }, armL: { py: 45, pz: 16, r: -rq * 0.7 }, body: { py: 80, pz: 16, r: Math.round(rq * 1.5) / 10 } }) : { key: 'f' + rq + 'l' + lf, lift: lf, armR: { ax: 'z', px: 14, py: 50, pz: 0, r: rq } };
     const c3 = V3D.has(key) && V3D.frameA(key, a, 0.22, pose, t * 1.1, hh > 300 ? 4 : 3);
     if (c3) { const s3 = hh / c3.hs, fy = p.y + 13 * ps0; ctx.save(); if (dying) ctx.globalAlpha = Math.max(0, 1 - b.dieT / 1.6); if (hurt) ctx.filter = 'brightness(2.4) saturate(0.2)';
       ctx.imageSmoothingEnabled = false; ctx.drawImage(c3, p.x - c3.ax * s3, fy - c3.ay * s3, c3.width * s3, c3.height * s3); ctx.restore();
@@ -4515,6 +4559,12 @@ function drawBoss(z) {                       // chefão: capuz vermelho em pixel
   const ps = u * 1.55 / BOSS_W;
   spr(BCV, p.x - 15 * ps, p.y - 22 * ps, BOSS_W * ps, BOSS_H * ps);
 }
+const BONE_FR = [];
+function boneFr(i) {   /* quadros do osso 3D (8 ângulos), recortados no tamanho do osso */
+  if (BONE_FR[i]) return BONE_FR[i]; let c = null; try { c = V3D.frameA('bossBone', i * Math.PI / 8, 0.35, { key: 'bn' }, 0, 3); } catch (e) {} if (!c) return null;
+  const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; let x0 = c.width, y0 = c.height, x1 = 0, y1 = 0;
+  for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) if (d[(y * c.width + x) * 4 + 3] > 20) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+  if (x1 < x0) return null; return BONE_FR[i] = { c, x: x0, y: y0, w: x1 - x0 + 1, h: y1 - y0 + 1 }; }
 function drawProj(pr, z) {
   const k = Math.min(1, 1 - pr.pz / pr.pz0), x = lerp(pr.x0, pr.lane, Math.min(1, k * 1.2)), e = lerp(pr.e0, pr.e1, k) + Math.sin(k * Math.PI) * 0.25;
   const g = proj(x, z, 0), p = proj(x, z, e), u = p.u, r = u * 0.2;
@@ -4524,6 +4574,16 @@ function drawProj(pr, z) {
     quad(c.x, d.x, c.y, a.x, b2.x, a.y);
   }
   shadow(g, r * 1.5);
+  if (pr.bone && boneFr(Math.floor(clock * 10 + pr.pz0) % 8)) {   /* osso 3D girando */
+    const f = boneFr(Math.floor(clock * 10 + pr.pz0) % 8), sc = r * 4.2 / Math.max(f.w, f.h); ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(clock * 9 + pr.pz0); ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(f.c, f.x, f.y, f.w, f.h, -f.w * sc / 2, -f.h * sc / 2, f.w * sc, f.h * sc); ctx.restore(); return; }
+  if (pr.bone) {   /* esqueleto gigante: osso girando (baixo = pule · alto = agache) */
+    const L = r * 3.2, T = r * 0.7, K = r * 0.75; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(clock * 14 + pr.pz0);
+    const C = ['#dae4e6', '#b8c4c8', '#7e8c90']; ctx.fillStyle = '#14141c'; ctx.fillRect(-L / 2 - K - 2, -T / 2 - 2, L + K * 2 + 4, T + 4);
+    for (const sx of [-1, 1]) { ctx.fillRect(sx * L / 2 - K - 2, -K - 2, K * 2 + 4, K * 2 + 4); }
+    ctx.fillStyle = C[1]; ctx.fillRect(-L / 2, -T / 2, L, T); ctx.fillStyle = C[0]; ctx.fillRect(-L / 2, -T / 2, L, T * 0.45);
+    for (const sx of [-1, 1]) { ctx.fillStyle = C[1]; ctx.fillRect(sx * L / 2 - K, -K, K * 2, K * 2); ctx.fillStyle = C[0]; ctx.fillRect(sx * L / 2 - K, -K, K * 2, K * 0.8); ctx.fillStyle = C[2]; ctx.fillRect(sx * L / 2 - K * 0.2, -K * 0.2, K * 0.4, K * 0.4); }
+    ctx.restore(); return; }
   const img = vortexImg(pr.kind === 'rock' ? 0 : 1, clock * 6 + pr.pz0), vh = r * 3.4, vw = vh * VTX_W / VTX_H;
   spr(img, p.x - vw / 2, p.y - vh / 2, vw, vh);
 }
@@ -4625,6 +4685,9 @@ function greenFire(x, y, r) {                 // bola de fogo verde do mago
 function objLen(o) {   /* comprimento do obstáculo para frente: só some quando a parte de trás passa por você */
   return o.type === 'low' ? (o.v ? 3.1 : 4.6) : o.type === 'block' ? (o.v ? 4.6 : 2.4) : o.type === 'tree' ? 24 : o.rider ? 3.0 : o.type === 'plant' ? 2.0 : o.type === 'pklava' ? o.len : o.type === 'pk' ? o.len : o.type === 'high' ? (o.v ? 0 : 3.4) : o.type === 'wall' ? 2.2 : 0;
 }
+function drawIceBall(q, z) {   /* bola de gelo da planta: cubinho azul girando */
+  const p = proj(q.lane, Math.max(0.3, z), 0.75), s = p.u * 0.16, a = q.t * 6; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(a);
+  ctx.fillStyle = '#2e7cc0'; ctx.fillRect(-s, -s, s * 2, s * 2); ctx.fillStyle = '#8ad8ff'; ctx.fillRect(-s * 0.8, -s * 0.8, s * 1.6, s * 1.6); ctx.fillStyle = '#e8faff'; ctx.fillRect(-s * 0.6, -s * 0.6, s * 0.6, s * 0.6); ctx.restore(); }
 function drawObj(o, z) {
   ctx.globalAlpha = Math.max(0, Math.min(1, (OFAR - z) / 3)) * (o.dieT ? Math.max(0.2, 1 - (clock - o.dieT) / 0.45) : 1);   /* morrendo: pisca e vai sumindo */
   if (o.type === 'skel' || o.type === 'mage') { drawMonster(o, z); ctx.globalAlpha = 1; return; }
@@ -4647,12 +4710,12 @@ function drawObj(o, z) {
   if (o.type === 'plant') {                   // planta carnívora em blocos: vaso de barro, caule com folhas e boca roxa que abre e fecha
     const l = o.lane, near = z < 7 ? 1 : 0, ph = (clock * 1.6 + o.wz) % 1, atk = z < 9 ? (ph < 0.35 ? ph / 0.35 : ph < 0.5 ? 1 : ph < 0.75 ? 1 - (ph - 0.5) / 0.25 : 0) : 0,   /* ataque: estica para frente com a boca escancarada e fecha */
       lg = atk * 0.9, op = atk > 0 ? (ph < 0.3 ? 0.46 * ph / 0.3 : ph < 0.38 ? 0.46 * (1 - (ph - 0.3) / 0.08) : 0.01) : 0.04 + 0.16 * Math.pow(Math.max(0, Math.sin(clock * (near ? 9 : 4) + o.wz * 3)), 2), sway = Math.sin(clock * 2.5 + o.wz) * 0.04 + (atk > 0 && ph >= 0.38 && ph < 0.46 ? (Math.random() - 0.5) * 0.06 : 0);   /* mordida: abre bem a boca no bote e fecha de uma vez (treme ao morder); parada fica mastigando */
-    const POT = { front: '#b8582c', top: '#d8743c', side: '#7e3418', bottom: '#5e2610' };
-    box(l - 0.3, l + 0.3, z + 0.2, z + 1.8, 0, 0.42, POT); box(l - 0.35, l + 0.35, z + 0.12, z + 1.88, 0.42, 0.52, { front: '#cc6a34', top: '#5a3018', side: '#8e3e1c' });   // vaso e borda
-    const ST = { front: '#3cbd60', top: '#7dea97', side: '#279a45', bottom: '#1f7a36' }, cx2 = l + sway;
+    const IC = !!o.ice, POT = IC ? { front: '#8aa8c4', top: '#b8d4ec', side: '#5a7896', bottom: '#3e5a76' } : { front: '#b8582c', top: '#d8743c', side: '#7e3418', bottom: '#5e2610' };
+    box(l - 0.3, l + 0.3, z + 0.2, z + 1.8, 0, 0.42, POT); box(l - 0.35, l + 0.35, z + 0.12, z + 1.88, 0.42, 0.52, IC ? { front: '#a8c8e4', top: '#e8f6ff', side: '#6a8ab0' } : { front: '#cc6a34', top: '#5a3018', side: '#8e3e1c' });   // vaso e borda
+    const ST = IC ? { front: '#3aa8b8', top: '#8ae8f0', side: '#2a7e8e', bottom: '#1e5e6e' } : { front: '#3cbd60', top: '#7dea97', side: '#279a45', bottom: '#1f7a36' }, cx2 = l + sway;
     box(cx2 - 0.06, cx2 + 0.06, z + 0.85 - lg, z + 1.15, 0.52, 0.74 + atk * 0.1, ST);   // caule (estica no bote)                                                        // caule
     for (const d of [-1, 1]) box(d > 0 ? cx2 + 0.05 : cx2 - 0.3, d > 0 ? cx2 + 0.3 : cx2 - 0.05, z + 0.7, z + 1.3, 0.56, 0.63, ST);   // folhas
-    const J = { front: '#d8332b', top: '#f0605a', side: '#9c1e1a', bottom: '#7a1410' }, IN = { front: '#3a0a10', top: '#ff8a7a', side: '#2a0608', bottom: '#ff8a7a' };   /* vermelha */
+    const J = IC ? { front: '#5ab8f0', top: '#c8f0ff', side: '#2e7cc0', bottom: '#1e5a98' } : { front: '#d8332b', top: '#f0605a', side: '#9c1e1a', bottom: '#7a1410' }, IN = IC ? { front: '#0e2a4a', top: '#8ad8ff', side: '#081a30', bottom: '#8ad8ff' } : { front: '#3a0a10', top: '#ff8a7a', side: '#2a0608', bottom: '#ff8a7a' };   /* vermelha */
     const e0 = 0.72 + atk * 0.1, lw = 0.36, z0 = z - lg, z1 = z + 2.0 - lg;   /* cabeça bem funda (extrudada) */
     box(cx2 - lw, cx2 + lw, z0, z1, e0, e0 + 0.16, J);                                                                    // mandíbula de baixo
     box(cx2 - lw + 0.04, cx2 + lw - 0.04, z0 + 0.2, z1 - 0.08, e0 + 0.16, e0 + 0.16 + op, IN);                            // boca por dentro
@@ -5141,6 +5204,75 @@ const V3D = (() => {   /* bonecos 3D de verdade: desenhados do modelo de blocos,
     return [...V.values()];
   }
   try { V3D.addModel('bossW', build('#ffffff')); V3D.addModel('bossR', build('#ff3b4a')); V3D.addModel('bossN', build(null)); } catch (e) {}
+})();
+(function () {   /* chefão da temporada 1: esqueleto gigante de blocos — caveira enorme, olhos verdes, boca aberta e um osso de clava */
+  const hs = (a, b) => { const v = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return v - Math.floor(v); };
+  const SK = ['#cfdadc', '#b8c4c8', '#a4b0b4', '#93a0a4'], BN = ['#8a979b', '#7e8c90', '#6a777a'], DK = '#0c1418', IN = '#182226';   /* mesma textura do esqueleto (mob) */
+  function build(eye) {
+    let GRP = 'body'; const V = new Map(), put = (x, y, z, c) => V.set(x + ',' + y + ',' + z, [x, y, z, c, GRP]), del = (x, y, z) => V.delete(x + ',' + y + ',' + z);
+    const box = (x0, y0, z0, w, h, d, col) => { for (let x = x0; x < x0 + w; x++) for (let y = y0; y < y0 + h; y++) for (let z = z0; z < z0 + d; z++) put(x, y, z, typeof col === 'function' ? col(x, y, z) : col); };
+    const skin = (x, y, z) => { const r = hs(Math.floor(x / 2) * 7 + Math.floor(z / 2) * 3, Math.floor(y / 2)); return SK[r < 0.45 ? 0 : r < 0.75 ? 1 : r < 0.92 ? 2 : 3]; };
+    const bone = (x, y, z) => BN[hs(Math.floor(x / 2) + Math.floor(z / 2) * 5, Math.floor(y / 2)) < 0.6 ? 0 : hs(x, y + z) < 0.5 ? 1 : 2];
+    /* caveira bem grande (cabeçudo), no estilo da referência: domo em cima, faixa azul nas sobrancelhas, olhos largos com brilho verde embaixo, boca enorme aberta */
+    const X0 = -3, X1 = 39, YB = 23, Z0 = 2, Z1 = 34, BL = (x, y, z) => BN[hs(x * 3 + z, y) < 0.5 ? 0 : 1];
+    for (let x = X0; x < X1; x++) for (let y = 0; y < YB; y++) for (let z = Z0; z < Z1; z++) {
+      const ex = Math.min(x - X0, X1 - 1 - x), ez = Math.min(z - Z0, Z1 - 1 - z);
+      if ((y < 3 && (ex < 7 || ez < 5)) || (y < 6 && (ex < 3 || ez < 2))) continue;   /* topo em blocos empilhados (degraus grandes, como na referência) */
+      if (ex < 1 && ez < 1) continue; put(x, y, z, skin(x, y, z)); }
+    box(8, -2, 9, 18, 2, 15, skin); box(12, -3, 12, 9, 1, 9, skin);   /* blocão de cima mais alto */
+    box(X0 - 1, 6, 8, 2, 12, 18, skin); box(X1 - 1, 7, 9, 2, 11, 16, skin);   /* blocos saltados nas laterais */
+    box(X0 + 1, 2, Z0 + 2, 9, 4, 6, skin); box(X1 - 10, 3, Z0 + 3, 9, 3, 6, skin);   /* degraus da frente em cima */
+    /* faixa azulada das sobrancelhas e olhos largos */
+    for (const x0 of [1, 21]) {
+      box(x0, 8, Z0 - 1, 14, 2, 1, BL);   /* sobrancelha azul saltada */
+      for (let x = x0 + 1; x < x0 + 13; x++) for (let y = 10; y < 18; y++) { for (let z = Z0 - 1; z < Z0 + 5; z++) del(x, y, z); put(x, y, Z0 + 5, DK); }
+      for (let y = 10; y < 18; y++) { put(x0, y, Z0, BL(x0, y, Z0)); put(x0 + 13, y, Z0, BL(x0 + 13, y, Z0)); }   /* borda azul do olho */
+      if (eye) { const c1 = eye === 'R' ? '#eaff5a' : '#5fd84a', c2 = eye === 'R' ? '#b8ff2a' : '#3aa83a'; box(x0 + 5, 14, Z0 + 3, 4, 3, 2, c1); box(x0 + 5, 16, Z0 + 3, 4, 1, 2, c2); if (eye === 'R') box(x0 + 3, 13, Z0 + 4, 8, 1, 1, c2); } }
+    /* bochechas em degraus e nariz */
+    for (let x = X0 + 1; x < X1 - 1; x++) for (let y = 18; y < 22; y++) put(x, y, Z0, skin(x, y, Z0));
+    for (const x of [16, 17, 18, 19]) for (const y of [18, 19, 20]) { del(x, y, Z0); put(x, y, Z0 + 1, DK); }
+    for (let x = X0 + 2; x < X1 - 2; x += 6) box(x, 21, Z0, 3, 1, 1, BL);   /* pedaços azuis nos degraus */
+    /* dentes de cima serrilhados */
+    for (let x = 10; x < 27; x += 5) box(x, 22, Z0 + 1, 3, 3, 3, SK[0]);   /* dentes de cima grossos */
+    /* boca aberta mais fina que a caveira: buraco escuro com colunas escuras dos lados */
+    box(5, 22, 20, 26, 17, 8, BL);   /* fundo da boca (atrás) */
+    for (let x = 9; x < 27; x++) for (let y = 23; y < 38; y++) put(x, y, 19, IN);
+    box(5, 22, 6, 4, 17, 14, BL); box(27, 22, 6, 4, 17, 14, BL);   /* colunas escuras dos lados */
+    box(5, 30, 4, 4, 5, 4, SK[0]); box(27, 30, 4, 4, 5, 4, SK[0]);   /* dentinhos dos cantos */
+    /* mandíbula fina embaixo com 3 dentes quadrados */
+    GRP = 'legL';   /* mandíbula solta: abre no mordidão */
+    box(4, 38, 5, 28, 3, 18, skin); box(5, 37, 5, 26, 1, 4, BL);
+    for (const x of [11, 16, 21]) box(x, 34, 5, 4, 4, 4, SK[0]);
+    GRP = 'body';   /* 3 dentões de baixo */
+    GRP = 'legR';   /* corpo de ossos (vai para trás no mordidão, a cabeça avança) */
+    /* corpo de ossos fininhos (pequeno perto da cabeça) */
+    box(16, 41, 15, 4, 4, 4, bone);   /* pescoço */
+    for (const y of [45, 48, 51]) { const w = 7; for (let x = 18 - w; x < 18 + w; x++) for (let z = 12; z < 22; z++) { const edge = x === 18 - w || x === 18 + w - 1 || z === 12 || z === 21; if (edge) { put(x, y, z, bone(x, y, z)); put(x, y + 1, z, bone(x, y + 1, z)); } } }
+    box(17, 44, 17, 2, 13, 3, bone); box(17, 45, 11, 2, 8, 1, bone);   /* coluna e esterno */
+    box(12, 56, 13, 12, 3, 7, bone);   /* bacia */
+    for (const x0 of [13, 20]) { box(x0, 59, 15, 3, 8, 3, bone); box(x0 - 1, 66, 14, 5, 3, 5, skin); box(x0, 69, 15, 3, 9, 3, bone); box(x0 - 1, 78, 12, 5, 3, 8, skin); }   /* pernas */
+    /* braço esquerdo longo: sai para o lado e desce até perto do chão */
+    GRP = 'armL'; box(7, 44, 14, 4, 4, 5, skin);   /* ombro (braço esquerdo anima no ataque) */
+    box(-3, 45, 15, 10, 3, 3, bone);   /* braço reto para o lado */
+    box(-7, 43, 14, 5, 6, 5, skin);   /* cotovelo */
+    box(-6, 35, 15, 3, 8, 3, skin);   /* antebraço levantado (mais baixo) */
+    box(-8, 31, 13, 7, 4, 7, skin); box(-9, 29, 14, 3, 3, 5, skin); box(-4, 29, 14, 3, 3, 5, skin);   /* mão */
+    GRP = 'armR';   /* braço direito longo com o ossão de clava (gira no ataque) */
+    box(25, 44, 14, 4, 3, 5, skin);
+    for (let y = 47; y < 57; y++) { const x = Math.round(28 + (y - 47) * 0.45); box(x, y, 15, 3, 1, 3, bone); }
+    box(31, 56, 14, 5, 4, 5, skin);   /* cotovelo */
+    box(32, 60, 15, 3, 12, 3, bone); box(31, 72, 12, 6, 4, 7, skin);   /* antebraço e mão */
+    for (let y = 36; y < 76; y++) { const x = Math.round(34 + (76 - y) * 0.12); box(x, y, 10, 3, 1, 3, skin); }   /* ossão inclinado */
+    box(37, 30, 8, 7, 5, 7, skin); box(36, 27, 9, 3, 4, 5, skin); box(42, 27, 9, 3, 4, 5, skin);   /* nó de cima */
+    box(32, 75, 9, 6, 3, 5, skin); box(31, 77, 9, 3, 2, 5, skin); box(36, 77, 9, 3, 2, 5, skin);   /* nó de baixo */
+    return [...V.values()];
+  }
+  try { const BV = [], pc = (x, y, z, c) => BV.push([x, y, z, c, 'body']);   /* osso 3D estilizado: cabo redondo e duas bolotas em cada ponta */
+    const bc = (x, y, z) => { const r = hs(x * 3 + z, y); return y < 46 ? (r < 0.6 ? '#eef3f4' : '#dae4e6') : (r < 0.6 ? '#b8c4c8' : '#a4b0b4'); };
+    for (let x = 7; x < 30; x++) for (let y = 44; y < 50; y++) for (let z = 14; z < 20; z++) if ((y - 46.5) ** 2 + (z - 16.5) ** 2 <= 7.5) pc(x, y, z, bc(x, y, z));
+    for (const cx of [5, 31]) for (const cy of [43, 50]) for (let x = cx - 4; x <= cx + 4; x++) for (let y = cy - 4; y <= cy + 4; y++) for (let z = 13; z <= 21; z++) if ((x - cx) ** 2 + (y - cy) ** 2 + (z - 17) ** 2 <= 17) pc(x, y, z, bc(x, y, z));
+    V3D.addModel('bossBone', BV); } catch (e) {}
+  try { V3D.addModel('bossSW', build('W')); V3D.addModel('bossSR', build('R')); V3D.addModel('bossSN', build(null)); } catch (e) {}
 })();
 
 /* menu: o seu boneco 3D correndo de verdade (3/4), feito do modelo */
@@ -6729,6 +6861,7 @@ function draw() {
   if (inGame && G && G.golem && G.golem.z > 0.8) list.push({ z: G.golem.z, f: zz => drawGolemW(zz) });   /* golem correndo */
   if (inGame && G && G.race) for (const b of G.bots) { const z = b.d - G.dist; if (z > 4 && z < FAR) list.push({ z, f: zz => drawBot(zz, b) }); }   /* bot colado na câmera não aparece gigante */
   if (inGame && DUO.on && DUO.op) { const z = (DUO.op.dd ?? DUO.op.d) - G.dist; if (z > 4 && z < FAR) list.push({ z, f: zz => drawRival(zz) }); }   // o outro jogador correndo na pista
+  if (inGame && G.iceB) for (const q of G.iceB) { const z = q.wz - G.dist; if (z > -0.5 && z < OFAR) list.push({ z, f: zz => drawIceBall(q, zz) }); }
   if (inGame) for (const o of G.objs) { const z = o.wz - G.dist; if (z < OFAR && z > -F * 0.9 - objLen(o)) list.push({ z, f: zz => { drawObj(o, zz); if (o.burn > 0) drawBurn(o, zz); } }); }   // obstáculos passam pela câmera (pelos lados, por baixo ou por cima) em vez de sumir
   if (inGame && G.boss && !G.boss.gone) list.push({ z: G.boss.pz, f: zz => drawBoss(zz) });
   if (inGame && G.projs) for (const pr of G.projs) list.push({ z: pr.pz, f: zz => drawProj(pr, zz) });
